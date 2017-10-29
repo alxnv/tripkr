@@ -1,0 +1,101 @@
+/* CSS Document */
+body {background-color:#FFFFFF; color:black;}
+a {color:#000000; text-decoration:none;}
+
+#top_tabl1 {background-image:url(img/top-left.jpg); background-repeat:no-repeat;}
+#top_tabl2 {background-image:url(img/top-center.jpg); background-repeat:repeat-x;}
+#top_tabl3 {background-image:url(img/top_right.jpg); background-repeat:no-repeat;}
+
+#osnov {}
+#top_menu {background-image:url(img/top_menu_fon.jpg); height:30px; width:100%; background-repeat:repeat-x;}
+#img_cat {}
+a#pages_top,a.pages_top {color: #000066; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; text-align:center;}
+
+a#pages,a.pages {color: #FFFFFF; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; text-align:center;}
+#svyaz {font-size:16px; font-weight:600; text-align:right;}
+.left_menu {
+margin-left:0px;
+border:#00CCFF; border-width:1px; border-style:dotted;}
+.left_menu p {text-align:right;}
+font {/*font-weight:600;*/}
+font.kont {font-weight:700; text-decoration:underline;}
+.kontent {border:#CCCCCC; border-width:1px; border-style:dotted;}
+#logo {margin-top:25px}
+.title {
+	margin-right:70px;
+	text-align:center;
+}
+#menu {
+margin-top:20px;
+}
+.qa{
+    color:#000066;
+    background-color:#000066;
+    height:1px;
+	border: 0;
+	margin: 7px 0;
+}
+.greydiv {
+    background-color:#F5F5F5;
+    margin-right: 50px;
+}
+.error {
+    color:red;
+    margin-left:50px;
+}
+.normalmessage {
+    color:green;
+    margin-left:50px;
+}
+.ast {
+    color:red;
+}
+div .link {
+    float:left;
+}
+#wrap {
+
+width: 500px;
+
+position: absolute;
+
+left: 50%;
+
+margin-left: -200px;
+
+}
+.content a {
+text-decoration:underline;
+}
+p.newsdate {
+color:#00bae3;
+font-size:120%;
+margin:0;
+}
+p.newsnaim {
+font-weight:bold;
+font-size:110%;
+margin:0;
+}
+p.newsanons {
+margin:0 0 15px 0;
+}
+p.newsanons a {
+text-decoration:none;
+}
+.attention {
+color:red;
+}
+
+.plashka {
+background-color:#d5f2f9;
+padding: 4px;
+border:1px solid #00bae3;
+border-collapse:collapse;
+}
+.plashblue {
+background-color:#fff;
+padding: 4px;
+border:1px solid #00bae3;
+border-collapse:collapse;
+}

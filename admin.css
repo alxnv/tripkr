@@ -1,0 +1,68 @@
+body {
+    font-family: Arial,Helvetica,sans_serif;
+    font-size:10pt;
+}
+a,a:visited {
+    color:#069;
+    text-decoration: underline;
+    outline:none;
+}
+a:hover {
+    text-decoration:none;
+    background-color:white;
+}
+img {
+    border-width: 0;
+}
+table {
+    border-width:1px;
+}
+a.nobg:hover {
+    background-color: transparent;
+}
+a.hand {
+    cursor:hand;
+    cursor:pointer;
+}
+ol.tree {
+    padding:0;
+    margin-left:30px;
+    margin-right:0px;
+}
+ol.tree li {
+    background: url(../img/admin/ui/Book.gif) no-repeat;
+    padding-left:30px;
+    margin-left:0;
+}
+
+
+
+.leftaligntd td {
+    text-align:left;
+}
+.topaligntd td {
+    vertical-align: top;
+}
+.bodyleft {
+    background-color: #eeeeee;
+}
+th {
+    background-color: #EEEEEE;
+}
+.savediv {
+    width:100%;
+    text-align:center;
+}
+.hidingmess {
+    width:90%;
+    text-align: center;
+    color:green;
+    padding: 1em 0;
+}
+.hidingerrormess {
+    width:90%;
+    text-align: center;
+    color:red;
+    padding: 1em 0;
+	margin-left:40px;
+}
