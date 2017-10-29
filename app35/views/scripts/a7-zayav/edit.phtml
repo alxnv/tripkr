@@ -1,0 +1,90 @@
+<?
+//my3::inithtmleditor();
+//echo $this->row->html;
+	echo '<form action="'.$this->baseUrl().'/a7-zayav/save/id/'.$this->id.'" method="post" style="margin:0;padding:0;">';
+
+?>
+<h2 align="center">Редактирование заявки на доступ к конфеденциальной информации</h2>
+<?
+my3::showerror();
+?>
+<?/*
+Время отправки заявки (в формате ДД.ММ.ГГГГ ЧЧ:ММ:СС): <?=$this->row->data1?><br><br>
+*/
+?>
+Дата отправки заявки  (в формате ДД.ММ.ГГГГ): <input type="text" name="data1" size="50" maxlength="200" <?php echo "value='".$this->row->data1."'" ?>><br><br>
+Наименование фирмы: <input type="text" name="naimfirm" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->naimfirm)?>" /><br>
+ФИО: <input type="text" name="fio" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->fio)?>" /><br>
+Должность: <input type="text" name="dolgn" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->dolgn)?>" /><br>
+Сайт: <input type="text" name="site" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->site)?>" /><br>
+E-mail: <input type="text" name="email" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->email)?>" /><br>
+Город: <input type="text" name="city" size="50" maxlength="250" value="<?=htmlspecialchars($this->row->city)?>" /><br>
+Контактный телефон: <input type="text" name="kphone" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->kphone)?>" /><br>
+Номер в реестре(ЕДИНЫЙ ФЕДЕРАЛЬНЫЙ РЕЕСТР ТУРОПЕРАТОРОВ): <input type="text" name="nreestr" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->nreestr)?>" /><br><br>
+<br>Логин: <input type="text" name="login" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->login)?>" /><br>
+Пароль: <input type="password" name="pwd" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->pwd)?>" /><br>
+<br><br>Комментарий админа:<br>
+<textarea name="comments" cols="60" rows="5" style="width:100%"><?php echo htmlspecialchars($this->row->comments); ?></textarea><br>
+<?
+/*<br>Новость:<br>
+        //echo '<h2 align=center>'.$this->escape($this->row->naim).'</h2>';
+        my3::editorfield('html',$this->row->html,'','350');
+*/
+?>
+<script type="text/javascript">
+d=document;
+function doallsel() {
+    selc=(d.getElementById('hdall').checked);
+    //d.getElementById('hdall').checked=selc;
+    imax=d.getElementById('savei').value;
+    for (i=1;i<=imax;i++) {
+        d.getElementById('hq'+i).checked=selc;
+    }
+}
+</script>
+<br><input type="checkbox" name="ismoderated" <?=$this->row->ismoderated ? 'checked' :'' ?>
+       id="hd31"> <label for="hd31"><b>Заявка одобрена и доступ открыт к следующим разделам:</b></label><br><br>
+
+<input type="checkbox" id="hdall" onclick="doallsel()"> <label for="hdall"><b>Выбрать/снять галку со всех туров:</b></label>
+<hr />
+
+<?
+
+    function printtree5(&$aro,$topid,&$i1) {
+// выводит на экран все дерево
+        echo '<ol class="tree">';
+        if (isset($aro[$topid])) {
+            for ($i=0,$j=count($aro[$topid]);
+            $i<$j;
+            $i++) {
+                $row=$aro[$topid][$i];
+                $n=$row->uid;
+                echo '<li><input type="checkbox" '.(!is_null($row->user_id) ? 'checked' :'').
+         ' id="hq'.$i1.'" name="hq'.$i1.'" /> <label for="hq'.$i1.'">'.my3::nbsh($row->naim).'</label><br>
+         <input type="hidden" name="hy'.$i1.'" value="'.$row->uid.'" /></li>';
+                if (isset($aro[$n])) {
+                    $i1++;
+                    printtree5(&$aro,$n,$i1);
+                    $i1--;
+                }
+                $i1++;
+           };
+        }
+        echo '</ol>';
+
+    }
+$i1=1; // сквозной индекс
+printtree5(&$this->zayavna, 299, $i1);
+
+/*for ($i=0;$i<count($this->zayavna);$i++) {
+    $row=$this->zayavna[$i];
+    echo '<input type="checkbox" '.(!is_null($row->user_id) ? 'checked' :'').
+         ' id="hq'.$i.'" name="hq'.$i.'" /> <label for="hq'.$i.'">'.my3::nbsh($row->naim).'</label><br>
+         <input type="hidden" name="hy'.$i.'" value="'.$row->uid.'" />';
+}*/
+?>
+<input type="hidden" id="savei" value="<?=$i1?>" />
+
+<br /><div class="savediv"><input type="submit" value="Сохранить"></div>
+</div>
+</form>

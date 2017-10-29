@@ -1,0 +1,58 @@
+<?
+//my3::inithtmleditor();
+$items=$this->items;
+?>
+<form action="<?=my3::baseurl().my3::nctrl().'/save/id/'.$this->id?>" method="post" style="margin:0;padding:0;"  enctype="multipart/form-data">
+    <h2 align="center">Редактирование плана проверок</h2>
+    <?
+    my3::showerror();
+    ?>
+    <table class="edittable" border="1" cellpadding="3" cellspacing="0">
+        <tr>
+            <td>ИНН</td>
+            <td><input type="text" name="s1" size="50" maxlength="200"
+                       value="<?=my3::nbsh($items->s1)?>" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Полное наименование юридического лица, в отношении которого планируется проведение проверки , его адрес (место нахождения постоянно действующего исполнительного органа), фамилия, имя и отчество индивидуального предпринимателя, место его жительства
+            </td>
+            <td><textarea name="s2" style="width:100%" rows="4"><?=my3::nbsh($items->s2)?></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Предмет проверки
+            </td>
+            <td><textarea name="s3" style="width:100%" rows="4"><?=my3::nbsh($items->s3)?></textarea>
+            </td>
+        <tr>
+            <td>
+                Основание проверки
+            </td>
+            <td><textarea name="s4" style="width:100%" rows="4"><?=my3::nbsh($items->s4)?></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Дата и сроки проведения проверки 
+            </td>
+            <td><textarea name="s5" style="width:100%" rows="4"><?=my3::nbsh($items->s5)?></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>Результаты проверки </td>
+            <td><input type="text" name="s6" size="50" maxlength="200"
+                       value="<?=my3::nbsh($items->s6)?>" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Примечание
+            </td>
+            <td><textarea name="s7" style="width:100%" rows="4"><?=my3::nbsh($items->s7)?></textarea>
+            </td>
+        </tr>
+    </table>
+    <br /><div class="savediv"><input type="submit" value="Сохранить"></div></form>

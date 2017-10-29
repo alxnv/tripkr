@@ -1,0 +1,60 @@
+<?
+
+my3::inithtmleditor();
+
+//echo $this->row->html;
+
+if (!$this->id && !$this->idtree) {
+    echo str_repeat('<br />',10).
+            '<p align="center">Эта запись удалена</p>';
+    exit;
+}
+//my3::inithtmleditor();
+?>
+<?
+//echo $this->row->html;
+$s4=$this->baseUrl();
+echo '<form enctype="multipart/form-data" target="lfr" action="'.$this->baseUrl().'/'.strtolower(my3::nctrl()).'/save/id/'.$this->id.
+        ($this->leftview ? '/leftview/'.my3::nbsh($this->leftview) : '').'" method="post">';
+//echo '<input type="hidden" name="rsid" value="'.$sid2.'">';
+//echo $this->id;
+echo '<h2 align=center>'.($this->id ? '' : 'Добавление новой записи').'
+    </h2>';
+if (!$this->id) echo '<input type="hidden" name="idtree" value="'.$this->idtree.'" />';
+/*include("../spaw2/spaw.inc.php");
+$spaw = new SpawEditor("html", $row->html);
+$spaw->show();*/
+?>
+		<div id="accordion">
+			<div>
+				<h3><a href="#">Страница</a></h3>
+                                <div style="height:450px">
+Заголовок страницы: <input type="text" size="60" name="naim" value="<?=my3::nbsh($this->row->naim)?>" />
+<br /><br />
+Текст:<br />
+<?
+        my3::editorfield('html',$this->row->html,'','300'); 
+?>
+                                </div>
+			</div>
+		</div>
+<script type="text/javascript">
+$(function(){
+
+        // Accordion
+        $("#accordion").accordion({ header: "h3",fillSpace:true });
+
+});
+</script>
+<?
+        /*if ($sid2=='contact') {
+	 $row9=qobj("select html from av_html where sid='contact2'");
+     echo '<br>
+<br>
+Код карты:<br>
+<textarea name="kodd" cols="60" rows="7">'.htmlspecialchars($row9->html).'</textarea><br>';
+	 };*/
+$o4=new My_PageEffects();
+echo $o4->uploaderrormessage('Ошибка загрузки файла');
+	echo '<br /><div class="savediv"><input type="submit" value="Сохранить"></div></form>';
+?>

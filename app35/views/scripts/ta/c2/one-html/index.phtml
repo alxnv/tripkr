@@ -1,0 +1,131 @@
+<?
+// туры
+if (!$this->id && !$this->idtree) {
+    echo str_repeat('<br />',10).
+            '<p align="center">Эта запись удалена</p>';
+    exit;
+}
+my3::inithtmleditor();
+?>
+
+
+<?
+//echo $this->row->html;
+$s4=$this->baseUrl();
+echo '<br /><br /><a href="#faq">Вопросы и ответы к туру</a><br />
+';
+$cnt=0;
+for ($i=0;$i<count($this->arr);$i++) {
+    if (trim($this->arr[$i]->html2)=='') $cnt++;
+};
+if ($cnt>0) echo 'В этом туре есть неотвеченные вопросы<br />';
+echo '
+    <form enctype="multipart/form-data" target="lfr" action="'.$this->baseUrl().'/'.strtolower(my3::nctrl()).'/save/id/'.$this->id.
+        ($this->leftview ? '/leftview/'.my3::nbsh($this->leftview) : '').'" method="post">';
+//echo '<input type="hidden" name="rsid" value="'.$sid2.'">';
+//echo $this->id;
+echo '<h2 align=center>'.($this->id ? '' : 'Добавление новой записи').'
+    </h2>';
+if (!$this->id) echo '<input type="hidden" name="idtree" value="'.$this->idtree.'" />';
+/*include("../spaw2/spaw.inc.php");
+$spaw = new SpawEditor("html", $row->html);
+$spaw->show();*/
+//var_dump($this->view,$this->id);
+/*if ($this->row->idtree==2 && $this->id)
+        echo '<p align="center">Адрес страницы на сайте:
+            <a href="http://'.$_SERVER['SERVER_NAME'].my3::baseurl().'cat/'.$this->id.'" target="_blank">http://'.
+            $_SERVER['SERVER_NAME'].
+            my3::baseurl().'cat/'.$this->id.'</a></p>';*/
+echo 'Название: <input type="text" size="50" name="naim" value="'.my3::nbsh($this->row->naim).'" /><br /><br />';
+echo '<br /><div class="savediv" style="text-align:right"><input type="submit" value="Сохранить"></div>';
+
+echo '<label for="lb5">Признак медтура</label> <input id="lb5" name="ismedtour" type="checkbox"
+    '.($this->row->flags ? ' checked="checked" ' : '').' /><br />';
+echo '<br>Изображение:<br>';
+$img_dir=my3::basepath().'img2/';
+$img_http=my3::baseurl().'img2/';
+$noimg=($this->row->pict=='' || ($szs=@getimagesize($img_dir.$this->row->pict))===false || $szs[0]==0);
+if (!$this->id || $noimg) {
+    echo '<font color=green>Нет изображения</font>';
+} else {
+    echo '<img src="'.$img_http.$this->row->pict.'" '.$szs[3].'>';
+}
+echo '<br />';
+echo 'Добавить/заменить изображение: <input name="userfile[]" type="file"><br>';
+echo 'Максимальный размер изображения: '.ini_get('upload_max_filesize').'б';
+if ($this->id) {
+    echo '<br><input name="img_del1" type="checkbox" id=dd1><label for=dd1>Удаление изображения</label><br>';
+};
+echo '<br />';
+
+
+my3::editorfield('html',$this->row->html,'','600');
+echo '<br /><br />Для ТурАгенств:';
+my3::editorfield('html2',$this->row->html2,'','600');
+echo '<br /><br />Для ТурОператоров:';
+my3::editorfield('html3',$this->row->html3,'','600');
+/*if ($sid2=='contact') {
+	 $row9=qobj("select html from av_html where sid='contact2'");
+     echo '<br>
+<br>
+Код карты:<br>
+<textarea name="kodd" cols="60" rows="7">'.htmlspecialchars($row9->html).'</textarea><br>';
+	 };*/
+$o4=new My_PageEffects();
+echo $o4->uploaderrormessage('Ошибка загрузки файла');
+
+echo '<br /><div class="savediv"><input type="submit" value="Сохранить"></div></form>';
+?>
+
+<a name="faq"></a>
+<script language="JavaScript">
+function delr(id) {
+if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
+ window.location.href='<?=my3::baseurl()?>ta_c2_questions/rdel/id/'+id;
+ };
+};
+function izm(id) {
+window.location.href='<?=my3::baseurl()?>ta_c2_questions/edit/id/'+id;
+};
+function pere(id) {
+pos=document.getElementById('ps'+id).value;
+//alert('<?=my3::baseurl().my3::nctrl()?>/rmove/id='+id+'/pos/'+parseInt(pos));
+window.location.href='<?=my3::baseurl()?>ta_c2_questions/rmove/id/'+id+'/pos/'+parseInt(pos);
+};
+</script>
+<div align="center">
+<?
+//$o4=new My_PageEffects();
+//echo $o4->hidingmessage('gfdhdg');
+//<a href="<?=my3::baseurl()ta_c2_questions/edit/id/0">Добавить спецпредложение</a><br>
+if (count($this->arr)>0) {
+?>
+<p align="center"><b>Вопросы и ответы к туру</b></p>
+<br>
+<table border="1" cellpadding="3" cellspacing="0">
+<tr valign="top">
+<th>№</th><th>Вопрос</th><th>Ответ</th><th>Действия</th>
+</tr>
+<?
+$to=new My_textop();
+//$cnt=$this->lend[1]*$this->lend[3]+1;
+for ($i=0;$i<count($this->arr);$i++) {
+ $row=$this->arr[$i];
+ $uid2=$row->uid;
+ echo '<tr align="left">';
+ echo '<td valign="top">'.$row->ordr.'</td>';
+ echo '<td valign=top>'.nl2br($this->escape($to->mnogot($row->html,500))).'</td>';
+ echo '<td valign=top>'.nl2br($this->escape($to->mnogot($row->html2,500)));
+ echo '</td><td valign=top><input type="button" onclick="javascript:izm('.$uid2.');" value="Изменить"><input type="button" onclick="javascript:delr('.$uid2.');" value="Удалить">';
+ echo '<input class="flatbtn" type="button" onclick="javascript:pere('.$uid2.');" value="Переместить в позицию"> <input type="text" id="ps'.$uid2.'" size=5 value=1>';
+ echo '</td></tr>';
+ //$cnt++;
+}
+?>
+</table>
+<?
+}
+?>
+    <a name="q"></a>
+</div>
+<? my3::printpages($this->lend); ?>

@@ -1,0 +1,36 @@
+<?
+if (!$this->id && !$this->idtree) {
+    echo str_repeat('<br />',10).
+            '<p align="center">Эта запись удалена</p>';
+    exit;
+}
+my3::inithtmleditor();
+
+//echo $this->row->html;
+echo '<form target="lfr" action="'.$this->baseUrl().'/'.my3::nctrl().'/save/id/'.$this->id.
+        ($this->leftview ? '/leftview/'.my3::nbsh($this->leftview) : '').'" method="post">';
+//echo '<input type="hidden" name="rsid" value="'.$sid2.'">';
+//echo $this->id;
+echo '<h2 align=center>'.($this->id ? '' : 'Добавление новой записи').'
+    </h2>';
+if (!$this->id) echo '<input type="hidden" name="idtree" value="'.$this->idtree.'" />';
+/*include("../spaw2/spaw.inc.php");
+$spaw = new SpawEditor("html", $row->html);
+$spaw->show();*/
+//var_dump($this->view,$this->id);
+if ($this->row->idtree==2 && $this->id)
+        echo '<p align="center">Адрес страницы на сайте:
+            <a href="http://'.$_SERVER['SERVER_NAME'].my3::baseurl().'cat/'.$this->id.'" target="_blank">http://'.
+            $_SERVER['SERVER_NAME'].
+            my3::baseurl().'cat/'.$this->id.'</a></p>';
+echo 'Название: <input type="text" size="50" name="naim" value="'.my3::nbsh($this->row->naim).'" /><br /><br />';
+my3::editorfield('html',$this->row->html,'','600');
+/*if ($sid2=='contact') {
+	 $row9=qobj("select html from av_html where sid='contact2'");
+     echo '<br>
+<br>
+Код карты:<br>
+<textarea name="kodd" cols="60" rows="7">'.htmlspecialchars($row9->html).'</textarea><br>';
+	 };*/
+echo '<br /><div class="savediv"><input type="submit" value="Сохранить"></div></form>';
+?>

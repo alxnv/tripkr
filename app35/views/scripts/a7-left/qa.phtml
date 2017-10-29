@@ -1,0 +1,35 @@
+<?php
+/*
+Copyright (C) 2010 Александр Воробьев
+ * показывает дерево из pfx_tree с указанным идентификатором
+ */
+?>
+<?
+if ($this->updaterightsave) {
+?>
+<script type="text/javascript">
+<?
+if ($this->updaterightsave==2) {
+?>
+var oIframe = top.document.getElementById('right').contentWindow.updateerrupload5();
+<?
+} else {
+?>
+var oIframe = top.document.getElementById('right').contentWindow.updatesave5();
+<?
+}
+?>
+</script>
+<?
+};
+?>
+
+<nobr>
+    <a href="<?=my3::baseurl()?>a7-left/index/updright/1">На главную страницу</a><br/><hr />
+    <h4 align="center">Вопросы - ответы</h4>
+<?
+$tr=new My_itdbtree(my3::getdbprefix().'tree');
+$tr->idtree=4;
+$tr->show('ta_qa',my3::curaction(), true);
+?>
+</nobr>

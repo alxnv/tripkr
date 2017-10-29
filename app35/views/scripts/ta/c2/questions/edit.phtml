@@ -1,0 +1,19 @@
+<?
+//my3::inithtmleditor();
+//echo $this->row->html;
+	echo '<form action="'.my3::baseurl().my3::lnctrl().'/save/id/'.$this->id.'" method="post" style="margin:0;padding:0;"  enctype="multipart/form-data">';
+
+?>
+<h2 align="center">Редактирование комментария/вопроса</h2>
+<?
+my3::showerror();
+?>
+<br>Комментарий/вопрос:<br>
+Пользователь <?=my3::nbsh($this->row->naim)?><br />
+<textarea name="html" cols="60" rows="10" style="width:100%"><?php echo htmlspecialchars($this->row->html); ?></textarea><br>
+<br>Ответ:<br>
+<textarea name="html2" cols="60" rows="10" style="width:100%"><?php echo htmlspecialchars($this->row->html2); ?></textarea><br>
+
+<?
+echo '<br /><div class="savediv"><input type="submit" value="Сохранить"></div></form>';
+?>

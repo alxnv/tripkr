@@ -1,0 +1,64 @@
+<script language="JavaScript">
+<?
+if ($this->updleft<>'') {
+?>
+top.frames['lfr'].location.href=top.frames['lfr'].location.href;
+<?
+};
+?>
+function goback() {
+<?php
+if (isset($goind)) {
+?>
+window.location.href='a7-main';
+<?php
+ } else {
+?>
+history.back(1);
+<?php
+ };
+?>
+};
+</script>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<table width=100% height=100%>
+<tr><td align=center>
+<?php
+if (true) { //((isset($_GET['e']))||(isset($adb1))) {
+ echo "<p align='center'>";
+ if (isset($adb1)) {
+  $e=$adb1;
+  $e=str_replace("<br>","@",$e);
+  } else {
+  $e=str_replace("<br>","@",$this->msg);
+  };
+ $e=$this->escape($e);
+ $e=str_replace("'","",$e);
+ $e=str_replace('"',"",$e);
+ $e=str_replace("@","<br>",$e);
+ echo '<font color="green" size="+1">'.$e.'</font>';
+ echo "<br><br><a href='javascript:goback()'>Назад</a>";
+ echo "</p></b>";
+ } else {
+ echo "&nbsp;";
+ };
+?>
+</p>
+</td></tr>
+</table>
+
+<?
+//echo $this->msg;
+?>

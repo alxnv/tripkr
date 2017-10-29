@@ -1,0 +1,19 @@
+<?
+echo '<form action="'.$this->baseUrl().'/a7-settings/save" method="post" style="margin:0;padding:0;">';
+?>
+<h2 align="center">Редактирование настроек сайта</h2>
+<?
+my3::showerror();
+/*
+Количество новостей на главной странице: <input type="text" name="numnews" size="5" maxlength="200" value="<?=htmlspecialchars($this->row->numnews)?>" /><br>
+Количество событий выводимых на главной странице: <input type="text" name="numarticles" size="5" maxlength="200" value="<?=htmlspecialchars($this->row->numarticles)?>" /><br>
+*/
+?>
+Текст спецпредложения:<br>
+<textarea name="spec" cols="60" rows="5"><?=htmlspecialchars($this->row->spec)?></textarea>
+<br><br>
+Адрес ссылки для спецпредложения: <input type="text" name="hrefspec" size="70" maxlength="200" value="<?=htmlspecialchars($this->row->hrefspec)?>" /><br>
+
+<?
+	echo '<br /><div class="savediv"><input type="submit" value="Сохранить"></div></form>';
+?>

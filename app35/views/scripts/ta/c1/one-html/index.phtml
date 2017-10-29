@@ -1,0 +1,63 @@
+<?
+if (!$this->id && !$this->idtree) {
+    echo str_repeat('<br />',10).
+            '<p align="center">Эта запись удалена</p>';
+    exit;
+}
+my3::inithtmleditor();
+?>
+
+
+<?
+//echo $this->row->html;
+$s4=$this->baseUrl();
+echo '<form enctype="multipart/form-data" target="lfr" action="'.$this->baseUrl().'/'.strtolower(my3::nctrl()).'/save/id/'.$this->id.
+        ($this->leftview ? '/leftview/'.my3::nbsh($this->leftview) : '').'" method="post">';
+//echo '<input type="hidden" name="rsid" value="'.$sid2.'">';
+//echo $this->id;
+echo '<h2 align=center>'.($this->id ? '' : 'Добавление новой записи').'
+    </h2>';
+if (!$this->id) echo '<input type="hidden" name="idtree" value="'.$this->idtree.'" />';
+/*include("../spaw2/spaw.inc.php");
+$spaw = new SpawEditor("html", $row->html);
+$spaw->show();*/
+//var_dump($this->view,$this->id);
+/*if ($this->row->idtree==2 && $this->id)
+        echo '<p align="center">Адрес страницы на сайте:
+            <a href="http://'.$_SERVER['SERVER_NAME'].my3::baseurl().'cat/'.$this->id.'" target="_blank">http://'.
+            $_SERVER['SERVER_NAME'].
+            my3::baseurl().'cat/'.$this->id.'</a></p>';*/
+echo 'Название: <input type="text" size="50" name="naim" value="'.my3::nbsh($this->row->naim).'" /><br /><br />';
+echo '<br /><div class="savediv" style="text-align:right"><input type="submit" value="Сохранить"></div>';
+
+echo '<br>Изображение:<br>';
+$img_dir=my3::basepath().'img2/';
+$img_http=my3::baseurl().'img2/';
+$noimg=($this->row->pict=='' || ($szs=@getimagesize($img_dir.$this->row->pict))===false || $szs[0]==0);
+if (!$this->id || $noimg) {
+    echo '<font color=green>Нет изображения</font>';
+} else {
+    echo '<img src="'.$img_http.$this->row->pict.'" '.$szs[3].'>';
+}
+echo '<br />';
+echo 'Добавить/заменить изображение: <input name="userfile[]" type="file"><br>';
+echo 'Максимальный размер изображения: '.ini_get('upload_max_filesize').'б';
+if ($this->id) {
+    echo '<br><input name="img_del1" type="checkbox" id=dd1><label for=dd1>Удаление изображения</label><br>';
+};
+echo '<br />';
+
+my3::editorfield('html',$this->row->html,'','600');
+/*if ($sid2=='contact') {
+	 $row9=qobj("select html from av_html where sid='contact2'");
+     echo '<br>
+<br>
+Код карты:<br>
+<textarea name="kodd" cols="60" rows="7">'.htmlspecialchars($row9->html).'</textarea><br>';
+	 };*/
+
+$o4=new My_PageEffects();
+echo $o4->uploaderrormessage('Ошибка загрузки файла');
+
+echo '<br /><div class="savediv"><input type="submit" value="Сохранить"></div></form>';
+?>

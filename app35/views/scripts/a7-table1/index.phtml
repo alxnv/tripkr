@@ -1,0 +1,46 @@
+<script language="JavaScript">
+function delr(id) {
+if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
+ window.location.href='<?=my3::baseurl().my3::nctrl()?>/rdel/id/'+id;
+ };
+};
+function izm(id) {
+window.location.href='<?=my3::baseurl().my3::nctrl()?>/edit/id/'+id;
+};
+function pere(id) {
+pos=document.getElementById('ps'+id).value;
+//alert('<?=my3::baseurl().my3::nctrl()?>/rmove/id='+id+'/pos/'+parseInt(pos));
+window.location.href='<?=my3::baseurl().my3::nctrl()?>/rmove/id/'+id+'/pos/'+parseInt(pos);
+};
+</script>
+<div align="center">
+<h1 align="center">План проверок</h1>
+<?
+//$o4=new My_PageEffects();
+//echo $o4->hidingmessage('gfdhdg');
+?>
+<a href="<?=my3::baseurl().my3::nctrl()?>/edit/id/0">Добавить запись</a><br>
+<br>
+<table border="1" cellpadding="3" cellspacing="0">
+<tr valign="top">
+<th>№</th><th>ИНН</th><th>Наименование юр.лица</th><th>Действия</th>
+</tr>
+<?
+//$cnt=$this->lend[1]*$this->lend[3]+1;
+for ($i=0;$i<count($this->arr);$i++) {
+ $row=$this->arr[$i];
+ $uid2=$row->uid;
+ $ar2=unserialize($row->s_srz);
+ echo '<tr align="left">';
+ echo '<td valign="top">'.$row->ordr.'</td>';
+ echo '<td valign=top>'.nl2br($this->escape($ar2['s1']));
+ echo '</td><td valign=top>'.nl2br($this->escape($ar2['s2']));
+ echo '</td><td valign=top><input type="button" onclick="javascript:izm('.$uid2.');" value="Изменить"><input type="button" onclick="javascript:delr('.$uid2.');" value="Удалить">';
+ echo '<input class="flatbtn" type="button" onclick="javascript:pere('.$uid2.');" value="Переместить в позицию"> <input type="text" id="ps'.$uid2.'" size=5 value=1>';
+ echo '</td></tr>';
+ //$cnt++;
+}
+?>
+</table>
+</div>
+<? my3::printpages($this->lend); ?>

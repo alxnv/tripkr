@@ -1,0 +1,70 @@
+<?
+my3::inithtmleditor();
+//echo $this->row->html;
+	echo '<form enctype="multipart/form-data" action="'.$this->baseUrl().'/a7-news/save/id/'.$this->id.'" method="post" style="margin:0;padding:0;">';
+
+?>
+<h2 align="center">Редактирование новости</h2>
+<?
+my3::showerror();
+
+echo '<br>Изображение:<br>';
+$img_dir=my3::basepath().'img2/';
+$img_http=my3::baseurl().'img2/';
+$noimg=($this->row->pict=='' || ($szs=@getimagesize($img_dir.$this->row->pict))===false || $szs[0]==0);
+if (!$this->id || $noimg) {
+    echo '<font color=green>Нет изображения</font>';
+} else {
+    echo '<img src="'.$img_http.$this->row->pict.'" '.$szs[3].'>';
+}
+echo '<br />';
+echo 'Добавить/заменить изображение: <input name="userfile[]" type="file"><br>';
+echo 'Максимальный размер изображения: '.ini_get('upload_max_filesize').'б';
+if ($this->id) {
+    echo '<br><input name="img_del1" type="checkbox" id=dd1><label for=dd1>Удаление изображения</label><br>';
+};
+echo '<br />';
+
+?>
+Дата новости (в формате ДД.ММ.ГГГГ): <input type="text" name="data1" size="50" maxlength="200" <?php echo "value='".$this->row->data1."'" ?>><br><br>
+Наименование: <input type="text" name="naim" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->naim)?>" /><br>
+		<div id="accordion">
+			<div>
+				<h3><a href="#">Страница</a></h3>
+                                <div style="height:450px">
+<br>Анонс:<br>
+<textarea name="anons" cols="60" rows="5" style="width:100%"><?php echo htmlspecialchars($this->row->anons); ?></textarea><br>
+<br>Новость:<br>
+<?
+        //echo '<h2 align=center>'.$this->escape($this->row->naim).'</h2>';
+        my3::editorfield('html',$this->row->html,'','350');
+
+?>
+                                </div>
+                        </div>
+
+                        <div>
+				<h3><a href="#">Title,Description,Keywords</a></h3>
+				<div>
+                                    Title: <input type="text" name="title" size="80" style="width:100%"
+                                                  value="<?=my3::nbsh($this->kw->data->title)?>"><br />
+                                    Description: <br />
+                                    <textarea name="description" cols="60" rows="4" style="width:100%"><?=my3::nbsh($this->kw->data->description)?></textarea>
+                                    <br />
+                                    Keywords (через запятую): <input type="text" name="keywords" size="80" style="width:100%"
+                                                  value="<?=my3::nbsh($this->kw->data->keywords)?>"><br />
+                                    * примечание: если не заполнять эти поля, то на сайте будут подставлены значения по умолчанию
+                                </div>
+			</div>
+
+<br /><div class="savediv"><input type="submit" value="Сохранить"></div>
+</div>
+</form>
+<script type="text/javascript">
+$(function(){
+
+        // Accordion
+        $("#accordion").accordion({ header: "h3",fillSpace:true});
+
+});
+</script>

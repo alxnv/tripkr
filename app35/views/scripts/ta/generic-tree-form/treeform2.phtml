@@ -1,0 +1,55 @@
+<?php
+/*
+Copyright (C) 2010 Александр Воробьев
+общая для многих скриптов форма действий с текущей записью
+ * !!! версия без actid
+*/
+?>
+<?
+$o4=new My_PageEffects();
+echo $o4->savemessage('Изменения сохранены');
+?>
+<script type="text/javascript">
+    d=document;
+    function myesc738(s) {
+        n=s.length;
+        s2='';
+        for (i=0;i<n;i++) {
+            c=s.charAt(i);
+            if (c=='?') c='¦'
+            else if (c=='&') c='¤'
+            else if (c=='#') c='v';
+            else if (c=='=') c='·';
+            s2=s2+c;
+        };
+        return s2;
+    };
+    function rpp738(id) {
+        s=prompt('Введите название нового подраздела:','');
+        if (s!='') {
+            top.frames['lfr'].location.href='<?=my3::baseurl()?>ta_generic-tree-form2/makesub/id/'+id+'/leftview/<?=my3::nbsh($this->leftview)?>/zgl/'+myesc738(s);
+        };
+    };
+    function delr738(id) {
+        if (confirm('Вы уверены, что хотите удалить этот элемент \nсо всем его содержимым?')) {
+            location.href='<?=my3::baseurl().strtolower(my3::nctrl())?>/delete/id/'+id;
+        };
+    };
+    function pere738(id) {
+        pos=d.getElementById('ps738').value;
+        top.frames['lfr'].location.href='<?=my3::baseurl()?>ta_generic-tree-form2/move/id/'+id+'/pos/'+parseInt(pos)+'/leftview/<?=my3::nbsh($this->leftview)?>';
+    };
+
+</script>
+<?php
+//echo $this->id;
+$uid2=$this->id;
+/*echo '<form action="'.my3::baseurl().'ta_generic-tree-form/save/id/'.$uid2.'" method="post">';
+echo 'Имя: <input type="text" size="50" name="naim" value="'.my3::nbsh($this->naim).'" />
+    <input type="submit" value="Изменить"><br />*/
+if ($this->candelete) echo '    <input type="button" onclick="javascript:delr738('.$uid2.');" value="Удалить"> ';
+if ($this->canrename) echo '<input type="button" onclick="javascript:pere738('.$uid2.');" value="Переместить в позицию">
+    <input type="text" id="ps738" size="5" value="1">';
+if  ($this->canmakechild) echo ' <input type="button" onclick="javascript:rpp738('.$uid2.');" value="Создать подраздел">';
+//echo '</form>';
+?>
