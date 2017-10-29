@@ -1,12 +1,12 @@
 <?
-my3::inithtmleditor();
+my7::inithtmleditor();
 //echo $this->row->html;
 	echo '<form action="'.$this->baseUrl().'/a7-news/save/id/'.$this->id.'" method="post" style="margin:0;padding:0;">';
 
 ?>
 <h2 align="center">Редактирование новости</h2>
 <?
-my3::showerror();
+my7::showerror();
 ?>
 Дата новости (в формате ДД.ММ.ГГГГ): <input type="text" name="data1" size="50" maxlength="200" <?php echo "value='".$this->row->data1."'" ?>><br><br>
 Наименование: <input type="text" name="naim" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->naim)?>" /><br>
@@ -19,7 +19,7 @@ my3::showerror();
 <br>Новость:<br>
 <?
         //echo '<h2 align=center>'.$this->escape($this->row->naim).'</h2>';
-        my3::editorfield('html',$this->row->html,'','350');
+        my7::editorfield('html',$this->row->html,'','350');
 
 ?>
                                 </div>
@@ -29,12 +29,12 @@ my3::showerror();
 				<h3><a href="#">Title,Description,Keywords</a></h3>
 				<div>
                                     Title: <input type="text" name="title" size="80" style="width:100%"
-                                                  value="<?=my3::nbsh($this->kw->data->title)?>"><br />
+                                                  value="<?=my7::nbsh($this->kw->data->title)?>"><br />
                                     Description: <br />
-                                    <textarea name="description" cols="60" rows="4" style="width:100%"><?=my3::nbsh($this->kw->data->description)?></textarea>
+                                    <textarea name="description" cols="60" rows="4" style="width:100%"><?=my7::nbsh($this->kw->data->description)?></textarea>
                                     <br />
                                     Keywords (через запятую): <input type="text" name="keywords" size="80" style="width:100%"
-                                                  value="<?=my3::nbsh($this->kw->data->keywords)?>"><br />
+                                                  value="<?=my7::nbsh($this->kw->data->keywords)?>"><br />
                                     * примечание: если не заполнять эти поля, то на сайте будут подставлены значения по умолчанию
                                 </div>
 			</div>

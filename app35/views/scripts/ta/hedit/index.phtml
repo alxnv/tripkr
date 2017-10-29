@@ -4,11 +4,11 @@ if (!$this->id && !$this->idtree) {
             '<p align="center">Эта запись удалена</p>';
     exit;
 }
-my3::inithtmleditor();
+my7::inithtmleditor();
 
 //echo $this->row->html;
-echo '<form target="lfr" action="'.$this->baseUrl().'/'.my3::nctrl().'/save/id/'.$this->id.
-        ($this->leftview ? '/leftview/'.my3::nbsh($this->leftview) : '').'" method="post">';
+echo '<form target="lfr" action="'.$this->baseUrl().'/'.my7::nctrl().'/save/id/'.$this->id.
+        ($this->leftview ? '/leftview/'.my7::nbsh($this->leftview) : '').'" method="post">';
 //echo '<input type="hidden" name="rsid" value="'.$sid2.'">';
 //echo $this->id;
 echo '<h2 align=center>'.($this->id ? '' : 'Добавление новой записи').'
@@ -20,11 +20,11 @@ $spaw->show();*/
 //var_dump($this->view,$this->id);
 if ($this->row->idtree==2 && $this->id)
         echo '<p align="center">Адрес страницы на сайте:
-            <a href="http://'.$_SERVER['SERVER_NAME'].my3::baseurl().'cat/'.$this->id.'" target="_blank">http://'.
+            <a href="http://'.$_SERVER['SERVER_NAME'].my7::baseurl().'cat/'.$this->id.'" target="_blank">http://'.
             $_SERVER['SERVER_NAME'].
-            my3::baseurl().'cat/'.$this->id.'</a></p>';
-echo 'Название: <input type="text" size="50" name="naim" value="'.my3::nbsh($this->row->naim).'" /><br /><br />';
-my3::editorfield('html',$this->row->html,'','600');
+            my7::baseurl().'cat/'.$this->id.'</a></p>';
+echo 'Название: <input type="text" size="50" name="naim" value="'.my7::nbsh($this->row->naim).'" /><br /><br />';
+my7::editorfield('html',$this->row->html,'','600');
 /*if ($sid2=='contact') {
 	 $row9=qobj("select html from av_html where sid='contact2'");
      echo '<br>

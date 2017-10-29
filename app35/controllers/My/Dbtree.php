@@ -19,16 +19,16 @@ class My_Dbtree {
         // если не передано $topid, то оно запрашивается из БД
         // $depth определяет сколько уровней вложенности удалять вместе с этой записью
         //  если==0, то одну эту запись
-        my3::qdirect("lock tables $this->tbl write");
+        my7::qdirect("lock tables $this->tbl write");
         if (is_null($topid)) {
-            $row=my3::qobj("select topid,ordr from $this->tbl where uid=$id");
+            $row=my7::qobj("select topid,ordr from $this->tbl where uid=$id");
             if ($row===null) return;
             $topid=$row->topid;
             $ordr=$row->ordr;
         }
-        my3::db()->delete($this->tbl,"uid=$id");
-        $arr = my3::qlist("select uid from $this->tbl where topid=$topid and ordr>$ordr order by ordr");
-        //my3::qdirect("update $this->tbl set ordr=ordr-1 where");
+        my7::db()->delete($this->tbl,"uid=$id");
+        $arr = my7::qlist("select uid from $this->tbl where topid=$topid and ordr>$ordr order by ordr");
+        //my7::qdirect("update $this->tbl set ordr=ordr-1 where");
         $b=0;
         $s='';
         for ($i=0;$i<count($arr);$i++) {
@@ -36,8 +36,8 @@ class My_Dbtree {
             $s.=$arr[$i]->uid;
             $b=1;
         }
-        if ($s<>'') my3::qdirect("update $this->tbl set ordr=ordr-1 where uid in ($s)");
-        my3::qdirect('unlock tables');
+        if ($s<>'') my7::qdirect("update $this->tbl set ordr=ordr-1 where uid in ($s)");
+        my7::qdirect('unlock tables');
 
 
     }
@@ -45,25 +45,25 @@ class My_Dbtree {
     function append($topid,$arr) {
         // добавляет запись в конец списка дочерних объектов $topid
         // вычисляет ordr
-        $db=my3::db();
-        my3::qdirect("lock tables $this->tbl write");
-        $row=my3::qobj("select max(ordr) as mo from $this->tbl where topid=$topid");
+        $db=my7::db();
+        my7::qdirect("lock tables $this->tbl write");
+        $row=my7::qobj("select max(ordr) as mo from $this->tbl where topid=$topid");
         if ($row===false) $row=(object)array('mo'=>0);
         $arr['topid']=$topid;
         $arr['ordr']=$row->mo+1;
         $db->insert($this->tbl,$arr);
-        my3::qdirect("unlock tables");
+        my7::qdirect("unlock tables");
     }
 
     function move($id,$pos2) {
         // перемещает запись внутри topid
-        $row=my3::qobj("select topid,ordr from $this->tbl where uid=$id");
+        $row=my7::qobj("select topid,ordr from $this->tbl where uid=$id");
         if ($row!==false) {
             if ($pos2<1) $pos2=1;
-            $db=my3::db();
+            $db=my7::db();
             $id1=$row->ordr;
-            my3::qdirect("lock tables $this->tbl write");
-            $row2=my3::qobj("select max(ordr) as mo from $this->tbl where topid=$row->topid");
+            my7::qdirect("lock tables $this->tbl write");
+            $row2=my7::qobj("select max(ordr) as mo from $this->tbl where topid=$row->topid");
             $mxx1=$row2->mo;
 
             if ($mxx1===false) {
@@ -88,7 +88,7 @@ class My_Dbtree {
             };
 
             //$arr2=array();
-            $arr = my3::qlist("select uid from $this->tbl where topid=$row->topid and ordr>=$mn1 and ordr<=$mx1 order by ordr".$dir1);
+            $arr = my7::qlist("select uid from $this->tbl where topid=$row->topid and ordr>=$mn1 and ordr<=$mx1 order by ordr".$dir1);
 
             $b=0;
             $s='';
@@ -97,11 +97,11 @@ class My_Dbtree {
                 $s.=$arr[$i]->uid;
                 $b=1;
             }
-            if ($s<>'') my3::qdirect("update $this->tbl set ordr=ordr $sg1 where uid in ($s)");
+            if ($s<>'') my7::qdirect("update $this->tbl set ordr=ordr $sg1 where uid in ($s)");
 
             $db->update($this->tbl,array('ordr'=>$pos2),"uid=$id");
             //update $ob4->tbl set ordr=$pos2 where uid=$uid2");
-            my3::qdirect('unlock tables');
+            my7::qdirect('unlock tables');
         }
     }
 }

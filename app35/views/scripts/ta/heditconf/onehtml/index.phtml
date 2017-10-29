@@ -1,6 +1,6 @@
 <?
 
-my3::inithtmleditor();
+my7::inithtmleditor();
 
 //echo $this->row->html;
 
@@ -9,13 +9,13 @@ if (!$this->id && !$this->idtree) {
             '<p align="center">Эта запись удалена</p>';
     exit;
 }
-//my3::inithtmleditor();
+//my7::inithtmleditor();
 ?>
 <?
 //echo $this->row->html;
 $s4=$this->baseUrl();
-echo '<form enctype="multipart/form-data" target="lfr" action="'.$this->baseUrl().'/'.strtolower(my3::nctrl()).'/save/id/'.$this->id.
-        ($this->leftview ? '/leftview/'.my3::nbsh($this->leftview) : '').'" method="post">';
+echo '<form enctype="multipart/form-data" target="lfr" action="'.$this->baseUrl().'/'.strtolower(my7::nctrl()).'/save/id/'.$this->id.
+        ($this->leftview ? '/leftview/'.my7::nbsh($this->leftview) : '').'" method="post">';
 //echo '<input type="hidden" name="rsid" value="'.$sid2.'">';
 //echo $this->id;
 echo '<h2 align=center>'.($this->id ? '' : 'Добавление новой записи').'
@@ -29,11 +29,11 @@ $spaw->show();*/
 			<div>
 				<h3><a href="#">Страница</a></h3>
                                 <div style="height:450px">
-Заголовок страницы: <input type="text" size="60" name="naim" value="<?=my3::nbsh($this->row->naim)?>" />
+Заголовок страницы: <input type="text" size="60" name="naim" value="<?=my7::nbsh($this->row->naim)?>" />
 <br /><br />
 Текст:<br />
 <?
-        my3::editorfield('html',$this->row->html,'','300'); 
+        my7::editorfield('html',$this->row->html,'','300'); 
 ?>
                                 </div>
 			</div>

@@ -10,7 +10,7 @@ class My_textop {
     }
     
     function mnogot($s,$n) {
-        $bp=my3::basePath();
+        $bp=my7::basePath();
         require_once $bp.'/utf8/utf8.php';
         require_once $bp.'/utf8/utils/unicode.php';
         require_once $bp.'/utf8/utils/specials.php';

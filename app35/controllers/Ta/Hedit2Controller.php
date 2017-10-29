@@ -31,11 +31,11 @@ class Ta_Hedit2Controller extends My_Ta_HEdit2CommonController {
         $id = intval($this->_getParam('id', 0));
         $this->view->idtree=intval($this->_getParam('idtree', 0));
         $leftview = $this->_getParam('lv', '');
-        /*my3::log('r',$leftview);
-        my3::log('r2',$id);
-        my3::log('r3',$this->view->idtree);*/
-        if (!$id && (!$this->view->idtree || $leftview=='')) my3::amessage('Не все параметры указаны');
-        $row=$id ? my3::qobj("select b.naim,b.idtree,b.actid,a.* from $this->treetbl b
+        /*my7::log('r',$leftview);
+        my7::log('r2',$id);
+        my7::log('r3',$this->view->idtree);*/
+        if (!$id && (!$this->view->idtree || $leftview=='')) my7::amessage('Не все параметры указаны');
+        $row=$id ? my7::qobj("select b.naim,b.idtree,b.actid,a.* from $this->treetbl b
                 left join $this->tbl a on b.uid=a.uid
                 where b.uid=$id") : false;
         $this->view->id=$row ? $id : 0;
@@ -50,7 +50,7 @@ class Ta_Hedit2Controller extends My_Ta_HEdit2CommonController {
         }
         
         $cname = $this->getControllerNameByFpnum($fpnum3);
-        if ($cname=='') my3::amessage('Ошибка настройки 3');
+        if ($cname=='') my7::amessage('Ошибка настройки 3');
         $this->_forward('index', $cname);
         }
 }

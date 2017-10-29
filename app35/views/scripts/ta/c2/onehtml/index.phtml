@@ -5,7 +5,7 @@ if (!$this->id && !$this->idtree) {
             '<p align="center">Эта запись удалена</p>';
     exit;
 }
-my3::inithtmleditor();
+my7::inithtmleditor();
 ?>
 
 
@@ -13,8 +13,8 @@ my3::inithtmleditor();
 //echo $this->row->html;
 $s4=$this->baseUrl();
 echo '
-    <form enctype="multipart/form-data" target="lfr" action="'.$this->baseUrl().'/'.strtolower(my3::nctrl()).'/save/id/'.$this->id.
-        ($this->leftview ? '/leftview/'.my3::nbsh($this->leftview) : '').'" method="post">';
+    <form enctype="multipart/form-data" target="lfr" action="'.$this->baseUrl().'/'.strtolower(my7::nctrl()).'/save/id/'.$this->id.
+        ($this->leftview ? '/leftview/'.my7::nbsh($this->leftview) : '').'" method="post">';
 //echo '<input type="hidden" name="rsid" value="'.$sid2.'">';
 //echo $this->id;
 echo '<h2 align=center>'.($this->id ? '' : 'Добавление новой записи').'
@@ -26,10 +26,10 @@ $spaw->show();*/
 //var_dump($this->view,$this->id);
 /*if ($this->row->idtree==2 && $this->id)
         echo '<p align="center">Адрес страницы на сайте:
-            <a href="http://'.$_SERVER['SERVER_NAME'].my3::baseurl().'cat/'.$this->id.'" target="_blank">http://'.
+            <a href="http://'.$_SERVER['SERVER_NAME'].my7::baseurl().'cat/'.$this->id.'" target="_blank">http://'.
             $_SERVER['SERVER_NAME'].
-            my3::baseurl().'cat/'.$this->id.'</a></p>';*/
-echo 'Название: <input type="text" size="100" name="naim" value="'.my3::nbsh($this->row->naim).'" /><br /><br />';
+            my7::baseurl().'cat/'.$this->id.'</a></p>';*/
+echo 'Название: <input type="text" size="100" name="naim" value="'.my7::nbsh($this->row->naim).'" /><br /><br />';
 //echo '<br /><div class="savediv" style="text-align:right"><input type="submit" value="Сохранить"></div>';
 
 echo '<label for="lb5">Признак медтура</label> <input id="lb5" name="ismedtour" type="checkbox"
@@ -42,7 +42,7 @@ echo '<label for="lb5">Признак медтура</label> <input id="lb5" nam
                                 <input type="checkbox" id="newtour" name="newtour" <?=($this->row->newtour ? 
         'checked="checked"' : '')?> /> <label for="newtour">Признак нового тура</label>
 <?
-my3::editorfield('html',$this->row->html,'','350');
+my7::editorfield('html',$this->row->html,'','350');
 ?>
                                 </div>
                         </div>
@@ -51,8 +51,8 @@ my3::editorfield('html',$this->row->html,'','350');
                                 <div>
 <?
 echo '<br>Изображение:<br>';
-$img_dir=my3::basepath().'img2/';
-$img_http=my3::baseurl().'img2/';
+$img_dir=my7::basepath().'img2/';
+$img_http=my7::baseurl().'img2/';
 $noimg=($this->row->pict=='' || ($szs=@getimagesize($img_dir.$this->row->pict))===false || $szs[0]==0);
 if (!$this->id || $noimg) {
     echo '<font color=green>Нет изображения</font>';
@@ -85,23 +85,23 @@ if ($cnt>0) echo ' (есть неотвеченные)';
 <script language="JavaScript">
 function delr(id) {
 if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
- window.location.href='<?=my3::baseurl()?>ta_c2_questions/rdel/id/'+id;
+ window.location.href='<?=my7::baseurl()?>ta_c2_questions/rdel/id/'+id;
  };
 };
 function izm(id) {
-window.location.href='<?=my3::baseurl()?>ta_c2_questions/edit/id/'+id;
+window.location.href='<?=my7::baseurl()?>ta_c2_questions/edit/id/'+id;
 };
 function pere(id) {
 pos=document.getElementById('ps'+id).value;
-//alert('<?=my3::baseurl().my3::nctrl()?>/rmove/id='+id+'/pos/'+parseInt(pos));
-window.location.href='<?=my3::baseurl()?>ta_c2_questions/rmove/id/'+id+'/pos/'+parseInt(pos);
+//alert('<?=my7::baseurl().my7::nctrl()?>/rmove/id='+id+'/pos/'+parseInt(pos));
+window.location.href='<?=my7::baseurl()?>ta_c2_questions/rmove/id/'+id+'/pos/'+parseInt(pos);
 };
 </script>
 <div align="center">
 <?
 //$o4=new My_PageEffects();
 //echo $o4->hidingmessage('gfdhdg');
-//<a href="<?=my3::baseurl()ta_c2_questions/edit/id/0">Добавить спецпредложение</a><br>
+//<a href="<?=my7::baseurl()ta_c2_questions/edit/id/0">Добавить спецпредложение</a><br>
 if (count($this->arr)>0) {
 ?>
 <p align="center"><b>Вопросы и ответы к туру</b></p>
@@ -131,19 +131,19 @@ for ($i=0;$i<count($this->arr);$i++) {
 }
 ?>
 </div>
-<? my3::printpages($this->lend); ?>
+<? my7::printpages($this->lend); ?>
                                 </div>
                         </div>
 			<div>
 				<h3><a href="#">Title,Description,Keywords</a></h3>
 				<div>
                                     Title: <input type="text" name="title" size="80" style="width:100%"
-                                                  value="<?=my3::nbsh($this->kw->data->title)?>"><br />
+                                                  value="<?=my7::nbsh($this->kw->data->title)?>"><br />
                                     Description: <br />
-                                    <textarea name="description" cols="60" rows="4" style="width:100%"><?=my3::nbsh($this->kw->data->description)?></textarea>
+                                    <textarea name="description" cols="60" rows="4" style="width:100%"><?=my7::nbsh($this->kw->data->description)?></textarea>
                                     <br />
                                     Keywords (через запятую): <input type="text" name="keywords" size="80" style="width:100%"
-                                                  value="<?=my3::nbsh($this->kw->data->keywords)?>"><br />
+                                                  value="<?=my7::nbsh($this->kw->data->keywords)?>"><br />
                                     * примечание: если не заполнять эти поля, то на сайте будут подставлены значения по умолчанию
                                 </div>
 			</div>
@@ -153,7 +153,7 @@ for ($i=0;$i<count($this->arr);$i++) {
                                 <input type="checkbox" id="newtourta" name="newtourta" <?=($this->row->newtourta ? 
         'checked="checked"' : '')?> /> <label for="newtourta">Признак нового тура</label>
 <?
-my3::editorfield('html2',$this->row->html2,'','350');
+my7::editorfield('html2',$this->row->html2,'','350');
 ?>
                                 </div>
                         </div>
@@ -161,12 +161,12 @@ my3::editorfield('html2',$this->row->html2,'','350');
 				<h3><a href="#">Title,Description,Keywords для страницы Турагенств</a></h3>
 				<div>
                                     Title: <input type="text" name="title2" size="80" style="width:100%"
-                                                  value="<?=my3::nbsh($this->kwagents->data->title)?>"><br />
+                                                  value="<?=my7::nbsh($this->kwagents->data->title)?>"><br />
                                     Description: <br />
-                                    <textarea name="description2" cols="60" rows="4" style="width:100%"><?=my3::nbsh($this->kwagents->data->description)?></textarea>
+                                    <textarea name="description2" cols="60" rows="4" style="width:100%"><?=my7::nbsh($this->kwagents->data->description)?></textarea>
                                     <br />
                                     Keywords (через запятую): <input type="text" name="keywords2" size="80" style="width:100%"
-                                                  value="<?=my3::nbsh($this->kwagents->data->keywords)?>"><br />
+                                                  value="<?=my7::nbsh($this->kwagents->data->keywords)?>"><br />
                                     * примечание: если не заполнять эти поля, то на сайте будут подставлены значения по умолчанию
                                 </div>
 			</div>
@@ -174,7 +174,7 @@ my3::editorfield('html2',$this->row->html2,'','350');
 				<h3><a href="#">Страница для ТурОператоров</a></h3>
                                 <div>
 <?
-my3::editorfield('html3',$this->row->html3,'','350');
+my7::editorfield('html3',$this->row->html3,'','350');
 ?>
                                 </div>
                         </div>
@@ -182,12 +182,12 @@ my3::editorfield('html3',$this->row->html3,'','350');
 				<h3><a href="#">Title,Description,Keywords для страницы ТурОператоров</a></h3>
 				<div>
                                     Title: <input type="text" name="title3" size="80" style="width:100%"
-                                                  value="<?=my3::nbsh($this->kwoper->data->title)?>"><br />
+                                                  value="<?=my7::nbsh($this->kwoper->data->title)?>"><br />
                                     Description: <br />
-                                    <textarea name="description3" cols="60" rows="4" style="width:100%"><?=my3::nbsh($this->kwoper->data->description)?></textarea>
+                                    <textarea name="description3" cols="60" rows="4" style="width:100%"><?=my7::nbsh($this->kwoper->data->description)?></textarea>
                                     <br />
                                     Keywords (через запятую): <input type="text" name="keywords3" size="80" style="width:100%"
-                                                  value="<?=my3::nbsh($this->kwoper->data->keywords)?>"><br />
+                                                  value="<?=my7::nbsh($this->kwoper->data->keywords)?>"><br />
                                     * примечание: если не заполнять эти поля, то на сайте будут подставлены значения по умолчанию
                                 </div>
 			</div>

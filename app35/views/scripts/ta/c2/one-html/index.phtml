@@ -5,7 +5,7 @@ if (!$this->id && !$this->idtree) {
             '<p align="center">Эта запись удалена</p>';
     exit;
 }
-my3::inithtmleditor();
+my7::inithtmleditor();
 ?>
 
 
@@ -20,8 +20,8 @@ for ($i=0;$i<count($this->arr);$i++) {
 };
 if ($cnt>0) echo 'В этом туре есть неотвеченные вопросы<br />';
 echo '
-    <form enctype="multipart/form-data" target="lfr" action="'.$this->baseUrl().'/'.strtolower(my3::nctrl()).'/save/id/'.$this->id.
-        ($this->leftview ? '/leftview/'.my3::nbsh($this->leftview) : '').'" method="post">';
+    <form enctype="multipart/form-data" target="lfr" action="'.$this->baseUrl().'/'.strtolower(my7::nctrl()).'/save/id/'.$this->id.
+        ($this->leftview ? '/leftview/'.my7::nbsh($this->leftview) : '').'" method="post">';
 //echo '<input type="hidden" name="rsid" value="'.$sid2.'">';
 //echo $this->id;
 echo '<h2 align=center>'.($this->id ? '' : 'Добавление новой записи').'
@@ -33,17 +33,17 @@ $spaw->show();*/
 //var_dump($this->view,$this->id);
 /*if ($this->row->idtree==2 && $this->id)
         echo '<p align="center">Адрес страницы на сайте:
-            <a href="http://'.$_SERVER['SERVER_NAME'].my3::baseurl().'cat/'.$this->id.'" target="_blank">http://'.
+            <a href="http://'.$_SERVER['SERVER_NAME'].my7::baseurl().'cat/'.$this->id.'" target="_blank">http://'.
             $_SERVER['SERVER_NAME'].
-            my3::baseurl().'cat/'.$this->id.'</a></p>';*/
-echo 'Название: <input type="text" size="50" name="naim" value="'.my3::nbsh($this->row->naim).'" /><br /><br />';
+            my7::baseurl().'cat/'.$this->id.'</a></p>';*/
+echo 'Название: <input type="text" size="50" name="naim" value="'.my7::nbsh($this->row->naim).'" /><br /><br />';
 echo '<br /><div class="savediv" style="text-align:right"><input type="submit" value="Сохранить"></div>';
 
 echo '<label for="lb5">Признак медтура</label> <input id="lb5" name="ismedtour" type="checkbox"
     '.($this->row->flags ? ' checked="checked" ' : '').' /><br />';
 echo '<br>Изображение:<br>';
-$img_dir=my3::basepath().'img2/';
-$img_http=my3::baseurl().'img2/';
+$img_dir=my7::basepath().'img2/';
+$img_http=my7::baseurl().'img2/';
 $noimg=($this->row->pict=='' || ($szs=@getimagesize($img_dir.$this->row->pict))===false || $szs[0]==0);
 if (!$this->id || $noimg) {
     echo '<font color=green>Нет изображения</font>';
@@ -59,11 +59,11 @@ if ($this->id) {
 echo '<br />';
 
 
-my3::editorfield('html',$this->row->html,'','600');
+my7::editorfield('html',$this->row->html,'','600');
 echo '<br /><br />Для ТурАгенств:';
-my3::editorfield('html2',$this->row->html2,'','600');
+my7::editorfield('html2',$this->row->html2,'','600');
 echo '<br /><br />Для ТурОператоров:';
-my3::editorfield('html3',$this->row->html3,'','600');
+my7::editorfield('html3',$this->row->html3,'','600');
 /*if ($sid2=='contact') {
 	 $row9=qobj("select html from av_html where sid='contact2'");
      echo '<br>
@@ -81,23 +81,23 @@ echo '<br /><div class="savediv"><input type="submit" value="Сохранить"
 <script language="JavaScript">
 function delr(id) {
 if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
- window.location.href='<?=my3::baseurl()?>ta_c2_questions/rdel/id/'+id;
+ window.location.href='<?=my7::baseurl()?>ta_c2_questions/rdel/id/'+id;
  };
 };
 function izm(id) {
-window.location.href='<?=my3::baseurl()?>ta_c2_questions/edit/id/'+id;
+window.location.href='<?=my7::baseurl()?>ta_c2_questions/edit/id/'+id;
 };
 function pere(id) {
 pos=document.getElementById('ps'+id).value;
-//alert('<?=my3::baseurl().my3::nctrl()?>/rmove/id='+id+'/pos/'+parseInt(pos));
-window.location.href='<?=my3::baseurl()?>ta_c2_questions/rmove/id/'+id+'/pos/'+parseInt(pos);
+//alert('<?=my7::baseurl().my7::nctrl()?>/rmove/id='+id+'/pos/'+parseInt(pos));
+window.location.href='<?=my7::baseurl()?>ta_c2_questions/rmove/id/'+id+'/pos/'+parseInt(pos);
 };
 </script>
 <div align="center">
 <?
 //$o4=new My_PageEffects();
 //echo $o4->hidingmessage('gfdhdg');
-//<a href="<?=my3::baseurl()ta_c2_questions/edit/id/0">Добавить спецпредложение</a><br>
+//<a href="<?=my7::baseurl()ta_c2_questions/edit/id/0">Добавить спецпредложение</a><br>
 if (count($this->arr)>0) {
 ?>
 <p align="center"><b>Вопросы и ответы к туру</b></p>
@@ -128,4 +128,4 @@ for ($i=0;$i<count($this->arr);$i++) {
 ?>
     <a name="q"></a>
 </div>
-<? my3::printpages($this->lend); ?>
+<? my7::printpages($this->lend); ?>

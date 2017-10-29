@@ -13,7 +13,7 @@ if (APPLICATION_ENV=='production') $path593=dirname(__FILE__);
 //echo APPLICATION_ENV.' '.$path593.' '.dirname(__FILE__);
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', APPLICATION_ENV=='production' ? $path593.'/app35' : 
-	(COMPLOC=='dacha' ? 'c:\xampp\zend\1-tripkr\application' : 'c:\Users\User\1-tripkr\application'));
+	(COMPLOC=='dacha' ? 'c:\xampp\htdocs\1-tripkr\app35' : 'c:\xampp\htdocs\1-tripkr\app35'));
 unset($arr,$s8);
 
 	
@@ -34,7 +34,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
 )));
 unset($path593);
 require_once 'Zend/Application.php';
-require_once APPLICATION_PATH.'/userobj/my3.php';
+require_once APPLICATION_PATH.'/userobj/my7.php';
 $application = new Zend_Application(
     APPLICATION_ENV,
     APPLICATION_PATH . '/configs/application.ini'

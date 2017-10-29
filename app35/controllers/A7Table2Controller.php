@@ -12,11 +12,11 @@ class A7Table2Controller extends Zend_Controller_Action {
 
     public function init() {
         /* Initialize action controller here */
-        my3::checkadm();
+        my7::checkadm();
         $this->cnt=10; // кол-во записей на страницу
         $this->sess='page859';
-        $this->tbl=my3::getdbprefix().'tabl';
-        //$this->imgdir=my3::basepath().'img2/';
+        $this->tbl=my7::getdbprefix().'tabl';
+        //$this->imgdir=my7::basepath().'img2/';
         $this->topid=1;
         $this->nflds=11;
     }
@@ -27,17 +27,17 @@ class A7Table2Controller extends Zend_Controller_Action {
         $_SESSION[$this->sess]=intval($pg1);
 
         $page=$_SESSION[$this->sess];
-        $row = my3::qobj("SELECT count(*) as cnt from $this->tbl where topid=$this->topid");
+        $row = my7::qobj("SELECT count(*) as cnt from $this->tbl where topid=$this->topid");
         $nrows=$row->cnt;
         $page++;
         do {
             $page--;
             $lm=$page*$this->cnt;
-            $this->view->arr=my3::qlist("SELECT * FROM $this->tbl where topid=$this->topid order by ordr limit $lm,$this->cnt");
+            $this->view->arr=my7::qlist("SELECT * FROM $this->tbl where topid=$this->topid order by ordr limit $lm,$this->cnt");
             $nrowspage=count($this->view->arr);
         } while (($nrowspage==0) && ($page>0));
 
-        $this->view->lend=array($nrows,$page,$nrowspage,$this->cnt,my3::nctrl().'/index/page/');
+        $this->view->lend=array($nrows,$page,$nrowspage,$this->cnt,my7::nctrl().'/index/page/');
         // параметры paginator
         $_SESSION[$this->sess]=$page;
 
@@ -48,7 +48,7 @@ class A7Table2Controller extends Zend_Controller_Action {
         // редактируем одну запись новости
         $id = intval($this->_getParam('id', 0));
         $this->view->id=$id;
-        $this->view->row=my3::qobj("select * from $this->tbl where uid=$id");
+        $this->view->row=my7::qobj("select * from $this->tbl where uid=$id");
         if ($this->view->row===false) {
             $this->view->row=(object)array('uid'=>0,'naim'=>'',
                             'pict'=>'','html'=>'','anons'=>'');
@@ -73,7 +73,7 @@ class A7Table2Controller extends Zend_Controller_Action {
         $id = intval($this->_getParam('id', 0));
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
-            $db=my3::db();
+            $db=my7::db();
             $s3='';
             $ao=new My_arrop();
             $ar3=$ao->nwithpfx('s',$this->nflds);
@@ -89,7 +89,7 @@ class A7Table2Controller extends Zend_Controller_Action {
                 $dbt->append($this->topid,$arr);
 
             }
-            my3::goUrl(my3::nctrl());
+            my7::goUrl(my7::nctrl());
         };
     }
 
@@ -101,22 +101,22 @@ class A7Table2Controller extends Zend_Controller_Action {
             $dbt=new My_Dbtree($this->tbl);
             $dbt->move($id,$pos);
         }
-        my3::goUrl(my3::nctrl());
+        my7::goUrl(my7::nctrl());
     }
 
     public function rdelAction() {
         // удаляем одну новость
         $id = intval($this->_getParam('id', 0));
         if ($id) {
-            $row=my3::qobj("select topid,ordr from $this->tbl where uid=$id");
+            $row=my7::qobj("select topid,ordr from $this->tbl where uid=$id");
             if ($row!==false) {
                 //@unlink($this->imgdir.$row->pict);
-                //my3::db()->delete($this->tbl,"uid=$id");
+                //my7::db()->delete($this->tbl,"uid=$id");
                 $dbt=new My_Dbtree($this->tbl);
                 $dbt->delete($id,0,$row->topid,$row->ordr);
             }
         }
-        my3::goUrl(my3::nctrl());
+        my7::goUrl(my7::nctrl());
     }
 
 

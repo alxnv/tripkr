@@ -17,7 +17,7 @@ class My_A7ExController extends Zend_Controller_Action
     public function init()
     {
         /* Initialize action controller here */
-        //if (my3::notadmin()) $this->_redirect('tools/helpers/noframe.htm',array('prependBase'=>1));
+        //if (my7::notadmin()) $this->_redirect('tools/helpers/noframe.htm',array('prependBase'=>1));
 
     }
 

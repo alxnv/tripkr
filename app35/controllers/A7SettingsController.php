@@ -9,14 +9,14 @@ class A7SettingsController extends Zend_Controller_Action
     public function init()
     {
         /* Initialize action controller here */
-        my3::checkadm();
-        $this->tbl=my3::getdbprefix().'settings';
+        my7::checkadm();
+        $this->tbl=my7::getdbprefix().'settings';
     }
 
     public function indexAction()
     {
         // action body
-        $this->view->row = my3::qobj("SELECT * from $this->tbl");
+        $this->view->row = my7::qobj("SELECT * from $this->tbl");
     }
 
     public function saveAction()
@@ -24,11 +24,11 @@ class A7SettingsController extends Zend_Controller_Action
         // action body
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
-            $db=my3::db();
+            $db=my7::db();
             $db->update($this->tbl,
                         $formData,
                         '');
-            my3::amessage('Данные сохранены');
+            my7::amessage('Данные сохранены');
         }
     }
 

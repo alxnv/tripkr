@@ -2,11 +2,11 @@
 // Copyright (C) 2010 Воробьев Александр
 
 // глобальный класс для работы со всем :)
-// my3.php для фронтенда назодится в каталоге tools
+// my7.php для фронтенда назодится в каталоге tools
 /**
  * @static
  */
-class my3 {
+class my7 {
 
 // ftp://u145948@u145948.ftp.masterhost.ru/id-online.ru/www/misc/tmfmosk.ru/FCKeditor/_samples/lasso/application-mozg
     public $baseurl=null;
@@ -40,7 +40,7 @@ class my3 {
     }
 
     static public function lnctrl() {
-        return strtolower(my3::nctrl());
+        return strtolower(my7::nctrl());
     }
    /**
  * Перейти к Url
@@ -48,20 +48,20 @@ class my3 {
  */
     static public function goUrl($s) {
         $response=Zend_Controller_Front::getInstance()->getResponse();
-        $response->setRedirect(my3::baseurl().$s);
+        $response->setRedirect(my7::baseurl().$s);
         $response->sendHeaders();
         exit;
-        //header('Location: '.my3::baseurl().$s);
+        //header('Location: '.my7::baseurl().$s);
     }
 
     /**
      * Получить url директории сайта
-     * @global <type> $my3
+     * @global <type> $my7
      * @return <type> 
      */
     static public function baseUrl() {
-        global $my3;
-        return $my3->baseurl;
+        global $my7;
+        return $my7->baseurl;
     }
 
     
@@ -77,21 +77,21 @@ class my3 {
  * @param <type> $updleft 
  */
     static public function amessage($s,$updleft=0) {
-        my3::goUrl('a7-message/view/'.($updleft ? 'updleft/1/' : '').'id/'.urlencode($s));
+        my7::goUrl('a7-message/view/'.($updleft ? 'updleft/1/' : '').'id/'.urlencode($s));
     }
 
     /**
      * перейти в браузере к странице ввода пароля
      */
     static public function gotoaindex() {
-        my3::goUrl('tools/helpers/noframe.htm');
+        my7::goUrl('tools/helpers/noframe.htm');
     }
 
     /**
      * если текущий пользователь не ввел пароль, перейти к странице ввода пароля
      */
     static public function checkadm() {
-        if (my3::notadmin()) my3::gotoaindex();
+        if (my7::notadmin()) my7::gotoaindex();
     }
 
 
@@ -101,12 +101,12 @@ class my3 {
 
     /**
      * возвращает путь к директории сайта
-     * @global <type> $my3
+     * @global <type> $my7
      * @return <type> 
      */
     static public function basePath() {
-        global $my3;
-        return $my3->basepath;
+        global $my7;
+        return $my7->basepath;
     }
 
     /*function gofrombaseurl($helper) {
@@ -145,11 +145,11 @@ class my3 {
 // $stp==1, то записать также тип переменной
 	//$APPLICATION_ENV=getenv('APPLICATION_ENV');
 	//$x8=(APPLICATION_ENV<>'production');
-	//echo '55'.(my3::LOG_DATA);
-		//echo '555'.print_r($my3->log_always).'|'.print_r($APPLICATION_ENV);
-        if (my3::LOG_DATA) { // || APPLICATION_ENV<>'production') 
+	//echo '55'.(my7::LOG_DATA);
+		//echo '555'.print_r($my7->log_always).'|'.print_r($APPLICATION_ENV);
+        if (my7::LOG_DATA) { // || APPLICATION_ENV<>'production') 
 			//echo '44';
-            $writer = new Zend_Log_Writer_Stream($my3->basepath.'logs/main.log');
+            $writer = new Zend_Log_Writer_Stream($my7->basepath.'logs/main.log');
             $logger = new Zend_Log($writer);
             //gettype()
             if ($s2==='') $logger->info($s);
@@ -173,22 +173,22 @@ class my3 {
      */
     static public function getconfig() {
         // возвращает конфигурацию приложения в виде массива
-        global $my3;
-        if (!isset($my3->config)) {
-            $my3->config=parse_ini_file(APPLICATION_PATH.'/configs/application.ini',true);
+        global $my7;
+        if (!isset($my7->config)) {
+            $my7->config=parse_ini_file(APPLICATION_PATH.'/configs/application.ini',true);
         }
 
-        return $my3;
+        return $my7;
     }
 
     /**
      * возвращает префикс имени таблиц БД для текущего проекта
-     * @global <type> $my3
+     * @global <type> $my7
      * @return <type>
      */
     static public function getdbprefix() {
-        global $my3;
-        return $my3->getconfig()->config['production']['dbprefix'];
+        global $my7;
+        return $my7->getconfig()->config['production']['dbprefix'];
     }
 
     /**
@@ -206,7 +206,7 @@ class my3 {
      * @return <type>
      */
     static public function qlist($s) {
-        $db=my3::db();
+        $db=my7::db();
         $db->setFetchMode(Zend_Db::FETCH_OBJ);
         return $db->fetchAll($s);
     }
@@ -217,7 +217,7 @@ class my3 {
      * @return <type>
      */
     static public function qobj($s) {
-        $db=my3::db();
+        $db=my7::db();
         $db->setFetchMode(Zend_Db::FETCH_OBJ);
         return $db->fetchRow($s);
     }
@@ -245,7 +245,7 @@ class my3 {
                 if ($i==$page) {
                     echo '<b> ['.($i+1).'] </b>';
                 } else {
-                    echo '<a href="'.my3::baseurl().$url.$i.$resh.'">['.($i+1).']</a> ';
+                    echo '<a href="'.my7::baseurl().$url.$i.$resh.'">['.($i+1).']</a> ';
                 };
             };
         };
@@ -284,7 +284,7 @@ class my3 {
             }
         }
         $_SESSION['err3']=$s;
-        my3::goUrl($url);
+        my7::goUrl($url);
     }
 
     /**
@@ -304,7 +304,7 @@ class my3 {
      * @return <type>
      */
     static public function alphatrans($s) {
-        $bp=my3::basePath();
+        $bp=my7::basePath();
         require_once $bp.'/utf8/utf8.php';
         require_once $bp.'/utf8/utils/unicode.php';
         require_once $bp.'/utf8/utils/specials.php';
@@ -373,8 +373,8 @@ $alphas=array(
      * сейчас число берется из таблицы БД
      */
     static public function siteuniqid() {
-        $tbl=my3::getdbprefix().'counter';
-        $db=my3::db();
+        $tbl=my7::getdbprefix().'counter';
+        $db=my7::db();
         $db->insert($tbl,array('uid'=>0));
         $r=$db->lastInsertId();
         $db->delete($tbl,"uid<($r-9)");
@@ -422,7 +422,7 @@ $alphas=array(
    * @param <type> $s 
    */
     static public function qdirect($s) {
-        $db=my3::db();
+        $db=my7::db();
         $db->getConnection()->exec($s);
     }
 
@@ -430,8 +430,8 @@ $alphas=array(
      * инициализирует визуальный html-редактор
      */
     static public function inithtmleditor() {
-        //var_dump(my3::basepath()."FCKeditor/fckeditor.php");exit;
-        require_once(my3::basepath()."ckeditor/ckeditor.php");
+        //var_dump(my7::basepath()."FCKeditor/fckeditor.php");exit;
+        require_once(my7::basepath()."ckeditor/ckeditor.php");
     }
 
 /**
@@ -451,12 +451,12 @@ $CKEditor->returnOutput = false;
 // Path to the CKEditor directory, ideally use an absolute path instead of a relative dir.
 //   $CKEditor->basePath = '/ckeditor/'
 // If not set, CKEditor will try to detect the correct path.
-$CKEditor->basePath = my3::baseurl().'ckeditor/';
+$CKEditor->basePath = my7::baseurl().'ckeditor/';
 
 // Set global configuration (will be used by all instances of CKEditor).
 $CKEditor->config['width'] = '100%';
 $CKEditor->config['height'] = $height;
-//$ckeditor->config['filebrowserUploadUrl'] = my3::baseUrl().'ckeditor/uploadimage.php';
+//$ckeditor->config['filebrowserUploadUrl'] = my7::baseUrl().'ckeditor/uploadimage.php';
 //echo $ckeditor->config['filebrowserUploadUrl'];exit;
 // Change default textarea attributes.
 $CKEditor->textareaAttributes = array("cols" => 80, "rows" => 10);
@@ -467,7 +467,7 @@ $initialValue = '<p>This is some <strong>sample text</strong>. You are using <a 
 // Create the first instance.
 $CKEditor->editor($name, $html);
 /*        $oFCKeditor = new CKEditor($name);
-        $sBasePath=my3::baseurl().'ckeditor/';
+        $sBasePath=my7::baseurl().'ckeditor/';
         $oFCKeditor->Height = $height;
         $oFCKeditor->BasePath	= $sBasePath;
         $oFCKeditor->editor($name, $html);*/
@@ -478,12 +478,12 @@ $CKEditor->editor($name, $html);
 
 /**
  * возвращает следующий уникальный для этого контроллера номер
- * @global <type> $my3
+ * @global <type> $my7
  * @return <type> 
  */
     static public function nextnum() {
-        global $my3;
-        return $my3->_num++;
+        global $my7;
+        return $my7->_num++;
     }
 
   /**
@@ -491,7 +491,7 @@ $CKEditor->editor($name, $html);
    * @return <type> 
    */
     static public function nextid() {
-        return 'idx'.my3::nextnum;
+        return 'idx'.my7::nextnum;
 
     }
 
@@ -510,7 +510,7 @@ $CKEditor->editor($name, $html);
  * @param <type> $arr 
  */
     static public function dbreplace($tbl,$arr) {
-        $db=my3::db();
+        $db=my7::db();
         $ar2=array_keys($arr);
         $arnames=array();
         for ($i=0;$i<count($ar2);$i++) {
@@ -521,8 +521,8 @@ $CKEditor->editor($name, $html);
         }
         $s2=join(',',$arr);
         $sn=join(',',$arnames);
-        //my3::log('k',"replace into $tbl ($sn) values ($s2)");
-        my3::qdirect("replace into $tbl ($sn) values ($s2)");
+        //my7::log('k',"replace into $tbl ($sn) values ($s2)");
+        my7::qdirect("replace into $tbl ($sn) values ($s2)");
     }
 /**
  * выполняет функцию mysql replace
@@ -531,18 +531,18 @@ $CKEditor->editor($name, $html);
  * @param <type> $arr 
  */
     static public function dbselreplace($uid,$tbl,$arr) {
-        $row = my3::qobj("select 1 from $tbl where uid=$uid");
+        $row = my7::qobj("select 1 from $tbl where uid=$uid");
         if ($row) {
-            $db=my3::db();
+            $db=my7::db();
             $ar2=array_keys($arr);
             $arnames=array();
             for ($i=0;$i<count($ar2);$i++) {
                 array_push($arnames, $ar2[$i]."=".$db->quote($arr[$ar2[$i]]));
             }
             $s=join(', ',$arnames);
-            my3::qdirect("update $tbl set $s where uid=$uid");
+            my7::qdirect("update $tbl set $s where uid=$uid");
         } else {
-            $db=my3::db();
+            $db=my7::db();
             $arr['uid']=$uid;
             $ar2=array_keys($arr);
             $arnames=array();
@@ -554,9 +554,9 @@ $CKEditor->editor($name, $html);
             }
             $s2=join(',',$arr);
             $sn=join(',',$arnames);
-            //my3::log('k',"replace into $tbl ($sn) values ($s2)");
+            //my7::log('k',"replace into $tbl ($sn) values ($s2)");
 
-            my3::qdirect("insert into $tbl ($sn) values ($s2)");
+            my7::qdirect("insert into $tbl ($sn) values ($s2)");
         }
     }
 
@@ -570,5 +570,5 @@ $CKEditor->editor($name, $html);
 
 } // end class
 
-$my3=new my3();
+$my7=new my7();
 ?>

@@ -6,16 +6,16 @@ class A7ZayavController extends Zend_Controller_Action {
 
     public function init() {
         /* Initialize action controller here */
-        my3::checkadm();
+        my7::checkadm();
         $this->cnt=50; // кол-во записей на страницу
         $this->sess='page839';
-        $this->tbl=my3::getdbprefix().'zayav';
-        $this->rewrtbl=my3::getdbprefix().'rewrite';
+        $this->tbl=my7::getdbprefix().'zayav';
+        $this->rewrtbl=my7::getdbprefix().'rewrite';
     }
 
     public function filterAction() {
         // фильтруем по названию фирмы список туроператоров
-        $bp=my3::basePath();
+        $bp=my7::basePath();
         require_once $bp.'/utf8/utf8.php';
         require_once $bp.'/utf8/utils/unicode.php';
         require_once $bp.'/utf8/utils/specials.php';
@@ -25,7 +25,7 @@ class A7ZayavController extends Zend_Controller_Action {
         } else {
             $_SESSION['flt596']=$filter;
         }
-        my3::goUrl('a7-zayav/index/page/0');
+        my7::goUrl('a7-zayav/index/page/0');
     }
     public function indexAction() {
         // выводим список туроператоров в виде таблицы
@@ -41,10 +41,10 @@ class A7ZayavController extends Zend_Controller_Action {
 
         $page=$_SESSION[$this->sess];
         if ($b) {
-            $row = my3::qobj("SELECT count(*) as cnt from $this->tbl
+            $row = my7::qobj("SELECT count(*) as cnt from $this->tbl
                 where naimfirm like '%$flt%' or email like '%$flt%'");
         } else { 
-            $row = my3::qobj("SELECT count(*) as cnt from $this->tbl");
+            $row = my7::qobj("SELECT count(*) as cnt from $this->tbl");
         };
         $nrows=$row->cnt;
         $page++;
@@ -52,11 +52,11 @@ class A7ZayavController extends Zend_Controller_Action {
             $page--;
             $lm=$page*$this->cnt;
             if ($b) {
-                $this->view->arr=my3::qlist("SELECT *,date_format(data1,'%d.%m.%Y') as df FROM $this->tbl
+                $this->view->arr=my7::qlist("SELECT *,date_format(data1,'%d.%m.%Y') as df FROM $this->tbl
                 where naimfirm like '%$flt%' or email like '%$flt%'
                 order by uid desc limit $lm,$this->cnt");
             } else {
-                $this->view->arr=my3::qlist("SELECT *,date_format(data1,'%d.%m.%Y') as df FROM $this->tbl
+                $this->view->arr=my7::qlist("SELECT *,date_format(data1,'%d.%m.%Y') as df FROM $this->tbl
                 order by uid desc limit $lm,$this->cnt");
             }
             $nrowspage=count($this->view->arr);
@@ -74,23 +74,23 @@ class A7ZayavController extends Zend_Controller_Action {
     /*function show($newcont,$ctrlr,$showadd=true) {
 // newcont - имя контроллера для добавления новой записи
 // ctrlr - номер текущего контроллера
-        if ($showadd) echo '<p align="center"><a href="'.my3::baseurl().
+        if ($showadd) echo '<p align="center"><a href="'.my7::baseurl().
                 $newcont.'/index/id/0/idtree/'.$this->idtree.'/lv/'.$ctrlr.'"
             target="right">Добавить элемент</a></p>';
-//$arr=my3::qlist("select * from $this->tbl where idtree=$this->idtree ")
+//$arr=my7::qlist("select * from $this->tbl where idtree=$this->idtree ")
 
         $arr=$this->getalltree($newcont);
-        $s=my3::nbsh($ctrlr);
+        $s=my7::nbsh($ctrlr);
         $this->printtree(&$arr,0,$s);
     }*/
 
     function getalltree($id) {
 // сохраняет в массив все дерево $idtree
-//my3::log('d',"select a.*,b.name from $this->tbl a,$this->tblact b
+//my7::log('d',"select a.*,b.name from $this->tbl a,$this->tblact b
 //      where a.idtree=$this->idtree and a.actid=b.uid order by a.topid,a.ordr");
-        //$ar2=my3::qlist("select a.* from $this->tbl a
+        //$ar2=my7::qlist("select a.* from $this->tbl a
           //      where a.idtree=$this->idtree order by a.topid,a.ordr");
-        $ar2=my3::qlist("select b.naim,a.user_id,b.uid,b.topid
+        $ar2=my7::qlist("select b.naim,a.user_id,b.uid,b.topid
             from et_tree b left join et_zayuser a on a.user_id=$id and b.uid=a.zay_id where  
                 b.idtree=12 order by b.topid,b.ordr");
         $aro=array();
@@ -109,10 +109,10 @@ class A7ZayavController extends Zend_Controller_Action {
 
     public function editAction() {
         // редактируем одну запись новости
-        $db=my3::db();
+        $db=my7::db();
         $id = intval($this->_getParam('id', 0));
         $this->view->id=$id;
-        $this->view->row=my3::qobj("select uid,login,pwd,naimfirm,
+        $this->view->row=my7::qobj("select uid,login,pwd,naimfirm,
                 fio,dolgn,site,email,kphone,nreestr,ismoderated,comments,city,
                 date_format(data1,'%d.%m.%Y') as data1 from $this->tbl where uid=$id");
         if ($this->view->row===false) $this->view->row=(object)array('uid'=>0,'naim'=>'',
@@ -156,7 +156,7 @@ class A7ZayavController extends Zend_Controller_Action {
         $xls->WriteLabel(2,13,"Комментарий админа");
         /*третья строка*/
 
-        $ar2=my3::qlist("select *,date_format(data1,'%d.%m.%Y') as data12 from et_zayav order by uid desc");
+        $ar2=my7::qlist("select *,date_format(data1,'%d.%m.%Y') as data12 from et_zayav order by uid desc");
         $psort=count($ar2);
         $aro=array();
         $j=3;
@@ -221,23 +221,23 @@ class A7ZayavController extends Zend_Controller_Action {
         //if ($sid=='') $this->_redirect('a7-message/view/id/'.urlencode('Сохранение записи: нет записи с идентификатором '.$sid),array('prependBase'=>1));
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
-            //my3::log('k',$formData);
-            $db=my3::db();
+            //my7::log('k',$formData);
+            $db=my7::db();
             $s3='';
-            $dt=my3::dateconv($formData['data1']);
+            $dt=my7::dateconv($formData['data1']);
             if ($dt===false) $s3.='Неправильная дата '.$formData['data1']."\n";
  
-            my3::qdirect('lock tables et_zayav write, et_zayuser write');
+            my7::qdirect('lock tables et_zayav write, et_zayuser write');
             $login1=mysql_real_escape_string($formData['login']);
-            $row89=my3::qobj("select count(*) as cnt from et_zayav where login='$login1' and uid<>$id");
+            $row89=my7::qobj("select count(*) as cnt from et_zayav where login='$login1' and uid<>$id");
             if ($row89->cnt>0) $s3.="Запись с таким логином уже есть в базе данных\n";
             
             
             if ($s3<>'') {
-                my3::qdirect("unlock tables");
-                my3::reterror('a7-zayav/edit/id/'.$id,$s3,$formData);
+                my7::qdirect("unlock tables");
+                my7::reterror('a7-zayav/edit/id/'.$id,$s3,$formData);
             }
-        /*$this->view->row=my3::qobj("select uid,login,pwd,naimfirm,
+        /*$this->view->row=my7::qobj("select uid,login,pwd,naimfirm,
                 fio,dolgn,site,email,kphone,nreestr,ismoderated,comments,
                 date_format(data1,'%d.%m.%Y') as data1 from $this->tbl where uid=$id");*/
                 
@@ -274,18 +274,18 @@ class A7ZayavController extends Zend_Controller_Action {
 
             }
             // пишем страницы к которым открыт доступ в бд
-            my3::qdirect("delete from et_zayuser where user_id=$id");
+            my7::qdirect("delete from et_zayuser where user_id=$id");
             $i=1;
             //var_dump($formData);exit;
             while(isset($formData['hy'.$i])) {
                 if (isset($formData['hq'.$i])) {
-                    my3::qdirect("insert into et_zayuser values ($id,".$formData['hy'.$i].")");
+                    my7::qdirect("insert into et_zayuser values ($id,".$formData['hy'.$i].")");
                 }
                 $i++;
             }
             
-            my3::qdirect("unlock tables");
-            my3::goUrl('a7-zayav');
+            my7::qdirect("unlock tables");
+            my7::goUrl('a7-zayav');
         };
     }
 
@@ -297,10 +297,10 @@ class A7ZayavController extends Zend_Controller_Action {
         // удаляем одну новость
         $id = intval($this->_getParam('id', 0));
         if ($id) {
-            my3::qdirect("delete from et_zayuser where user_id=$id");
-            my3::db()->delete($this->tbl,"uid=$id");
+            my7::qdirect("delete from et_zayuser where user_id=$id");
+            my7::db()->delete($this->tbl,"uid=$id");
         }
-        my3::goUrl('a7-zayav');
+        my7::goUrl('a7-zayav');
     }
 
 

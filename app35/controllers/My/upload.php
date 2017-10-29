@@ -35,7 +35,7 @@ class my_upload {
 
         if ($files=='') $arr=array();
         else $arr=explode(';',$files);
-        my3::log('q',$arr);
+        my7::log('q',$arr);
         $nish=count($arr)>>1;
         $aimnums=array();
         $adel=array();
@@ -47,7 +47,7 @@ class my_upload {
         for ($i=0;$i<count($formData[$idl]);$i++) {
             $ar2[$formData[$idl][$i]]=$i;
         }
-        my3::log('ar2',$ar2);
+        my7::log('ar2',$ar2);
 
         $formData[$userf]['nn']=array();
         $formData[$userf]['capt']=array();
@@ -66,7 +66,7 @@ class my_upload {
                     $formData[$userf]['capt'][$ar2[strval($i)]]=$arr[$i*2+1];
                 } else {
                     // файл перезагрузили
-                    $s1=my3::siteuniqid();
+                    $s1=my7::siteuniqid();
                     array_push($aimnums,$s1);
                     $pi=pathinfo($_FILES[$userf]['name'][$ar2[strval($i)]]);
                     $ext=$pi['extension'];
@@ -92,7 +92,7 @@ class my_upload {
                 // если файл новый и загружен
                 array_push($afrombd,'');
                 array_push($adel,0);
-                $s1=my3::siteuniqid();
+                $s1=my7::siteuniqid();
                 array_push($aimnums,$s1);
                 $pi=pathinfo($_FILES[$userf]['name'][$i]);
                 $ext=$pi['extension'];
@@ -105,7 +105,7 @@ class my_upload {
         }
         $_FILES[$userf]=$arfnew;
         $this->nfiles=$this->nold+$cnt;
-        //my3::log('files',$_FILES);
+        //my7::log('files',$_FILES);
 
         $ar3=array();
         for ($i=0;$i<count($formData[$idl]);$i++) {
@@ -114,8 +114,8 @@ class my_upload {
                 $ar3[]=$formData[$userf]['capt'][$i];
             }
         }
-        //my3::log('fd',$formData);
-        //my3::log('adel',$adel);
+        //my7::log('fd',$formData);
+        //my7::log('adel',$adel);
         return join(';',$ar3);
 
     }
@@ -213,7 +213,7 @@ class my_upload {
         $fexts=array();
         $pict2=array();
         $s3='';
-        my3::makeavailcat($catalog);
+        my7::makeavailcat($catalog);
         for ($i=0;$i<$nfiles;$i++) {
             $s33=$this->file_upl($i,$arfinfo[$i][0],$arfinfo[$i][1],$arfinfo[$i][2],$arfinfo[$i][3],$arfinfo[$i][4],$fext,$imn1,$notestext,$arfinfo[$i][5]);
             $fexts[$i]=$fext;
@@ -227,7 +227,7 @@ class my_upload {
             if ($fexts[$i]<>'') {
                 if ($afrombd[$i]<>'') @unlink($catalog.'/'.$afrombd[$i]);
                 if ($byname) {
-                    $fnow=strtolower(my3::alphatrans($_FILES["userfile"]['name'][$i]));
+                    $fnow=strtolower(my7::alphatrans($_FILES["userfile"]['name'][$i]));
                     //var_dump($fnow);
                 } else {
                     $fnow=$basename.$aimnums[$i].'.'.$fexts[$i];

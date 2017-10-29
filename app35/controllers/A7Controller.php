@@ -13,7 +13,7 @@ class A7Controller extends Zend_Controller_Action
     public function indexAction()
     {
         // action body
-        //~ my3::gotoamessage($this,'месаг один34');
+        //~ my7::gotoamessage($this,'месаг один34');
         //$this->_redirect('a7-message/view/id/'.urlencode('ололд пг гшш 78'),array('prependBase'=>1));
         @session_start();
         $this->view->title='Администраторский модуль - введите пароль';
@@ -36,7 +36,7 @@ public function loginAction()
             //$this->view->kr=$del;
                 //$pwdsite=Zend_Registry::get('config');
                 //var_dump($pwdsite); exit;
-                $pwdadm=my3::getadminpass();
+                $pwdadm=my7::getadminpass();
                 if ($l4==$_SESSION['captcha_keystring'] && $pwd==$pwdadm) {
                     $_SESSION['login']='admin5';
                     //gopage4('a7-main');

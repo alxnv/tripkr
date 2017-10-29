@@ -27,25 +27,25 @@ echo $o4->savemessage('Изменения сохранены');
     function rpp738(id) {
         s=prompt('Введите название нового подраздела:','');
         if (s!='') {
-            top.frames['lfr'].location.href='<?=my3::baseurl()?>ta_generic-tree-form2/makesub/id/'+id+'/leftview/<?=my3::nbsh($this->leftview)?>/zgl/'+myesc738(s);
+            top.frames['lfr'].location.href='<?=my7::baseurl()?>ta_generic-tree-form2/makesub/id/'+id+'/leftview/<?=my7::nbsh($this->leftview)?>/zgl/'+myesc738(s);
         };
     };
     function delr738(id) {
         if (confirm('Вы уверены, что хотите удалить этот элемент \nсо всем его содержимым?')) {
-            location.href='<?=my3::baseurl().strtolower(my3::nctrl())?>/delete/id/'+id;
+            location.href='<?=my7::baseurl().strtolower(my7::nctrl())?>/delete/id/'+id;
         };
     };
     function pere738(id) {
         pos=d.getElementById('ps738').value;
-        top.frames['lfr'].location.href='<?=my3::baseurl()?>ta_generic-tree-form2/move/id/'+id+'/pos/'+parseInt(pos)+'/leftview/<?=my3::nbsh($this->leftview)?>';
+        top.frames['lfr'].location.href='<?=my7::baseurl()?>ta_generic-tree-form2/move/id/'+id+'/pos/'+parseInt(pos)+'/leftview/<?=my7::nbsh($this->leftview)?>';
     };
 
 </script>
 <?php
 //echo $this->id;
 $uid2=$this->id;
-/*echo '<form action="'.my3::baseurl().'ta_generic-tree-form/save/id/'.$uid2.'" method="post">';
-echo 'Имя: <input type="text" size="50" name="naim" value="'.my3::nbsh($this->naim).'" />
+/*echo '<form action="'.my7::baseurl().'ta_generic-tree-form/save/id/'.$uid2.'" method="post">';
+echo 'Имя: <input type="text" size="50" name="naim" value="'.my7::nbsh($this->naim).'" />
     <input type="submit" value="Изменить"><br />*/
 if ($this->candelete) echo '    <input type="button" onclick="javascript:delr738('.$uid2.');" value="Удалить"> ';
 if ($this->canrename) echo '<input type="button" onclick="javascript:pere738('.$uid2.');" value="Переместить в позицию">

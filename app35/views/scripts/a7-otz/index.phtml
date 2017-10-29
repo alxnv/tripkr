@@ -1,16 +1,16 @@
 <script language="JavaScript">
 function delr(id) {
 if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
- window.location.href='<?=my3::baseurl()?>a7-news/rdel/id/'+id;
+ window.location.href='<?=my7::baseurl()?>a7-news/rdel/id/'+id;
  };
 };
 function izm(id) {
-window.location.href='<?=my3::baseurl()?>a7-news/edit/id/'+id;
+window.location.href='<?=my7::baseurl()?>a7-news/edit/id/'+id;
 };
 </script>
 <div align="center">
 <h1 align="center">Новости</h1>
-<a href="<?=my3::baseurl()?>a7-news/edit/id/0">Добавить новость</a><br>
+<a href="<?=my7::baseurl()?>a7-news/edit/id/0">Добавить новость</a><br>
 <br>
 <table border="1" cellpadding="3" cellspacing="0">
 <tr valign="top">
@@ -29,4 +29,4 @@ for ($i=0;$i<count($this->arr);$i++) {
 ?>
 </table>
 </div>
-<? my3::printpages($this->lend); ?>
+<? my7::printpages($this->lend); ?>

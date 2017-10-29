@@ -1,16 +1,16 @@
 <script language="JavaScript">
 function delr(id) {
 if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
- window.location.href='<?=my3::baseurl().my3::nctrl()?>/rdel/id/'+id;
+ window.location.href='<?=my7::baseurl().my7::nctrl()?>/rdel/id/'+id;
  };
 };
 function izm(id) {
-window.location.href='<?=my3::baseurl().my3::nctrl()?>/edit/id/'+id;
+window.location.href='<?=my7::baseurl().my7::nctrl()?>/edit/id/'+id;
 };
 function pere(id) {
 pos=document.getElementById('ps'+id).value;
-//alert('<?=my3::baseurl().my3::nctrl()?>/rmove/id='+id+'/pos/'+parseInt(pos));
-window.location.href='<?=my3::baseurl().my3::nctrl()?>/rmove/id/'+id+'/pos/'+parseInt(pos);
+//alert('<?=my7::baseurl().my7::nctrl()?>/rmove/id='+id+'/pos/'+parseInt(pos));
+window.location.href='<?=my7::baseurl().my7::nctrl()?>/rmove/id/'+id+'/pos/'+parseInt(pos);
 };
 </script>
 <div align="center">
@@ -19,7 +19,7 @@ window.location.href='<?=my3::baseurl().my3::nctrl()?>/rmove/id/'+id+'/pos/'+par
 //$o4=new My_PageEffects();
 //echo $o4->hidingmessage('gfdhdg');
 ?>
-<a href="<?=my3::baseurl().my3::nctrl()?>/edit/id/0">Добавить событие</a><br>
+<a href="<?=my7::baseurl().my7::nctrl()?>/edit/id/0">Добавить событие</a><br>
 <br>
 <table border="1" cellpadding="3" cellspacing="0">
 <tr valign="top">
@@ -41,4 +41,4 @@ for ($i=0;$i<count($this->arr);$i++) {
 ?>
 </table>
 </div>
-<? my3::printpages($this->lend); ?>
+<? my7::printpages($this->lend); ?>

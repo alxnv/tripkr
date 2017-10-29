@@ -1,16 +1,16 @@
 <?
-my3::inithtmleditor();
+my7::inithtmleditor();
 
 //echo $this->row->html;
-echo '<form action="'.$this->baseUrl().'/'.my3::nctrl().'/save/id/'.$this->id.'" method="post" enctype="multipart/form-data">';
+echo '<form action="'.$this->baseUrl().'/'.my7::nctrl().'/save/id/'.$this->id.'" method="post" enctype="multipart/form-data">';
 //echo '<input type="hidden" name="rsid" value="'.$sid2.'">';
-echo '<h2 align=center>'.my3::nbsh($this->row->naim).'</h2>';
-my3::showerror();
+echo '<h2 align=center>'.my7::nbsh($this->row->naim).'</h2>';
+my7::showerror();
 
 /*include("../spaw2/spaw.inc.php");
 $spaw = new SpawEditor("html", $row->html);
 $spaw->show();*/
-my3::editorfield('html',$this->row->html,'','400');
+my7::editorfield('html',$this->row->html,'','400');
 /*if ($sid2=='contact') {
 	 $row9=qobj("select html from av_html where sid='contact2'");
      echo '<br>

@@ -1,12 +1,12 @@
 <?
-//my3::inithtmleditor();
+//my7::inithtmleditor();
 //echo $this->row->html;
 	echo '<form action="'.$this->baseUrl().'/a7-zayav/save/id/'.$this->id.'" method="post" style="margin:0;padding:0;">';
 
 ?>
 <h2 align="center">Редактирование заявки на доступ к конфеденциальной информации</h2>
 <?
-my3::showerror();
+my7::showerror();
 ?>
 <?/*
 Время отправки заявки (в формате ДД.ММ.ГГГГ ЧЧ:ММ:СС): <?=$this->row->data1?><br><br>
@@ -28,7 +28,7 @@ E-mail: <input type="text" name="email" size="50" maxlength="200" value="<?=html
 <?
 /*<br>Новость:<br>
         //echo '<h2 align=center>'.$this->escape($this->row->naim).'</h2>';
-        my3::editorfield('html',$this->row->html,'','350');
+        my7::editorfield('html',$this->row->html,'','350');
 */
 ?>
 <script type="text/javascript">
@@ -60,7 +60,7 @@ function doallsel() {
                 $row=$aro[$topid][$i];
                 $n=$row->uid;
                 echo '<li><input type="checkbox" '.(!is_null($row->user_id) ? 'checked' :'').
-         ' id="hq'.$i1.'" name="hq'.$i1.'" /> <label for="hq'.$i1.'">'.my3::nbsh($row->naim).'</label><br>
+         ' id="hq'.$i1.'" name="hq'.$i1.'" /> <label for="hq'.$i1.'">'.my7::nbsh($row->naim).'</label><br>
          <input type="hidden" name="hy'.$i1.'" value="'.$row->uid.'" /></li>';
                 if (isset($aro[$n])) {
                     $i1++;
@@ -79,7 +79,7 @@ printtree5(&$this->zayavna, 299, $i1);
 /*for ($i=0;$i<count($this->zayavna);$i++) {
     $row=$this->zayavna[$i];
     echo '<input type="checkbox" '.(!is_null($row->user_id) ? 'checked' :'').
-         ' id="hq'.$i.'" name="hq'.$i.'" /> <label for="hq'.$i.'">'.my3::nbsh($row->naim).'</label><br>
+         ' id="hq'.$i.'" name="hq'.$i.'" /> <label for="hq'.$i.'">'.my7::nbsh($row->naim).'</label><br>
          <input type="hidden" name="hy'.$i.'" value="'.$row->uid.'" />';
 }*/
 ?>

@@ -9,8 +9,8 @@ class My_plusminusstruct {
 //
     function gethtml($afiles) {
         // на входе файл,имя файла,...
-        $iplus='<img alt="0" width="28" height="30" src="'.my3::baseurl().'img/admin/plus.gif" />';
-        $iminus='<img alt="0" width="28" height="30" src="'.my3::baseurl().'img/admin/minus.gif" />';
+        $iplus='<img alt="0" width="28" height="30" src="'.my7::baseurl().'img/admin/plus.gif" />';
+        $iminus='<img alt="0" width="28" height="30" src="'.my7::baseurl().'img/admin/minus.gif" />';
         $s='
 <script type="text/javascript">
 
@@ -107,7 +107,7 @@ if (obj.parentNode.parentNode.parentNode.tagName==\'TBODY\')
             </th></tr>';
         $nish=count($afiles)>>1;
         for ($i=0;$i<$nish;$i++) {
-            $s.='<tr><td><input type="hidden" name="idl[]" value="'.$i.'" />'.my3::nbsh($afiles[$i*2+1]).
+            $s.='<tr><td><input type="hidden" name="idl[]" value="'.$i.'" />'.my7::nbsh($afiles[$i*2+1]).
             '</td><td><div style="width:100%;height:100%;text-align:center;margin:10px 0 0 0"><input type="file" name="userfile[]" /></div></td>
  <td><p align="center"><a class="nobg hand"  onClick="add35(this)">'.$iplus.'</a><a class="nobg hand" onClick="del35(this)">'.$iminus.'</a></p></td></tr>';
         }

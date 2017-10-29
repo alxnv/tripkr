@@ -20,8 +20,8 @@ class Ta_genericTreeFormController extends Zend_Controller_Action {
     }
     public function init() {
         /* Initialize action controller here */
-        my3::checkadm();
-        $this->tbl=my3::getdbprefix().'tree';
+        my7::checkadm();
+        $this->tbl=my7::getdbprefix().'tree';
     }
 
     public function moveAction() {
@@ -30,9 +30,9 @@ class Ta_genericTreeFormController extends Zend_Controller_Action {
         $id = intval($this->_getParam('id', 0));
         $pos = intval($this->_getParam('pos', 0));
         $leftview = $this->_getParam('leftview', 0);
-        if (!$id || !$leftview) my3::amessage('Не все параметры указаны');
+        if (!$id || !$leftview) my7::amessage('Не все параметры указаны');
         $itd->move($id,$pos);
-        my3::goUrl('a7-left/'.$leftview);
+        my7::goUrl('a7-left/'.$leftview);
     }
 
     public function makesubAction() {
@@ -42,42 +42,42 @@ class Ta_genericTreeFormController extends Zend_Controller_Action {
         $actid = intval($this->_getParam('actid', 0));
         $leftview = $this->_getParam('leftview', 0);
         $zgl = $this->_getParam('zgl', 0);
-        if (!$id || !$leftview || !$actid || !$zgl) my3::amessage('Не все параметры указаны');
+        if (!$id || !$leftview || !$actid || !$zgl) my7::amessage('Не все параметры указаны');
         
         // получаем fpnum создаваемого элемента
         $ct = $this->getControllerByActid($actid);
-        if ($ct == '')  my3::amessage('Ошибка - настройте администраторский модуль');
+        if ($ct == '')  my7::amessage('Ошибка - настройте администраторский модуль');
         include str_replace('_','/',$ct).".php";
         $obj = new $ct($this->getRequest(), $this->getResponse());
-        $row=my3::qobj("select fpnum from $obj->tbl where uid=$id");
-        if (!$row || $row->fpnum==0)  my3::amessage('Ошибка структуры данных');
+        $row=my7::qobj("select fpnum from $obj->tbl where uid=$id");
+        if (!$row || $row->fpnum==0)  my7::amessage('Ошибка структуры данных');
         $fpnum=$row->fpnum;
         $sf = $obj->getControllerNameByFpnum($fpnum);
-        if ($sf=='')  my3::amessage('Ошибка структуры данных 4');
+        if ($sf=='')  my7::amessage('Ошибка структуры данных 4');
         $sf2=$sf.'Controller';
         include str_replace('_','/',$sf2).'.php';
         $objc = new $sf2($this->getRequest(), $this->getResponse());
         $cfpnum = $objc->getChildFpnum($id);
-        if ($cfpnum==0)  my3::amessage('Ошибка структуры данных 2');
+        if ($cfpnum==0)  my7::amessage('Ошибка структуры данных 2');
         
-        my3::qdirect("lock tables $this->tbl write, $obj->tbl write");
-        $row=my3::qobj("select idtree from $this->tbl where uid=$id");
+        my7::qdirect("lock tables $this->tbl write, $obj->tbl write");
+        $row=my7::qobj("select idtree from $this->tbl where uid=$id");
         if ($row) {
             $itd->idtree=$row->idtree;
             $tp=new My_textop();
             $arr=array('naim'=>$tp->myunescape($zgl),'actid'=>$actid);
             $idnew=$itd->append($id,$arr);
-            my3::qdirect("insert into $obj->tbl (uid,fpnum) values ($idnew, $cfpnum)");
+            my7::qdirect("insert into $obj->tbl (uid,fpnum) values ($idnew, $cfpnum)");
         };
-        my3::qdirect('unlock tables');
-        my3::goUrl('a7-left/'.$leftview);
+        my7::qdirect('unlock tables');
+        my7::goUrl('a7-left/'.$leftview);
 
     }
     /*public function indexAction() {
 
         // если надо, отображаем форму
         /*$id = intval($this->_getParam('id', 0));
-        $row=$id ? my3::qobj("select a.*,b.naim from $this->tbl a, $this->treetbl b
+        $row=$id ? my7::qobj("select a.*,b.naim from $this->tbl a, $this->treetbl b
                 where a.uid=$id and a.uid=b.uid") : false;
         $this->view->id=$row ? $id : 0;
         $this->view->naim=$row ? $row->naim : '';
@@ -99,8 +99,8 @@ class Ta_genericTreeFormController extends Zend_Controller_Action {
             } else {
 
             }
-            my3::db()->update($this->tbl,array('html'=>$formData['html']),'sid='.my3::db()->quote($sid));
-            my3::amessage('Данные сохранены');
+            my7::db()->update($this->tbl,array('html'=>$formData['html']),'sid='.my7::db()->quote($sid));
+            my7::amessage('Данные сохранены');
         };
     }*/
 

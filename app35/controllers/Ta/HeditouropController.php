@@ -20,12 +20,12 @@
 class Ta_HeditouropController extends Zend_Controller_Action {
     public function init() {
         /* Initialize action controller here */
-        my3::checkadm();
-        $this->tbl=my3::getdbprefix().'ta_html';
-        $this->treetbl=my3::getdbprefix().'tree';
+        my7::checkadm();
+        $this->tbl=my7::getdbprefix().'ta_html';
+        $this->treetbl=my7::getdbprefix().'tree';
         $this->actid=1; // идентификатор текущего контроллера в дереве
-        $this->imgdir=my3::basepath().'img2/';
-        $this->rewrtbl=my3::getdbprefix().'rewrite';
+        $this->imgdir=my7::basepath().'img2/';
+        $this->rewrtbl=my7::getdbprefix().'rewrite';
 
         }
 
@@ -64,11 +64,11 @@ class Ta_HeditouropController extends Zend_Controller_Action {
         $id = intval($this->_getParam('id', 0));
         $this->view->idtree=intval($this->_getParam('idtree', 0));
         $leftview = $this->_getParam('lv', '');
-        /*my3::log('r',$leftview);
-        my3::log('r2',$id);
-        my3::log('r3',$this->view->idtree);*/
-        if (!$id && (!$this->view->idtree || $leftview=='')) my3::amessage('Не все параметры указаны');
-        $row=$id ? my3::qobj("select b.topid,b.naim,b.idtree,b.actid,a.* from $this->treetbl b
+        /*my7::log('r',$leftview);
+        my7::log('r2',$id);
+        my7::log('r3',$this->view->idtree);*/
+        if (!$id && (!$this->view->idtree || $leftview=='')) my7::amessage('Не все параметры указаны');
+        $row=$id ? my7::qobj("select b.topid,b.naim,b.idtree,b.actid,a.* from $this->treetbl b
                 left join $this->tbl a on b.uid=a.uid
                 where b.uid=$id") : false;
         $this->view->id=$row ? $id : 0;
@@ -76,9 +76,9 @@ class Ta_HeditouropController extends Zend_Controller_Action {
         $this->view->row=$row;
         
         /*$cname = $this->getControllerNameByFpnum($row->fpnum);
-        if ($cname=='') my3::amessage('Ошибка настройки 3');
+        if ($cname=='') my7::amessage('Ошибка настройки 3');
         $this->_forward('index', $cname);*/
-        $db=my3::db();
+        $db=my7::db();
         if ($this->view->id) {
             $id=$this->view->id;
             $this->view->candelete = $this->getCanDelete($this->view->id);
@@ -99,25 +99,25 @@ class Ta_HeditouropController extends Zend_Controller_Action {
     public function deleteAction() {
         $id = intval($this->_getParam('id', 0));
         $itd=new My_itdbtr($this->treetbl);
-        my3::qdirect("lock tables $this->tbl write, $this->treetbl write");
+        my7::qdirect("lock tables $this->tbl write, $this->treetbl write");
         // удаляем элемент и все подэлементы в обоих таблицах
         $itd->deletein2tbl($id,$this->tbl);
         //$itd->delete($id,0);
-        //my3::db()->delete($this->tbl,"uid=$id");
-        my3::qdirect('unlock tables');
+        //my7::db()->delete($this->tbl,"uid=$id");
+        my7::qdirect('unlock tables');
 
-        my3::amessage('Запись удалена',1);
+        my7::amessage('Запись удалена',1);
     }
     
     public function saveAction() {
         // action body
-        global $my3;
+        global $my7;
         $id = intval($this->_getParam('id', 0));
-        //if ($id=='') my3::amessage('Сохранение записи: нет записи с идентификатором '.$sid);
+        //if ($id=='') my7::amessage('Сохранение записи: нет записи с идентификатором '.$sid);
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
-            $db=my3::db();
-            //$dt=my3::dateconv($formData['data1']);
+            $db=my7::db();
+            //$dt=my7::dateconv($formData['data1']);
             $s3='';
             $leftview = $this->_getParam('leftview', 0);
 
@@ -126,10 +126,10 @@ class Ta_HeditouropController extends Zend_Controller_Action {
             // callback-функция обработки изображения
             {
                 global $edit4;
-                //$path1=my3::basepath().'img2/';
+                //$path1=my7::basepath().'img2/';
                 //$in15=getimgnum().'.jpg';
                 //resjpegrez3(120,80,2,$fn1,$in1) &&
-                my3::resamplejpeg3(150,0,$fn1,$fn1);
+                my7::resamplejpeg3(150,0,$fn1,$fn1);
                 //@unlink($fn1);
                 //@rename($path1.$in15,$fn1);
             };
@@ -137,7 +137,7 @@ class Ta_HeditouropController extends Zend_Controller_Action {
             $aimnums=array();
             $adel=array();
             for ($i=0;$i<1;$i++) {
-                array_push($aimnums,my3::siteuniqid());
+                array_push($aimnums,my7::siteuniqid());
                 array_push($adel,(isset($_POST['img_del'.($i+1)]) ? 1 : 0));
             };
             $aval2=array('jpg');
@@ -146,7 +146,7 @@ class Ta_HeditouropController extends Zend_Controller_Action {
             );
             if ($s3=='') {
                 if ($id) {
-                    $row=my3::qobj("select pict from $this->tbl where uid=$id");
+                    $row=my7::qobj("select pict from $this->tbl where uid=$id");
                     $afrombd=array($row->pict);
                 } else {
                     $afrombd=array('');
@@ -161,7 +161,7 @@ class Ta_HeditouropController extends Zend_Controller_Action {
 
             //if ($dt===false) $s3.='Неправильная дата '.$formData['data1'];
             if ($s3<>'') {
-                my3::goUrl('a7-left/'.$leftview.'/updaterightsave/2');
+                my7::goUrl('a7-left/'.$leftview.'/updaterightsave/2');
 
                     //array('html'=>stripslashes($formData['html'])));
             //$arr=array('anons'=>$formData['anons'],
@@ -173,55 +173,55 @@ class Ta_HeditouropController extends Zend_Controller_Action {
             if ($id) {
                 //$itd=new My_itdbtree($this->treetbl);
                 //$idtree = intval($this->_getParam('idtree', 0));
-                if (!$leftview) my3::amessage('Не все параметры указаны');
+                if (!$leftview) my7::amessage('Не все параметры указаны');
                 //$itd->idtree=$idtree;
-                my3::qdirect("lock tables $this->tbl write, $this->treetbl write");
+                my7::qdirect("lock tables $this->tbl write, $this->treetbl write");
                 $arr=array('naim'=>$formData['naim'],'actid'=>$this->actid);
-                my3::db()->update($this->treetbl,$arr,"uid=$id");
+                my7::db()->update($this->treetbl,$arr,"uid=$id");
                 $arr=array('html'=>$formData['html'],'pict'=>$afrombd[0],
                     'newtour'=>$newtour);
-                my3::dbselreplace($id,$this->tbl,$arr);
-                my3::qdirect('unlock tables');
+                my7::dbselreplace($id,$this->tbl,$arr);
+                my7::qdirect('unlock tables');
                 $s=$db->quote('page/'.$id);
                 $kw=new My_Titlekw($this->rewrtbl,$s);
                 $kw->saveData($formData['title'],$formData['description'],$formData['keywords']);
                 
                 // проставляем тур доступным всем зарегенным туроператорам
                 if (isset($formData['prost1'])) {
-                    $row6=my3::qobj("select topid from $this->treetbl where uid=$id");
+                    $row6=my7::qobj("select topid from $this->treetbl where uid=$id");
                     if ($row6) { //  && $row6->topid==299
-                        $ar4=my3::qlist("select uid from et_zayav where ismoderated=1");
+                        $ar4=my7::qlist("select uid from et_zayav where ismoderated=1");
                         for ($i=0;$i<count($ar4);$i++) {
                             $uid4=$ar4[$i]->uid;
-                            my3::qdirect("replace into et_zayuser (user_id,zay_id) values ($uid4,$id)");
+                            my7::qdirect("replace into et_zayuser (user_id,zay_id) values ($uid4,$id)");
                         }
                     }
                     
                     
                 }
                 
-                my3::goUrl('a7-left/'.$leftview.'/updaterightsave/1');
+                my7::goUrl('a7-left/'.$leftview.'/updaterightsave/1');
             } else {
                 $itd=new My_itdbtr($this->treetbl);
                 $idtree = intval($this->_getParam('idtree', 0));
-                if (!$idtree || !$leftview) my3::amessage('Не все параметры указаны');
+                if (!$idtree || !$leftview) my7::amessage('Не все параметры указаны');
                 $itd->idtree=$idtree;
-                my3::qdirect("lock tables $this->tbl write, $this->treetbl write");
+                my7::qdirect("lock tables $this->tbl write, $this->treetbl write");
                 $arr=array('naim'=>$formData['naim'],'actid'=>$this->actid);
                 $uid2=$itd->append(0,$arr);
                 $arr=array('html'=>$formData['html'],'pict'=>$afrombd[0],
                     'newtour'=>$newtour);
-                my3::dbselreplace($uid2,$this->tbl,$arr);
-                my3::qdirect('unlock tables');
+                my7::dbselreplace($uid2,$this->tbl,$arr);
+                my7::qdirect('unlock tables');
                 $s=$db->quote('page/'.$uid2);
                 $kw=new My_Titlekw($this->rewrtbl,$s);
                 $kw->saveData($formData['title'],$formData['description'],$formData['keywords']);
-                my3::goUrl('a7-left/'.$leftview.'/updaterightsave/1');
+                my7::goUrl('a7-left/'.$leftview.'/updaterightsave/1');
             }
                 }
-            //my3::log('k',$formData);
-            //my3::db()->update($this->tbl,array('html'=>$formData['html']),'sid='.my3::db()->quote($sid));
-            //my3::amessage('Данные сохранены');
+            //my7::log('k',$formData);
+            //my7::db()->update($this->tbl,array('html'=>$formData['html']),'sid='.my7::db()->quote($sid));
+            //my7::amessage('Данные сохранены');
         };
     }
 

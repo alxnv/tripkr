@@ -7,8 +7,8 @@ class My_plusminusstruct {
 //'<select name="sl'+i+'[]">'+se.innerHTML+'</select> ,срок размещения: <select name="sz'+i+'[]" style="width:140px">'+sq.innerHTML+'</select> или до <input type="text" size="10" name="sd'+i+'[]">';
 //
     function gethtml() {
-        $iplus='<img alt="0" width="28" height="30" src="'.my3::baseurl().'img/admin/plus.gif" />';
-        $iminus='<img alt="0" width="28" height="30" src="'.my3::baseurl().'img/admin/minus.gif" />';
+        $iplus='<img alt="0" width="28" height="30" src="'.my7::baseurl().'img/admin/plus.gif" />';
+        $iminus='<img alt="0" width="28" height="30" src="'.my7::baseurl().'img/admin/minus.gif" />';
         $s='<script type="text/javascript">
             function add35(obj) {
             e=d.getElementById("tbl35");

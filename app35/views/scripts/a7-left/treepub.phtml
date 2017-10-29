@@ -4,11 +4,11 @@ Copyright (C) 2010 Александр Воробьев
 */
 ?>
 <nobr>
-    <a href="<?=my3::baseurl()?>a7-left/index/updright/1">На главную страницу</a><br/><hr />
+    <a href="<?=my7::baseurl()?>a7-left/index/updright/1">На главную страницу</a><br/><hr />
     <h4 align="center">Публикации</h4>
 <?
-$tr=new My_itdbtree(my3::getdbprefix().'tree');
+$tr=new My_itdbtree(my7::getdbprefix().'tree');
 $tr->idtree=2;
-$tr->show('ta_hedit',my3::curaction());
+$tr->show('ta_hedit',my7::curaction());
 ?>
 </nobr>

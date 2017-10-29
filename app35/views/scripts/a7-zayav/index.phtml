@@ -4,24 +4,24 @@ $b2=($this->flt596=='');
 <script language="JavaScript">
 function delr(id) {
 if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
- window.location.href='<?=my3::baseurl()?>a7-zayav/rdel/id/'+id;
+ window.location.href='<?=my7::baseurl()?>a7-zayav/rdel/id/'+id;
  };
 };
 function izm(id) {
-window.location.href='<?=my3::baseurl()?>a7-zayav/edit/id/'+id;
+window.location.href='<?=my7::baseurl()?>a7-zayav/edit/id/'+id;
 };
 </script>
 <div align="center">
-    <a href="<?=my3::baseurl()?>a7-zayav/xls">Заявки ТО в виде Excel файла</a><br />
+    <a href="<?=my7::baseurl()?>a7-zayav/xls">Заявки ТО в виде Excel файла</a><br />
 <h1 align="center">Заявки туроператоров на доступ к конфиденциальной информации</h1>
 <p align="center">(серым цветом выделены не одобренные (пока?) заявки)</p>
-<p align="center"><form method="post" action="<?=my3::baseurl()?>a7-zayav/filter">Фильтр
+<p align="center"><form method="post" action="<?=my7::baseurl()?>a7-zayav/filter">Фильтр
     по названию фирмы и E-mail: <input type="text" name="filter"
-   value="<?=my3::nbsh($this->flt596)?>" /> 
+   value="<?=my7::nbsh($this->flt596)?>" /> 
     <input type="submit" value="Применить" />
 </form>
 </p>
-<!--<a href="<?=my3::baseurl()?>a7-news/edit/id/0">Добавить новость</a><br>-->
+<!--<a href="<?=my7::baseurl()?>a7-news/edit/id/0">Добавить новость</a><br>-->
 <br>
 <table border="1" cellpadding="3" cellspacing="0">
 <tr valign="top">
@@ -46,4 +46,4 @@ for ($i=0;$i<count($this->arr);$i++) {
 ?>
 </table>
 </div>
-<? my3::printpages($this->lend); ?>
+<? my7::printpages($this->lend); ?>

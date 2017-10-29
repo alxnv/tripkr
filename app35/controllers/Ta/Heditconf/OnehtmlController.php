@@ -25,7 +25,7 @@ class Ta_Heditconf_OneHtmlController extends My_Ta_HeditconfCommonController {
     }
     public function init() {
         parent::init();
-        $this->imgdir=my3::basepath().'img2/';
+        $this->imgdir=my7::basepath().'img2/';
         
     }
 
@@ -44,24 +44,24 @@ class Ta_Heditconf_OneHtmlController extends My_Ta_HeditconfCommonController {
     public function deleteAction() {
         $id = intval($this->_getParam('id', 0));
         $itd=new My_itdbtree($this->treetbl);
-        my3::qdirect("lock tables $this->tbl write, $this->treetbl write");
+        my7::qdirect("lock tables $this->tbl write, $this->treetbl write");
         // удаляем элемент и все подэлементы в обоих таблицах
         $itd->deletein2tbl($id,$this->tbl);
         //$itd->delete($id,0);
-        //my3::db()->delete($this->tbl,"uid=$id");
-        my3::qdirect('unlock tables');
+        //my7::db()->delete($this->tbl,"uid=$id");
+        my7::qdirect('unlock tables');
 
-        my3::amessage('Запись удалена',1);
+        my7::amessage('Запись удалена',1);
     }
     public function saveAction() {
         // action body
-        global $my3;
+        global $my7;
         $id = intval($this->_getParam('id', 0));
-        //if ($id=='') my3::amessage('Сохранение записи: нет записи с идентификатором '.$sid);
+        //if ($id=='') my7::amessage('Сохранение записи: нет записи с идентификатором '.$sid);
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
-            $db=my3::db();
-            //$dt=my3::dateconv($formData['data1']);
+            $db=my7::db();
+            //$dt=my7::dateconv($formData['data1']);
             $s3='';
             $leftview = $this->_getParam('leftview', 0);
 
@@ -70,33 +70,33 @@ class Ta_Heditconf_OneHtmlController extends My_Ta_HeditconfCommonController {
             if ($id) {
                 //$itd=new My_itdbtree($this->treetbl);
                 //$idtree = intval($this->_getParam('idtree', 0));
-                if (!$leftview) my3::amessage('Не все параметры указаны');
+                if (!$leftview) my7::amessage('Не все параметры указаны');
                 //$itd->idtree=$idtree;
-                my3::qdirect("lock tables $this->tbl write, $this->treetbl write");
+                my7::qdirect("lock tables $this->tbl write, $this->treetbl write");
                 $arr=array('naim'=>$naim2,'actid'=>$this->actid);
-                my3::db()->update($this->treetbl,$arr,"uid=$id");
+                my7::db()->update($this->treetbl,$arr,"uid=$id");
                 $arr=array('html'=>$formData['html']);
-                my3::dbselreplace($id,$this->tbl,$arr);
-                my3::qdirect('unlock tables');
-                my3::goUrl('a7-left/'.$leftview.'/updaterightsave/1');
+                my7::dbselreplace($id,$this->tbl,$arr);
+                my7::qdirect('unlock tables');
+                my7::goUrl('a7-left/'.$leftview.'/updaterightsave/1');
             } else {
                 $itd=new My_itdbtree($this->treetbl);
                 $idtree = intval($this->_getParam('idtree', 0));
-                if (!$idtree || !$leftview) my3::amessage('Не все параметры указаны');
+                if (!$idtree || !$leftview) my7::amessage('Не все параметры указаны');
                 $itd->idtree=$idtree;
-                my3::qdirect("lock tables $this->tbl write, $this->treetbl write");
+                my7::qdirect("lock tables $this->tbl write, $this->treetbl write");
                 $arr=array('naim'=>$naim2,'actid'=>$this->actid);
                 $uid2=$itd->append(0,$arr);
                 $fpnum2=$this->getNewFpnum();
                 $arr=array('fpnum'=>$fpnum2,'html'=>$formData['html']);
-                my3::dbselreplace($uid2,$this->tbl,$arr);
-                my3::qdirect('unlock tables');
-                my3::goUrl('a7-left/'.$leftview.'/updaterightsave/1');
+                my7::dbselreplace($uid2,$this->tbl,$arr);
+                my7::qdirect('unlock tables');
+                my7::goUrl('a7-left/'.$leftview.'/updaterightsave/1');
             }
                 }
-            //my3::log('k',$formData);
-            //my3::db()->update($this->tbl,array('html'=>$formData['html']),'sid='.my3::db()->quote($sid));
-            //my3::amessage('Данные сохранены');
+            //my7::log('k',$formData);
+            //my7::db()->update($this->tbl,array('html'=>$formData['html']),'sid='.my7::db()->quote($sid));
+            //my7::amessage('Данные сохранены');
     }
 
 
