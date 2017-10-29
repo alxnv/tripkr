@@ -1,6 +1,6 @@
 <? include ("blocks/bd.php");/*Соединяемся с базой*/ 
 $result = mysql_query("SELECT * FROM settings WHERE page='about'",$db);
-if (!$result)
+if (!$result)   
 {
 echo "<p>Запрос на выборку данных из базы не рошел, напишите об этом администратору.<br><strong>Код ошибки:</strong></p>";
 exit (mysql_error());
