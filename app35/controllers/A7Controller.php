@@ -36,7 +36,8 @@ public function loginAction()
             //$this->view->kr=$del;
                 //$pwdsite=Zend_Registry::get('config');
                 //var_dump($pwdsite); exit;
-                $pwdadm=my7::getadminpass();
+                $obj3=my7::qobjS("select * from et_cpusers where login='$1'", array('admin'));
+                $pwdadm=$obj3->pwd;
                 if ($l4==$_SESSION['captcha_keystring'] && $pwd==$pwdadm) {
                     $_SESSION['login']='admin5';
                     //gopage4('a7-main');
