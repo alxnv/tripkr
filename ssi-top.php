@@ -14,6 +14,7 @@ if (!isset($_SESSION['notfirstpagethissession'])) {
 <meta name="description" content="US Korea - сайт о Корее для туристов и профессионалов турбизнеса. Корея, туры" />
 <meta name="keywords" content="Korea, Корея, US Korea, US Travel, туры" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
+<link rel="icon" type="image/png" href="<?=BS?>images/favicon.png" />
 <link rel="stylesheet" type="text/css" href="<?=BS?>style.css" />
 <link rel="stylesheet" type="text/css" href="<?=BS?>css/contact.css" />
 <? if (APPLICATION_ENV=='production') { ?>
