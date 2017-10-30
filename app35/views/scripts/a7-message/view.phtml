@@ -1,3 +1,6 @@
+<?
+// если issession==1, то выводимое сообщение передается в $_SESSION['message8']
+?>
 <script language="JavaScript">
 <?
 if ($this->updleft<>'') {
@@ -42,7 +45,7 @@ if (true) { //((isset($_GET['e']))||(isset($adb1))) {
   $e=$adb1;
   $e=str_replace("<br>","@",$e);
   } else {
-  $e=str_replace("<br>","@",$this->msg);
+  $e=str_replace("<br>","@",($this->insession ? $_SESSION['message8'] : $this->msg));
   };
  $e=$this->escape($e);
  $e=str_replace("'","",$e);

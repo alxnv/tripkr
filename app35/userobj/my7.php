@@ -11,11 +11,15 @@ class my7 {
 // ftp://u145948@u145948.ftp.masterhost.ru/id-online.ru/www/misc/tmfmosk.ru/FCKeditor/_samples/lasso/application-mozg
     public $baseurl=null;
     public $basepath=null;
+    public $hostname=null;
     public $_num=1;
 	const LOG_DATA=false; // работает ли функция log()
+    const SITEMAIL='mow.ustravel@gmail.com'; //  mail администратора сайта. на него отсылаются все оповещения
 
     function __construct() {
         $this->baseurl=dirname($_SERVER['SCRIPT_NAME']).'/';
+        //$pu=parse_url($_SERVER['SCRIPT_NAME']);
+        $this->hostname=$_SERVER['SERVER_NAME'];
         if ($this->baseurl=='//') $this->baseurl='/';
         $this->basepath=dirname($_SERVER["SCRIPT_FILENAME"]).'/';
     }
@@ -91,11 +95,12 @@ class my7 {
 
 /**
  * Вывести страницу с сообщением c выравниванием по левому краю
+ * сообщение передается в $_SESSION['message8']
  * @param <type> $s
  * @param <type> $updleft 
  */
-    static public function amessageleft($s,$updleft=0) {
-        my7::goUrl('a7-message/view/alignleft/1/'.($updleft ? 'updleft/1/' : '').'id/'.urlencode($s));
+    static public function amessageleft($updleft=0) {
+        my7::goUrl('a7-message/view/alignleft/1/'.($updleft ? 'updleft/1/' : '').'insession/1');
     }
     /**
      * перейти в браузере к странице ввода пароля
@@ -126,6 +131,16 @@ class my7 {
         return $my7->basepath;
     }
 
+    /**
+     * возвращает имя сайта
+     * @global <type> $my7
+     * @return <type> 
+     */
+    static public function hostName() {
+        global $my7;
+        return $my7->hostname;
+    }
+
     /*function gofrombaseurl($helper) {
         // ? не работает ?
         // переход на url относительно базового урла проекта
@@ -154,6 +169,7 @@ class my7 {
 
     /**
      * записать отладочное сообщение в лог-файл
+     * !!! если my7::LOG_DATA===false то записи лога не происходит!
      * @param <type> $s
      * @param <type> $s2
      * @param <type> $stp
@@ -216,6 +232,16 @@ class my7 {
         // получение адаптера приложения
         return Zend_Db_Table::getDefaultAdapter();
     }
+
+    public static  function encodeheader($input, $charset = 'UTF-8')
+{
+	$s='';
+	for ($i=0;$i<strlen($input);$i++)
+		{
+		$s.='='.strtoupper(dechex(ord(substr($input,$i,1))));
+		};
+	return '=?'.$charset.'?Q?'.$s.'?=';
+}
 
     /**
      * выполняет команду БД select и возвращает массив объектов

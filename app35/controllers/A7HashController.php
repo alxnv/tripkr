@@ -9,6 +9,7 @@ class A7HashController extends Zend_Controller_Action
 
     public function init()
     {
+        my7::checkadm();
         /* Initialize action controller here */
     }
 
@@ -23,6 +24,8 @@ class A7HashController extends Zend_Controller_Action
     public function saveAction()
     {
         if ($this->getRequest()->isPost()) {
+
+            $db=my7::db();
             $formData = $this->getRequest()->getPost();
             //my7::log('k',$formData);
             $pwd=$formData['pwd'];
@@ -33,7 +36,7 @@ class A7HashController extends Zend_Controller_Action
             }
             $arr=my7::qobjarrayS("select * from et_zayav where pwd='$1' and ismoderated=1 order
                 by email", array($pwd));
-            $errs=array();
+            $errs='';
             $numerrs=0;
             //var_dump($arr);
             //exit;
@@ -44,24 +47,24 @@ class A7HashController extends Zend_Controller_Action
                 $repeat=false;
                 do {
                     $hash=my7::generatetexthash(32);
-                    try {
-                        my7::qobjS("insert into et_hashlogin (hash,login,date_generated,date_expired)
-                            values ('$1','$2',now(),now()+$3 days)",
-                                array($hash,$arr[$i]->login,intval($formData['days'])));
-                    } catch(Exception $e){
-                        $repeat=true;
-
-                    }
+                    $data = array( 'hash' => $hash,
+		    'login' => $arr[$i]->login,
+		    'date_generated' => 'now()',
+		    'date_expired' => 'now()+ interval $3 day');
+                    $db->insert('et_hashlogin', $data);
+                        /*my7::qobjS("insert into et_hashlogin (hash,login,date_generated,date_expired)
+                            values ('$1','$2',now(),now()+ interval $3 day)",
+                                array($hash,$arr[$i]->login,intval($formData['days'])));*/
                 } while ($repeat);
                 
                 // отсылаем письмо
-                $email=$formData['email'];
+                $email=$arr[$i]->email;
                 $err='';
 		$sitemail=my7::SITEMAIL;
 		$msg=$formData['frm'];
                 $msg=  str_replace('@fio@', $arr[$i]->fio, $msg);
-                $msg=  str_replace('@firm@', $arr[$i]->firm, $msg);
-                $lnk1=my7::baseUrl().'/secret_change_pwd.php?hash='.$hash;
+                $msg=  str_replace('@firm@', $arr[$i]->naimfirm, $msg);
+                $lnk1=$_SERVER["REQUEST_SCHEME"].'://'.my7::hostName().my7::baseUrl().'secret_change_pwd.php?hash='.$hash;
                 $msg=  str_replace('@link@', '<a href="'.$lnk1.'">'.$lnk1.'</a>', $msg);
                 $headers = 'From: <'.$email.">\nReply-To: ".$email."\n";
 		$headers .= "MIME-Version: 1.0\n";
@@ -71,17 +74,18 @@ class A7HashController extends Zend_Controller_Action
                 my3::log('hdr2',$hdr2);
                 my3::log('msg',$msg);
                 my3::log('headers',$headers);*/
-		if (!mail($sitemail,$hdr2,$msg, $headers)) {
-                    $err=$formData['login']."<br>";
+		if (!mail($email,$hdr2,$msg, $headers)) {
+                    $err=$arr[$i]->login."<br>";
                     $errs=$errs.$err;
                     $numerrs++;
                 }
                 
             }
-            
-            my7::amessageleft('Email отправлены и доступ к личным страничкам по смене пароля предоставлен
-                <br>Всего '.count($arr)-$numerrs.' сообщений отправлено'.
-                    ($numerrs>0 ? '<br>Не отправлены сообщения следующим пользователям:<br>'.$errs : ''));
+
+            $_SESSION['message8']='Email отправлены и доступ к личным страничкам по смене пароля предоставлен
+                <br>Всего '.(count($arr)-$numerrs).' сообщений отправлено'.
+                  ($numerrs>0 ? '<br>Не отправлены сообщения следующим пользователям:<br>'.$errs : '');
+            my7::amessageleft('session');
         };
         
     }

@@ -10,6 +10,11 @@ class A7Controller extends Zend_Controller_Action
         /* Initialize action controller here */
     }
 
+    public function indexPhpAction() {
+        // для редиректа с дебаггера
+        $this->_redirect('a7');
+
+        }
     public function indexAction()
     {
         // action body
