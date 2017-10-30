@@ -5,7 +5,7 @@
 */
 $uri2=htmlspecialchars(substr('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
 ?>
-<div style="position:absolute;width:150px;right:0;overflow:hidden">
+<div style="position:relative;width:150px;overflow:hidden">
 <div style="position:absolute;top:10px">
 <a href="https://twitter.com/share" class="twitter-share-button" id="tweet5">Tweet</a>
 <script type="text/javascript">

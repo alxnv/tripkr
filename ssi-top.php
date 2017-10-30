@@ -99,7 +99,7 @@ notfpthissess=<?=$notfirstpagethissession?>;
 <tr class="bw0 pr1">
 <td><div style="width:100%;position:relative"><? if (APPLICATION_ENV=='production') include "ssi-clocks.php";?></div></td>
 <td><div style="margin:0 auto;width:601px"><img src="<?=BS?>img/tripkr-zag.jpg" alt="" id="img_cat" width="601" height="125" /></div></td>
-<td valign="top" align="right"><? if (APPLICATION_ENV=='production') include "ssi-social.php"; ?></td>
+<td valign="top" align="right"><? if (true || APPLICATION_ENV=='production') include "ssi-social.php"; ?></td>
 </tr>
 
 <tr>
