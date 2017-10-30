@@ -23,6 +23,7 @@ class A7MessageController extends Zend_Controller_Action
         // action body
         $msg = $this->_getParam('id', '');
         $this->view->updleft = $this->_getParam('updleft', '');
+        $this->view->alignleft = $this->_getParam('alignleft', 0);
         $this->view->msg=$msg;
         //$this->view->pr=$this->_getAllParams();
     }

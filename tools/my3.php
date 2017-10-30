@@ -148,6 +148,78 @@ return $s;
         header('Location: '.my3::baseurl().$s);
         exit;
     }
+
+/**
+     * заменяет в строке один подмассив вхождений с координатами на другой
+     * параметры в строке запроса $s - вида $1, $2, ...
+     * @param string $s строка в которой заменяется
+     * @param array $arr1 массив в каждой строке которого массив из двух
+        * элементов (строка,координаты в строке $s)
+     * @param array $arr2 массив заменяющих значений
+     * @return string
+     */
+
+    static function repltextarray($s,$arr1,$arr2) {
+
+        $last=strlen($s);
+        $s2='';
+        $modifiedindex=-1;
+        for ($i=count($arr1)-1;$i>=0;$i--) {
+            if ($arr1[$i][0]!=$arr2[$i]) {
+                $ps2=$arr1[$i][1]+strlen($arr1[$i][0]);
+                $s2=$arr2[$i].substr($s,$ps2,$last-$ps2).$s2;
+                $last=$arr1[$i][1];
+                $modifiedindex=$i;
+            }
+        }
+        if ($modifiedindex==-1) {
+            $s2=$s;
+        } else {
+            $s2=substr($s,0,$arr1[$modifiedindex][1]).$s2;
+        }
+        return $s2;
+    }
+
+
+    
+    /**
+     * выполняет команду БД select и возвращает 1 объект
+     * экранирует строки в аргументах
+     * параметры в строке запроса $s - вида $1, $2, ...
+     * @param string $s
+     * @param array $arr
+     * @return <type>
+     */
+    static public function qobjS($s, $arr) {
+        $arr2=array();
+        for ($i=0;$i<count($arr);$i++) {
+            if (is_string($arr[$i])) {
+                $arr2[] =  mysql_real_escape_string($arr[$i]);
+            } else {
+                $arr2[] = $arr[$i];
+            }
+        }
+        $mtch=array();
+        preg_match_all('/(\$\d+)/m',$s,&$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
+
+        // убераем лишнюю информацию
+        $mtch2=array();
+        for ($i=0;$i<count($mtch);$i++) {
+            $mtch2[]=$mtch[$i][1];
+        }
+
+        // проставляем соответствия '$n'
+        $zam2=array();
+        for ($i=0;$i<count($mtch2);$i++) {
+            $zam2[]=strval($arr[intval(substr($mtch2[$i][0],1))-1]);
+        }
+
+        $s3=  my7::repltextarray($s, $mtch2, $zam2);
+        global $db3;
+        return $db3->qobj($s);
+    }
+
+    
     public static  function qobj($s) {
         global $db3;
         return $db3->qobj($s);

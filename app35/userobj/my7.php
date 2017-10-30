@@ -20,7 +20,26 @@ class my7 {
         $this->basepath=dirname($_SERVER["SCRIPT_FILENAME"]).'/';
     }
 
-/**
+ /**
+ * генерировать случайный хэщ из заданного количества цифр и строчных и заглавных букв
+ * @param integer $len
+ * @return string 
+ * 
+ */
+    static function generatetexthash($len) {
+        $s='';
+        for ($i=0;$i<$len;$i++) {
+            $n=rand(1,10+26+25);
+            if ($n<10) $c=chr(ord('0')+$n-1);
+                else if ($n<10+26) $c=chr(ord('a')+$n-10);
+                    else $c=chr(ord('A')+$n-10-26);
+            $s=$s.$c;
+            //var_dump($s);
+        }
+        return $s;
+    }
+    
+ /**
  * получить имя текущего контроллера
  * @return <type> 
  * 
@@ -70,6 +89,14 @@ class my7 {
         my7::goUrl('a7-message/view/'.($updleft ? 'updleft/1/' : '').'id/'.urlencode($s));
     }
 
+/**
+ * Вывести страницу с сообщением c выравниванием по левому краю
+ * @param <type> $s
+ * @param <type> $updleft 
+ */
+    static public function amessageleft($s,$updleft=0) {
+        my7::goUrl('a7-message/view/alignleft/1/'.($updleft ? 'updleft/1/' : '').'id/'.urlencode($s));
+    }
     /**
      * перейти в браузере к странице ввода пароля
      */
@@ -247,6 +274,7 @@ class my7 {
     
     /**
      * выполняет команду БД select и возвращает 1 объект
+     * экранирует строки в аргументах
      * параметры в строке запроса $s - вида $1, $2, ...
      * @param string $s
      * @param array $arr
@@ -280,6 +308,44 @@ class my7 {
         $db=my7::db();
         $db->setFetchMode(Zend_Db::FETCH_OBJ);
         return $db->fetchRow($s3);
+    }
+
+    /**
+     * выполняет команду БД select и возвращает массив объектов
+     * экранирует строки в аргументах
+     * параметры в строке запроса $s - вида $1, $2, ...
+     * @param string $s
+     * @param array $arr
+     * @return <type>
+     */
+    static public function qobjarrayS($s, $arr) {
+        $arr2=array();
+        for ($i=0;$i<count($arr);$i++) {
+            if (is_string($arr[$i])) {
+                $arr2[] =  mysql_real_escape_string($arr[$i]);
+            } else {
+                $arr2[] = $arr[$i];
+            }
+        }
+        $mtch=array();
+        preg_match_all('/(\$\d+)/m',$s,&$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
+
+        // убераем лишнюю информацию
+        $mtch2=array();
+        for ($i=0;$i<count($mtch);$i++) {
+            $mtch2[]=$mtch[$i][1];
+        }
+
+        // проставляем соответствия '$n'
+        $zam2=array();
+        for ($i=0;$i<count($mtch2);$i++) {
+            $zam2[]=strval($arr[intval(substr($mtch2[$i][0],1))-1]);
+        }
+
+        $s3=  my7::repltextarray($s, $mtch2, $zam2);
+        $db=my7::db();
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
+        return $db->fetchAll($s3);
     }
 
     /**
