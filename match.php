@@ -40,7 +40,7 @@ $s="select *,$3 from jkjlk
     where login='$1' and num=$3 order by $2";
 $mtch=array();
 $zam=array('xjx','id', 4);
-preg_match_all('/(\$\d+)/m',$s,&$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
+preg_match_all('/(\$\d+)/m',$s,$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
 
 // убераем лишнюю информацию
 $mtch2=array();

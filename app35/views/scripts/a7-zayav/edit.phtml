@@ -64,7 +64,7 @@ function doallsel() {
          <input type="hidden" name="hy'.$i1.'" value="'.$row->uid.'" /></li>';
                 if (isset($aro[$n])) {
                     $i1++;
-                    printtree5(&$aro,$n,$i1);
+                    printtree5($aro,$n,$i1);
                     $i1--;
                 }
                 $i1++;
@@ -74,7 +74,7 @@ function doallsel() {
 
     }
 $i1=1; // сквозной индекс
-printtree5(&$this->zayavna, 299, $i1);
+printtree5($this->zayavna, 299, $i1);
 
 /*for ($i=0;$i<count($this->zayavna);$i++) {
     $row=$this->zayavna[$i];

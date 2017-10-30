@@ -100,7 +100,7 @@ ob_end_clean ();
 
 if (isset($conf35['rewr'])) {
     // заменяем в тексте информацию
-    $row2=&$conf35['rewr'];
+    $row2=$conf35['rewr'];
     // если нет такой записи в БД, то берем пустые значения
     //print_r($row2);
     if ($row2->title<>'') {

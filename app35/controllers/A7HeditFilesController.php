@@ -57,7 +57,7 @@ class A7HeditFilesController extends Zend_Controller_Action {
                     $rf2='';
                 };
                 $sfl=$f3->preprocess1($formData,'userfile','idl',$rf2,
-                        &$aimnums,&$adel,&$afrombd);
+                        $aimnums,$adel,$afrombd);
                 my7::log('e',$sfl);
                 my7::log('afr',$afrombd);
                 $aval2=array('doc','docx','xls','rar','zip');
@@ -65,8 +65,8 @@ class A7HeditFilesController extends Zend_Controller_Action {
                         array(0,$aval2,0,0,0,0));
 
                 $achanged=array();
-                $s3=$f3->move_upl($f3->nfiles,$this->imgdir,'',&$afrombd,$arfinfo,$adel,
-                        $aimnums,&$achanged,'',0,0);
+                $s3=$f3->move_upl($f3->nfiles,$this->imgdir,'',$afrombd,$arfinfo,$adel,
+                        $aimnums,$achanged,'',0,0);
                 //if ($in15=='' && $isedit1) $in15=$row->bigpict;
             };
 

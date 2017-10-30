@@ -42,7 +42,7 @@
                 echo '<li>'.$s1.'<a href="'.BS.'page/'.$row->uid.'">'.my3::nbsh($row->naim).'</a>'.$s2.'</li>';
                 if (isset($aro[$n])) {
                     $i1++;
-                    printtree5(&$aro,$n,$i1);
+                    printtree5($aro,$n,$i1);
                     $i1--;
                 }
                 $i1++;

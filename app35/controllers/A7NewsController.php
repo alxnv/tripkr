@@ -98,7 +98,7 @@ class A7NewsController extends Zend_Controller_Action {
                 };
                 $achanged = array();
                 $f3 = new My_upload();
-                $s3 = $f3->move_upl(1, $this->imgdir, '', &$afrombd, $arfinfo, $adel, $aimnums, &$achanged, 'crthumb', 0, 0);
+                $s3 = $f3->move_upl(1, $this->imgdir, '', $afrombd, $arfinfo, $adel, $aimnums, $achanged, 'crthumb', 0, 0);
                 //if ($in15=='' && $isedit1) $in15=$row->bigpict;
             };
 
