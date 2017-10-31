@@ -4,9 +4,10 @@
 <div class="yashare-auto-init" style="margin-top:20px" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj"></div> 
 */
 $uri2=htmlspecialchars(substr('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
+$dummy='http://gokoreatour.ru';
 ?>
-<div style="position:relative;width:150px;overflow:hidden">
-<div style="position:absolute;top:10px">
+<div style="position:relative;margin-left:42px;overflow:hidden">
+<?/*<div style="position:absolute;top:10px">
 <a href="https://twitter.com/share" class="twitter-share-button" id="tweet5">Tweet</a>
 <script type="text/javascript">
 document.getElementById('tweet5').setAttribute( 'data-text',"<?=my3::nbsh($title).' '.$uri2?>");
@@ -52,6 +53,32 @@ document.getElementById('fb7').setAttribute( 'data-action',"recommend");
 </div>
  * 
  */?>
+    <div class="newsocial" style="margin-top:20px;position:relative">
+        <div style="float:left">
+            <a target="_blank" href="http://twitter.com/share?text=Поделиться страничкой сайта gokoreatour.ru&url=<?=$uri2?>"><img src="<?=BS?>images/c_tweetter.jpg"
+               width="33" height="33" border="0" /></a>
+        </div>
+        <div style="float:left;margin-left:10px">
+        <a target="_blank" href="http://vk.com/share.php?description=Поделиться страничкой сайта gokoreatour.ru&url=<?=$uri2?>"><img
+                src="<?=BS?>images/c_vk.jpg"
+               width="33" height="33" border="0" /></a>
+        </div>
+        <div style="float:left;margin-left:10px">
+            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?=urlencode($uri2)?>"><img
+                src="<?=BS?>images/c_fb.jpg"
+               width="33" height="33" border="0" /></a>
+        </div>
+        <div style="float:left;margin-left:10px">
+            <a target="_blank" href="https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl=<?=urlencode($uri2)?>"><img
+                src="<?=BS?>images/c_ok.jpg"
+               width="33" height="33" border="0" /></a>
+        </div>
+        <?/*<div style="float:left;margin-left:10px">
+            <a target="_blank" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=<?=($uri2)?>&st.comments=Поделитесь страничкой с сайта gokoreatour.ru"><img
+                src="<?=BS?>images/c_ok.jpg"
+               width="33" height="33" border="0" /></a>
+        </div>*/?>
+</div>
 <div style="clear:both"></div>
 </div>
 <?
