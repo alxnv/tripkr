@@ -105,7 +105,7 @@ $title='Акция';
 <p align="center">
 	<span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;"><strong>ПРИ ПОДДЕРЖКЕ&nbsp;</strong></span></span></p>
 <p align="center">
-	<span style="font-size:28px;"><span style="font-family:arial,helvetica,sans-serif;"><a href="http://tripkr.ru"><strong><img border="0" alt="" src="<?=BS?>img/verstka/niz.jpg" style="width: 642px; height: 104px;" /></strong></a></span></span></p>
+	<span style="font-size:28px;"><span style="font-family:arial,helvetica,sans-serif;"><a href="<?=my3::SITE?>"><strong><img border="0" alt="" src="<?=BS?>img/verstka/niz.jpg" style="width: 642px; height: 104px;" /></strong></a></span></span></p>
 
 
 

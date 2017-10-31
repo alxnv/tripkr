@@ -138,7 +138,7 @@ class A7ZayavController extends Zend_Controller_Action {
 
         $xls->BOF(); //начинаем собирать файл
         /*первая строка*/
-        $xls->WriteLabel(1,0,"Заявки туроператоров на сайте tripkr.ru от ".date("d.m.Y H:i:s",time()));
+        $xls->WriteLabel(1,0,"Заявки туроператоров на сайте gokoreatour.ru от ".date("d.m.Y H:i:s",time()));
         /*вторая строка*/
         $xls->WriteLabel(2,0,"№ порядковый");
         $xls->WriteLabel(2,1,"Дата регистрации");
