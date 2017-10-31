@@ -55,7 +55,7 @@ document.getElementById('fb7').setAttribute( 'data-action',"recommend");
  */?>
     <div class="newsocial" style="margin-top:20px;position:relative">
         <div style="float:left">
-            <a target="_blank" href="http://twitter.com/share?text=Поделиться страничкой сайта gokoreatour.ru&url=<?=$uri2?>"><img src="<?=BS?>images/c_tweetter.jpg"
+            <a target="_blank" href="http://twitter.com/share?text=Туры в Южную Корею&url=<?=$uri2?>"><img src="<?=BS?>images/c_tweetter.jpg"
                width="33" height="33" border="0" /></a>
         </div>
         <div style="float:left;margin-left:10px">
