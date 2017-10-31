@@ -11,6 +11,7 @@ class my3 {
     public $baseurl=null;
     public $basepath=null;
     const SITEMAIL='mow.ustravel@gmail.com'; //  mail администратора сайта. на него отсылаются все оповещения
+    const SITE='http://gokoreatour.ru'; //  сайт
 
     function __construct() {
         $this->baseurl=dirname($_SERVER['SCRIPT_NAME']).'/';

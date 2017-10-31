@@ -18,8 +18,9 @@ echo my3::nbsh($lgnuid3->login).' ';
 ?>
 <a href="<?=BS?>work/logout"  style="margin-left:30px" onClick="return window.confirm('Вы уверены что хотите выйти из личного кабинета?')">Выйти</a>
 <a href="<?=BS?>register" style="margin-left:30px">Регистрация</a>
-<a href="<?=BS?>retpwd" style="margin-left:30px">Восстановить пароль</a>
-<a href="<?=BS?>allnewsto/0" style="margin-left:30px">Новости для туроператоров</a>
+<a href="<?=BS?>retpwd" style="margin-left:30px">Восстановить&nbsp;пароль</a>
+<a href="<?=BS?>allnewsto/0" style="margin-left:30px">Новости&nbsp;для&nbsp;туроператоров</a>
+<a href="<?=BS?>changepwd_turops" style="margin-left:30px">Изменить&nbsp;пароль</a>
 </p>
 
 <?

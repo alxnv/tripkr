@@ -9,7 +9,7 @@ $uid2=intval($_GET['uid']);
 $row2=$db3->qobj("select * from et_newsto where uid=$uid2");
 $title='US Korea. Новость';
 if (!testlogged()) {
-	header('Location: http://tripkr.ru');
+	header('Location: '.my3::SITE);
 	exit;
 }
 

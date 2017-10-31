@@ -5,7 +5,7 @@ require_once "funct1.php";
 $spp=10;
 $title='US Korea. Новости для туроператоров';
 if (!testlogged()) {
-	header('Location: http://tripkr.ru');
+	header('Location: '.my3::SITE);
 	exit;
 }
 //$row2=$db3->qobj("select * from mg_html where sid='".$db3->escape($uid)."'");

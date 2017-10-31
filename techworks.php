@@ -1,10 +1,10 @@
 <?php
-
+// не требуется
 /*
 работы по оптимизации базы данных
 вызывается каждое сотое открытие страницы на сайте
   */
 
 // удаляем доступ к личным страницам по смене пароля для записей которые expired
-my3::q("delete from et_hashlogin where date_expired<now()");
+//my3::q("delete from et_hashlogin where date_expired<now()");
 ?>

@@ -4,6 +4,7 @@
 error_reporting (E_ALL);
 @session_start();
 require_once 'tools/my3.php';
+include "funct1.php";
 $my3=new my3();
 
 if (isset($_GET['uid']) && $_GET['uid']=='logout') {
@@ -13,6 +14,39 @@ if (isset($_GET['uid']) && $_GET['uid']=='logout') {
 	header('Location: '.my3::baseurl().'page/41'); // загл страница туроператоров
 	
 }
+
+
+if (isset($_GET['uid']) && $_GET['uid']=='changepwd' && count($_POST)>0) {
+	// изменение пароля для зарегистрированного пользователя
+    if (!testlogged()) { // если это не зашедший по паролю туроператор
+            header('Location: '.my3::SITE);
+            exit;
+    }
+
+    if (!isset($_POST['pwd']) || !isset($_POST['pwd2']))  die('Не все параметры указаны');
+	$s3='';
+        
+	$pwd=mysql_real_escape_string(substr($_POST['pwd'],0,200));
+	$pwd2=mysql_real_escape_string(substr($_POST['pwd2'],0,200));
+        if ($pwd<>$pwd2) $s3.="Введенные пароли не совпадают\n";
+
+	if ($s3<>'') {
+		$_SESSION['err34']=$s3;
+		header('Location: '.my3::baseurl().'changepwd_turops');
+	} else {
+		// записываем новый пароль в бд
+
+            global $lgnuid3;
+            $lgn=mysql_real_escape_string($lgnuid3->login);
+            my3::q("update et_zayav set pwd='$pwd' where login='$lgn' and ismoderated=1");
+            $month = time()+60*60*24*30; //mktime(0,0,0,1,1,2030);
+            
+            setcookie('pwd', MD5(substr($_POST['pwd'],0,200)), $month, '/');
+            my3::gotomessage('Пароль был изменен');	
+	}
+	
+}
+
 
 if (isset($_GET['uid']) && $_GET['uid']=='retpwd' && count($_POST)>0) {
 	// вход по паролю и логину

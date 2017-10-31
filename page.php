@@ -78,6 +78,7 @@ if ($hotel_info) {
 
 if ($uid2==41) {
 	// туроператоры
+    //var_dump($_COOKIE);
 	include "ssi-turopreglogin.php";
 }
 

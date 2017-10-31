@@ -1,6 +1,7 @@
 <?php
 
 /*
+ * !!!! не используется
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -9,6 +10,7 @@ class A7HashController extends Zend_Controller_Action
 
     public function init()
     {
+        exit;
         my7::checkadm();
         /* Initialize action controller here */
     }
