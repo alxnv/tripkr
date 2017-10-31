@@ -38,7 +38,8 @@
 <hr class="hr2" noshade="noshade" />
 <p id="svyaz">Тел.: (495) 728-88-95 |
 
-E-mail: <?=mailaddrreplacer('<a href="mailto:mow.ustravel@gmail.com">mow.ustravel@gmail.com</a>')?>
+E-mail: <?=mailaddrreplacer('<a href="mailto:mow.ustravel@gmail.com">mow.ustravel@gmail.com</a>')?><br />
+&copy; Воробьёв А.Б., 2012-<?php echo date('Y') ?>
 </p>
 
 </td>
