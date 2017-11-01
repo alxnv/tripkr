@@ -16,7 +16,7 @@ if($sid=='index') $title='US Korea';
 
 <?
 if ($sid<>'index') echo '<h1 class="title">'.my3::nbsh($row->naim).'</h1>';
-echo mailaddrreplacer($row->html);
+echo mailaddrreplacer(my3::repldomain($row->html));
 ?>
 
 

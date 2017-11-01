@@ -24,6 +24,6 @@ if ($id1<>-1) echo '</ul></li>';
 
 echo '</ul><br /><br />';
  
-echo mailaddrreplacer($row2->html);
+echo mailaddrreplacer(my3::repldomain($row2->html));
 
 ?>

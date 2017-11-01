@@ -24,7 +24,7 @@ else if (isset($ismed)) {
 } else {
     $wh2=' and b.flags=0';
 }
-echo mailaddrreplacer($row2->html);
+echo mailaddrreplacer(my3::repldomain($row2->html));
 echo '<br />';
 $arr=my3::qlist("select a.uid,b.pict,a.naim,b.fpnum,b.newtour,b.newtourta  from et_tree a,et_ta_html b
     where a.idtree=2 and a.uid=b.uid $wh2 and b.".$fld."<>'' order by a.ordr desc");

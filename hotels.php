@@ -10,7 +10,7 @@ for ($i=0;$i<count($arr);$i++) {
 }
 
 echo '</ul></div><div style="float:left">';
-echo mailaddrreplacer($row2->html);
+echo mailaddrreplacer(my3::repldomain($row2->html));
 echo '</div><div style="clear:both"></div>';
 
 ?>

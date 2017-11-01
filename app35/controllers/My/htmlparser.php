@@ -1,7 +1,8 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
@@ -123,111 +124,3 @@ class my_htmlparser {
         }
 }
 } //end class
-
-/**
-     * парсит html и заменяет если текущий сайт домен на https://www.gokoreatour.ru
-     * @param string $s исходная строка
-     * @return string
-     */
-function repldomain($s) {
-    $pr=new my_htmlparser('/(\<(img)([^>]+)\>)/mi',$s);
-    for ($i=0;$i<$pr->count;$i++) {
-        if ($pr->hasAttr($i, 'src')) {
-            $addr=$pr->getValue($i,'src');
-            $s2=parse_url($addr);
-            if (isset($s2['host'])) {
-                $sl=strtolower($s2['host']);
-                $hashost=1;
-            } else {
-                $hashost=0;
-            };
-            $s3=$addr;
-            if ($hashost && in_array($sl,
-                    array('gokoreatour.ru','гокореатур.рф','tripkr.ru',
-                        'www.gokoreatour.ru','www.гокореатур.рф','www.tripkr.ru'))) {
-                if (!($s2['scheme']=='https' && $sl=='www.gokoreatour.ru')) {
-                    // заменяем на https://www.gokoreatour.ru
-                    $s3='https://www.gokoreatour.ru'.$s2['path'];
-                    if (isset($s2['query'])) $s3.='?'.$s2['query'];
-                }
-            if ($s3<>$addr) $pr->setValue($i,'src',$s3);    
-            }
-        }
-    }
-    return $pr->repltextarray();
-    
-}
-
-/**
-     * заменяет в строке один подмассив вхождений с координатами на другой
-     * параметры в строке запроса $s - вида $1, $2, ...
-     * @param string $s строка в которой заменяется
-     * @param array $arr1 массив в каждой строке которого массив из двух
-        * элементов (строка,координаты в строке $s)
-     * @param array $arr2 массив заменяющих значений
-     * @return string
-     */
-
-function repltextarray($s,$arr1,$arr2) {
-    
-    $last=strlen($s);
-    $s2='';
-    $modifiedindex=-1;
-    for ($i=count($arr1)-1;$i>=0;$i--) {
-        if ($arr1[$i][0]!=$arr2[$i]) {
-            $ps2=$arr1[$i][1]+strlen($arr1[$i][0]);
-            $s2=$arr2[$i].substr($s,$ps2,$last-$ps2).$s2;
-            $last=$arr1[$i][1];
-            $modifiedindex=$i;
-        }
-    }
-    if ($modifiedindex==-1) {
-        $s2=$s;
-    } else {
-        $s2=substr($s,0,$arr1[$modifiedindex][1]).$s2;
-    }
-    return $s2;
-}
-
-/*$s='<p align="center">
-        <img width="40" 
-        src="go.php" />
-        <b>go</b> <img name="hgfdh">
-            ';*/
-
-$s='<p align="center">
-        <img width="40" 
-        src="https://www.гокореатур.рф/jjkjk/" />
-        <b>go</b> <img name="hgfdh">
-            ';
-
-$mtch2=array();
-$zam=array('xjx','id', 4);
-//preg_match_all('/(\<(img)(!\>)+\>)/mi',$s,$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
-$regex='/(\<(img)([^>]+)\>)/mi';
-/*preg_match_all($regex,$s,$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
-
-for ($i=0;$i<count($mtch);$i++) {
-//    $reg2='/(\w+)\s.\=\s.[\"|\\'."'".']([\d|\w]+)[\"|\\'."'".']/mi';
-    $reg2='/(\w+)\s*\=\s*[\"|\\'."'".']([^\"\\'."'".']*)[\"|\\'."'".']/mi';
-    preg_match_all($reg2,$mtch[$i][3][0],$mtch3, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
-//    var_dump('mtch_'.$i.'=',$reg2,'s=',$mtch[$i][3][0],$mtch3);
-
-    $mtch2[]=array($mtch[$i][1][0],$mtch[$i][1][1],$mtch3);
-}*/
-echo '<pre>';
-var_dump($s,repldomain($s));
-//$pr=new my_htmlparser($regex,$s);
-//var_dump($pr->hasAttr(1,'name'));
-//$pr->setValue(1,'name','vasya');
-//$pr->setValue(0,'width','1000');
-//var_dump($pr->repltextarray());
-//var_dump('$regex=',$regex);
-//var_dump('$s=',$s);
-//var_dump('$zam=',$zam);
-//var_dump('$zam2=',$zam2);
-
-//var_dump($mtch2);
-//$s3=  repltextarray($s, $mtch2, $zam2);
-//var_dump('$3=',$s3);
-?>

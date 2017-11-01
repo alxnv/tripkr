@@ -114,13 +114,13 @@ switch ($uid2) {
 		} else if ($hotelsincity) {
 			include "hotelsincity.php";
 		} else if ($hotel_info) {
-			echo mailaddrreplacer($row2->html);
+			echo mailaddrreplacer(my3::repldomain($row2->html));
 		} else if ($tourop_page_not_logged) {
 			echo 'Информация для туроператоров';
 		} else {
 			// не тур, а обычная страница        
 			// выводим таблицу дочерних страниц с картинками
-			echo mailaddrreplacer($row2->html);
+			echo mailaddrreplacer(my3::repldomain($row2->html));
 
 			echo '<br /><br />';
 

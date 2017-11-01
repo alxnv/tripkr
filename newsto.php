@@ -16,7 +16,7 @@ if (!testlogged()) {
 include "ssi-top.php";
 
 echo '<h1 class="title"><a href="'.BS.'allnewsto/0">Новости</a> / '.my4::txtesc($row2->naim).'</h1>';
-echo mailaddrreplacer($row2->html);
+echo mailaddrreplacer(my3::repldomain($row2->html));
 
 
 include "ssi-bottom.php";

@@ -57,7 +57,7 @@ $ar7=getalltree7($lgnuid3->uid);
 $i1=1; // сквозной индекс (не используется)
 printtree5($ar7, $uid2, $i1);
 
-echo mailaddrreplacer($row2->html);
+echo mailaddrreplacer(my3::repldomain($row2->html));
 
 /*$arr4=my3::qlist("select b.uid,b.naim,c.html from et_zayuser a, et_tree b, et_ta_html c, et_zayav d where a.user_id=$lgnuid3->uid and a.user_id=d.uid and d.ismoderated=1 and b.idtree=12 and b.topid=299 and a.zay_id=b.uid and b.uid=c.uid order by b.ordr");
 

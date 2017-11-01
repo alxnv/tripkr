@@ -13,13 +13,48 @@ class my3 {
     public $ismobile=null;
     public $onecolumn=null;
     const SITEMAIL='mow.ustravel@gmail.com'; //  mail администратора сайта. на него отсылаются все оповещения
-    const SITE='http://gokoreatour.ru'; //  сайт
+    const SITE='https://gokoreatour.ru'; //  сайт
 
     function __construct() {
         $this->baseurl=dirname($_SERVER['SCRIPT_NAME']).'/';
         if ($this->baseurl=='//') $this->baseurl='/';
         $this->basepath=dirname($_SERVER["SCRIPT_FILENAME"]).'/';
     }
+
+/**
+     * парсит html и заменяет если текущий сайт домен на https://www.gokoreatour.ru
+     * @param string $s исходная строка
+     * @return string
+     */
+public static function repldomain($s) {
+    include_once dirname(__FILE__)."/../app35/controllers/My/htmlparser.php";
+    $pr=new my_htmlparser('/(\<(img)([^>]+)\>)/mi',$s);
+    for ($i=0;$i<$pr->count;$i++) {
+        if ($pr->hasAttr($i, 'src')) {
+            $addr=$pr->getValue($i,'src');
+            $s2=parse_url($addr);
+            if (isset($s2['host'])) {
+                $sl=strtolower($s2['host']);
+                $hashost=1;
+            } else {
+                $hashost=0;
+            };
+            $s3=$addr;
+            if ($hashost && in_array($sl,
+                    array('gokoreatour.ru','гокореатур.рф','tripkr.ru',
+                        'www.gokoreatour.ru','www.гокореатур.рф','www.tripkr.ru'))) {
+                if (!($s2['scheme']=='https' && $sl=='www.gokoreatour.ru')) {
+                    // заменяем на https://www.gokoreatour.ru
+                    $s3='https://www.gokoreatour.ru'.$s2['path'];
+                    if (isset($s2['query'])) $s3.='?'.$s2['query'];
+                }
+            if ($s3<>$addr) $pr->setValue($i,'src',$s3);    
+            }
+        }
+    }
+    return $pr->repltextarray();
+    
+}
 
     
 // Validate email address 
