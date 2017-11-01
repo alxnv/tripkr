@@ -3,9 +3,12 @@
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tbody>
         <tr>
-            <td width="50%" align="center"><script type="text/javascript" src="<?=BS?>js/embed.js"></script><script type="text/javascript" language="JavaScript">objUSNY=new Object;objUSNY.wtsclock="wtsclock001.swf";objUSNY.color="DDDDDD";objUSNY.wtsid="RU-MOW";objUSNY.width=55;objUSNY.height=55;objUSNY.wmode="transparent";showClock(objUSNY);</script><noscript><embed src="https://www.worldtimeserver.com/clocks/wtsclock001.swf?color=DDDDDD&amp;wtsid=RU-MOW&amp;" width="55" height="55" wmode="transparent" type="application/x-shockwave-flash" allowscriptaccess="always"></noscript></td>
+            <td width="50%" align="center">
+                <script type="text/javascript" src="https://www.worldtimeserver.com/clocks/embed.js"></script><script type="text/javascript" language="JavaScript">objRUTVE=new Object;objRUTVE.wtsclock="wtsclock001.swf";objRUTVE.color="DDDDDD";objRUTVE.wtsid="RU-TVE";objRUTVE.width=62;objRUTVE.height=62;objRUTVE.wmode="transparent";showClock(objRUTVE);</script>
+            </td>
             <td width="1"><img alt="" width="3" height="1" src="dot.gif"></td>
-            <td width="50%" align="center"><script type="text/javascript" src="<?=BS?>js/embed.js"></script><script type="text/javascript" language="JavaScript">objKR=new Object;objKR.wtsclock="wtsclock001.swf";objKR.color="DDDDDD";objKR.wtsid="KR";objKR.width=62;objKR.height=62;objKR.wmode="transparent";showClock(objKR);</script><noscript><embed src="https://www.worldtimeserver.com/clocks/wtsclock001.swf?color=DDDDDD&amp;wtsid=KR&amp;" width="62" height="62" wmode="transparent" type="application/x-shockwave-flash" allowscriptaccess="always"></noscript></td>
+            <td width="50%" align="center">
+                                <script type="text/javascript" src="https://www.worldtimeserver.com/clocks/embed.js"></script><script type="text/javascript" language="JavaScript">objRUTVE=new Object;objRUTVE.wtsclock="wtsclock001.swf";objRUTVE.color="DDDDDD";objRUTVE.wtsid="KR";objRUTVE.width=62;objRUTVE.height=62;objRUTVE.wmode="transparent";showClock(objRUTVE);</script>
         </tr>
         <tr>
             <td height="5" colspan="3"><img alt="" width="1" height="1" src="<?=BS?>img/dot.gif"></td>
@@ -19,6 +22,7 @@
             <td height="8" colspan="3"><img alt="" width="1" height="1" src="<?=BS?>img/dot.gif"></td>
         </tr>
 <?/*		
+<script type="text/javascript" src="<?=BS?>js/embed.js"></script><script type="text/javascript" language="JavaScript">objKR=new Object;objKR.wtsclock="wtsclock001.swf";objKR.color="DDDDDD";objKR.wtsid="KR";objKR.width=62;objKR.height=62;objKR.wmode="transparent";showClock(objKR);</script><noscript><embed src="https://www.worldtimeserver.com/clocks/wtsclock001.swf?color=DDDDDD&amp;wtsid=KR&amp;" width="62" height="62" wmode="transparent" type="application/x-shockwave-flash" allowscriptaccess="always"></noscript></td>
         <tr>
             <td width="50%" align="center"><script type="text/javascript" src="<?=BS?>js/embed.js"></script><script type="text/javascript" language="JavaScript">objUSNY=new Object;objUSNY.wtsclock="wtsclock001.swf";objUSNY.color="DDDDDD";objUSNY.wtsid="UA";objUSNY.width=55;objUSNY.height=55;objUSNY.wmode="transparent";showClock(objUSNY);</script><noscript><embed src="http://www.worldtimeserver.com/clocks/wtsclock001.swf?color=DDDDDD&amp;wtsid=UA&amp;" width="55" height="55" wmode="transparent" type="application/x-shockwave-flash" allowscriptaccess="always"></noscript></td>
             <td width="1"><img alt="" width="3" height="1" src="dot.gif"></td>
