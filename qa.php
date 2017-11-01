@@ -27,7 +27,7 @@ for ($i=0;$i<count($arr);$i++) {
     echo '<a name="n'.$ar2->uid.'"></a>';
     echo '<div class="greydiv"><a name="qa'.$ar2->uid.'"></a>';
     echo '<strong>Вопрос:</strong><br />'.nl2br(my4::txtesc($ar2->html)).'</a><br /><br />
-        <strong>Ответ:</strong><br />'.$ar2->html2.'</a></div><br /><br />';
+        <strong>Ответ:</strong><br />'.my3::repldomain($ar2->html2).'</a></div><br /><br />';
     //if ($i<count($arr)-1) echo '<hr class="qa" noshade size="1" />';
 };
 
