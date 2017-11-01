@@ -1,7 +1,7 @@
 <?
 require_once "tools/funct.php";
 
-//$_SESSION['scrwidth']=700; // !!!here
+$_SESSION['scrwidth']=1280; // !!!here
 if (!isset($_SESSION['scrwidth'])) {
     if (isset($_COOKIE['scrwidth'])) {
         $_SESSION['scrwidth']=intval($_COOKIE['scrwidth']);
