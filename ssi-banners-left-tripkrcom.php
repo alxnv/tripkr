@@ -19,18 +19,18 @@ if (isset($is_first_page)) {
 	наши туры?</div>';*/
 	echo '<br /><br /><br />
 	<a href="http://www.gokoreatour.ru/page/142"><img border="0" 
-	style="margin-left:0px" src="http://www.gokoreatour.ru/img/tripkr2.gif" width="205" height="117" /></a>';
+	style="margin-left:0px" src="https://www.gokoreatour.ru/img/tripkr2.gif" width="205" height="117" /></a>';
 };
 ?>
 <br />
 <br />
 <br />
 	<a href="http://korshop.ru/"><img border="0" 
-	style="margin-left:0px" src="http://www.gokoreatour.ru/img2/banner1.jpg" width="205" height="117" /></a>
+	style="margin-left:0px" src="https://www.gokoreatour.ru/img2/banner1.jpg" width="205" height="117" /></a>
 <br />
 <br />
 <br />
-<a href="http://www.kartaturov.ru/advertise/" target="_blank"><img border="0" style="margin-left:10px" src="http://www.gokoreatour.ru/img/kartaturov.jpg" width="168" height="61" /></a>
+<a href="http://www.kartaturov.ru/advertise/" target="_blank"><img border="0" style="margin-left:10px" src="https://www.gokoreatour.ru/img/kartaturov.jpg" width="168" height="61" /></a>
 
 <div style="margin-top:50px; width:180px;margin-left:5px">
 <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
