@@ -10,6 +10,8 @@
 class my3 {
     public $baseurl=null;
     public $basepath=null;
+    public $ismobile=null;
+    public $onecolumn=null;
     const SITEMAIL='mow.ustravel@gmail.com'; //  mail администратора сайта. на него отсылаются все оповещения
     const SITE='http://gokoreatour.ru'; //  сайт
 

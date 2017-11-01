@@ -3,7 +3,7 @@
 
 $row93=my3::qobj("select spec,hrefspec from et_settings");
 if (trim($row93->spec)<>'' && trim($row93->hrefspec)<>'') {
-	echo '<div style="width:245px;height:245px;background-image:url('.BS.'img/office-sticky-note.png);">
+	echo '<div class="sticky" style="width:245px;height:245px;background-image:url('.BS.'img/office-sticky-note.png);">
 <div style="padding:0px 20px 30px 20px"><br />
 	<a href="'.htmlspecialchars($row93->hrefspec).'" class="ahref">'.nl2br(htmlspecialchars($row93->spec)).'</a>
 </div></div>';

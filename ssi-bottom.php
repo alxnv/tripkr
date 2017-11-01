@@ -1,7 +1,7 @@
 </div>
 <? include "ssi-bottomnews.php"; ?>
 </td>
-
+<? if (!$my3->onecolumn) { ?>
 <td valign="top">
         <?/*<img src="<?=BS?>img/ex.gif" width="240">
     <br />*/?>
@@ -28,7 +28,7 @@
     </td></tr>
 </table>
 </p>
- </td>
+ </td><? } // (!$my3->onecolumn)?>
 
 </tr>
 <tr><td></td><td></td><td></td></tr>

@@ -1,5 +1,21 @@
 <?
 require_once "tools/funct.php";
+
+$_SESSION['scrwidth']=700; // !!!here
+if (!isset($_SESSION['scrwidth'])) {
+    if (isset($_COOKIE['scrwidth'])) {
+        $_SESSION['scrwidth']=intval($_COOKIE['scrwidth']);
+    } else {
+        // передаем переменные с размерами
+        echo "<script language='javascript'>\n"
+        . "var date = new Date(new Date().getTime() + 3600 * 1000);
+document.cookie = 'scrwidth='+screen.width+'; path=/; expires=' + date.toUTCString();\n";
+        echo "  location.href=location.href\n";
+        echo "</script>\n";
+        exit();
+    }
+}
+
 if (!isset($_SESSION['notfirstpagethissession'])) {
 	$_SESSION['notfirstpagethissession']=1;
 	$notfirstpagethissession=0;
@@ -7,9 +23,14 @@ if (!isset($_SESSION['notfirstpagethissession'])) {
 	$notfirstpagethissession=1;
 }
 
+$my3->ismobile=(intval($_SESSION['scrwidth'])<=768); // просмотр с мобильного устройства
+$my3->onecolumn=$my3->ismobile; // выводим все на экран в одну колонку
+//var_dump($my3->ismobile);
 /*if (rand(0,99)==0) {
     include "techworks.php"; // работы по оптимизации базы данных
 }*/
+//echo "bs=".BS;
+//exit;
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -88,7 +109,8 @@ notfpthissess=<?=$notfirstpagethissession?>;
 </td><td id="top_tabl3" width="29">&nbsp;</td></tr></table>
 </td>
 <td id="valcell" style="height:110px" align="right" width="260">
-<? if (APPLICATION_ENV=='production') { ?><a target="_blank" href="http://clck.yandex.ru/redir/dtype=stred/pid=7/cid=1228/*http://pogoda.yandex.ru/seoul"><img src="http://info.weather.yandex.net/seoul/2_white.ru.png" border="0" alt=""/><img width="1" height="1" src="http://clck.yandex.ru/click/dtype=stred/pid=7/cid=1227/*http://img.yandex.ru/i/pix.gif" alt="" border="0"/></a>
+<? if (APPLICATION_ENV=='production') { ?><a target="_blank" href="http://clck.yandex.ru/redir/dtype=stred/pid=7/cid=1228/*http://pogoda.yandex.ru/seoul"><img
+        src="https://info.weather.yandex.net/seoul/2_white.ru.png" border="0" alt=""/><img width="1" height="1" src="https://clck.yandex.ru/click/dtype=stred/pid=7/cid=1227/*http://img.yandex.ru/i/pix.gif" alt="" border="0"/></a>
 <? } ?></td>
 
 </tr>
@@ -107,7 +129,7 @@ notfpthissess=<?=$notfirstpagethissession?>;
 </tr>
 
 <tr>
-<td width="200" valign="top">
+<? if (!$my3->onecolumn) { ?><td width="200" valign="top">
     <?/*<img src="<?=BS?>img/ex.gif" width="240">
     <br />*/?>
 <div id="menu" style="margin-top:10px"> <?//здесь сдвиг от верхнего желтого банера?>
@@ -121,5 +143,6 @@ if (isset($menu)) {
 	       
     </div>
 <? if (true || APPLICATION_ENV=='production') include "ssi-banners-left-tripkrcom.php" ?>	
-</td><td valign="top" class="content">
+</td><? } //(!$my3->onecolumn) ?>
+    <td valign="top" <?=($my3->onecolumn ? ' colspan="3" ' : '')?> class="content">
 <div class="content2">

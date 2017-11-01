@@ -1,19 +1,31 @@
 /* CSS Document */
 html {
-height:99%;
+height:99%; 
+font-size:12pt;
 }
+
+@media screen and (max-device-width: 768px)  {
+  html {
+    font-size: 80pt;
+  }
+}
+
 body {background-color:#FFFFFF; color:black;height:99%;
-font-family:Verdana,Arial, Helvetica, sans-serif; font-size:14px;
+font-family:Verdana,Arial, Helvetica, sans-serif;
 margin:5px;
 }
 a {color:#000000; text-decoration:none;}
 h1 {
-font-size:22px;
+font-size:160%;
 }
 h3 {
-    font-size:15px;
+    font-size:110%;
 }
 
+.sticky {
+    font-size:14px;
+
+}
 .nadp {
 color: #4a36c9;
 font-size:12px;
@@ -126,7 +138,7 @@ padding:3px !important;
 border:#00CCFF !important; border-width:1px !important; border-style:dotted !important;
 background-color:#3c63c8 !important;
 color:white !important;
-font-size:12px !important;
+font-size:90% !important;
 }
 .left_menu p {text-align:right;}
 #rightcol p {text-align:left;}
@@ -266,9 +278,9 @@ color:#00bae3;
 }
 
 #menu li {
-line-height:30px;
+line-height:180%;
 font-weight:bold;
-font-size:22px;
+font-size:160%;
 }
 
 #menu a, #menu a:visited {
