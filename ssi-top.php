@@ -1,7 +1,7 @@
 <?
 require_once "tools/funct.php";
 
-$_SESSION['scrwidth']=700; // !!!here
+//$_SESSION['scrwidth']=700; // !!!here
 if (!isset($_SESSION['scrwidth'])) {
     if (isset($_COOKIE['scrwidth'])) {
         $_SESSION['scrwidth']=intval($_COOKIE['scrwidth']);
@@ -23,7 +23,7 @@ if (!isset($_SESSION['notfirstpagethissession'])) {
 	$notfirstpagethissession=1;
 }
 
-$my3->ismobile=(intval($_SESSION['scrwidth'])<=768); // просмотр с мобильного устройства
+$my3->ismobile=(intval($_SESSION['scrwidth'])<768); // просмотр с мобильного устройства
 $my3->onecolumn=$my3->ismobile; // выводим все на экран в одну колонку
 //var_dump($my3->ismobile);
 /*if (rand(0,99)==0) {
