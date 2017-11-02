@@ -36,7 +36,13 @@ class my3 {
         }
         
         $hostname=$_SERVER['SERVER_NAME'];
-        $scheme=$_SERVER["REQUEST_SCHEME"];
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {
+            $scheme='https';
+        } else {
+            $scheme='http';
+            
+        }
+        //$scheme=$_SERVER["REQUEST_SCHEME"];
         
         var_dump('hh',$hostname,$scheme);
         
