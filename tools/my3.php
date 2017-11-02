@@ -13,7 +13,7 @@ class my3 {
     public $ismobile=null;
     public $onecolumn=null;
     const SITEMAIL='mow.ustravel@gmail.com'; //  mail администратора сайта. на него отсылаются все оповещения
-    const SITE='https://gokoreatour.ru'; //  сайт
+    const SITE='https://www.gokoreatour.ru'; //  сайт
 
     function __construct() {
         $this->baseurl=dirname($_SERVER['SCRIPT_NAME']).'/';
@@ -21,7 +21,39 @@ class my3 {
         $this->basepath=dirname($_SERVER["SCRIPT_FILENAME"]).'/';
     }
 
-/**
+    /**
+     * делает редирект, если текущий сайт не my3::SITE с www или без
+     */
+
+    function redirectifnotdomain() {
+        $ar=parse_url(my3::SITE);
+        $s1=$ar['scheme'];
+        $shost=$ar['host'];
+        if (substr($shost,0,4)=='www.') {
+            $sh2=substr($shost,4);
+        } else {
+            $sh2='www.'.$shost;
+        }
+        
+        $hostname=$_SERVER['SERVER_NAME'];
+        $scheme=$_SERVER["REQUEST_SCHEME"];
+        
+        if ($hostname<>'localhost' && !($s1==$scheme && ($hostname==$shost || $hostname==$sh2))) {
+
+            $s2=parse_url(substr($_SERVER["REQUEST_URI"],0,10000)); //$_SERVER['SCRIPT_NAME']
+            $s=my3::SITE.$s2['path'];
+            if (isset($s2['query'])) $s.='?'.$s2['query'];
+            if (isset($s2['fragment'])) $s.='#'.$s2['fragment'];
+
+            //var_dump('si',$s);
+            header("HTTP/1.1 301 Moved Permanently"); 
+            header("Location: ".$s); 
+            exit();
+        }
+        
+
+    }
+    /**
      * парсит html и заменяет если текущий сайт домен на https://www.gokoreatour.ru
      * @param string $s исходная строка
      * @return string
