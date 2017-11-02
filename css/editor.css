@@ -1,0 +1,11 @@
+/* дополнительная таблица стилей для html-редактора
+*/
+table, table td,.content table, .content table td {
+border-style:solid;
+border-color:#00bae3;
+border-collapse:collapse;
+}
+table td, .content table td {
+background-color:#d5f2f9;
+padding: 4px;
+}

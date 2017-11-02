@@ -13,5 +13,5 @@ CKEDITOR.editorConfig = function( config )
 	} else {
 		config.filebrowserUploadUrl = '/a7-ckuploadimage/ckupload';
 	};
-	config.contentsCss = '/style.css';
+	config.contentsCss = ['/style.css', '/css/editor.css'];
 };
