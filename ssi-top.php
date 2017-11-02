@@ -166,7 +166,7 @@ notfpthissess=<?=$notfirstpagethissession?>;
         </div>
         <div id="container5">
             <div id="clocks">
-                <div style="width:100%;position:relative"><? if (APPLICATION_ENV=='production') include "ssi-clocks.php";?></div>                
+                <div style="width:100%;position:relative"><? if (true || APPLICATION_ENV=='production') include "ssi-clocks.php";?></div>                
             </div>
             <div id="logo2">
                 <div style="margin:0 auto;width:601px"><img src="<?=BS?>img/tripkr-zag.jpg" alt="" id="img_cat" width="601" height="125" /></div>                
@@ -191,7 +191,7 @@ notfpthissess=<?=$notfirstpagethissession?>;
                 
             </div>
 		<div id="content">
-
+<?/*<img src="<?=BS?>img/dog.gif" width="800" height=800" />*/?>
 
 <? /*<body>
 <table class="bgwhite" id="osnova" width="100%">

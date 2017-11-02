@@ -22,10 +22,14 @@ font-size:12pt;
   min-height: 100vh;
 }
 
+#container5
+{
+  display: flex;
+  flex-direction: row;
+}
+
 #header
 {
-  background-color: #dddddd;
-  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -40,9 +44,23 @@ font-size:12pt;
   flex-direction: row;
     
 }
+.newsocial {
+  display: flex;
+  flex-direction: row;
+    
+}
+.newsocial2 {
+  display: flex;
+  flex-direction: column;
+    
+}
+.newsocial2 div {
+    margin-right:10px;
+    margin-bottom:10px;
+}
 
 #valuta {
-    margin:0 auto;
+    margin:10px auto;
     justify-content: center;
   display: flex;
   flex-direction: row;
@@ -77,7 +95,6 @@ font-size:90% !important;
 {
   display: flex;
   flex-direction: row;
-  background-color: #dddddd;
   /*height: 20px;
   min-height: 20px;*/
   width: 100%;
@@ -89,17 +106,21 @@ font-size:90% !important;
     
 }
 #leftbl {
-background-color:orange;
-width:200px;
+width:300px;
 }
 #content {
-margin-left:-200px;
-padding-left:200px;
+margin-left:-300px;
+padding-left:300px;
+margin-right:5px;
 width:70%;
+min-width:min-content;
 }
 #rightbl {
-background-color:violet;
 width:30%;
+}
+#clocks {
+    min-width:200px;
+    margin-top:20px;
 }
 
 .menu3 {
@@ -126,6 +147,7 @@ width:30%;
 .mtd13,.mtd23,.mtd33 {
     width:29px;
 }
+
 
 body {background-color:#FFFFFF; color:black;
 font-family:Verdana,Arial, Helvetica, sans-serif;
