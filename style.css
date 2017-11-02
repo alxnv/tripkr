@@ -45,7 +45,8 @@ font-size:12pt;
 #container4 {
   display: flex;
   flex-direction: row;
-    
+  justify-content: space-between;
+  /*background-color: #d3e9f6;  */
 }
 .newsocial {
   display: flex;
@@ -85,6 +86,8 @@ font-size:90% !important;
   overflow: auto;
   height: 100%;
   width: 100%;
+  align-items:stretch;
+
 }
 
 #content2
@@ -92,14 +95,16 @@ font-size:90% !important;
   display: flex;
   flex-direction: row;
   flex: 1;
+  justify-content: space-between;
 }
 
 #footer
 {
-  display: flex;
-  flex-direction: row;
+  /*display: flex;
+  flex-direction: row;*/
   /*height: 20px;
   min-height: 20px;*/
+  margin: 0 auto;
   width: 100%;
 }
 
@@ -112,14 +117,16 @@ font-size:90% !important;
 width:300px;
 }
 #content {
-margin-left:-300px;
+/*margin-left:-300px;
 padding-left:300px;
-margin-right:5px;
-width:70%;
-min-width:min-content;
+margin-right:-290px;
+padding-right:300px;*/
+margin-right:15px;
+width:100%;
+
 }
 #rightbl {
-width:30%;
+width:300px;
 }
 #clocks {
     min-width:200px;
