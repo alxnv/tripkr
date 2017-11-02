@@ -23,6 +23,7 @@ class my3 {
 
     /**
      * делает редирект, если текущий сайт не my3::SITE с www или без
+     * 
      */
 
     function redirectifnotdomain() {
@@ -68,7 +69,7 @@ class my3 {
      */
 public static function repldomain($s) {
     include_once dirname(__FILE__)."/../app35/controllers/My/htmlparser.php";
-    $pr=new my_htmlparser('/(\<(img)([^>]+)\>)/mi',$s);
+    $pr=new my_htmlparser('img',$s);
     for ($i=0;$i<$pr->count;$i++) {
         if ($pr->hasAttr($i, 'src')) {
             $addr=$pr->getValue($i,'src');

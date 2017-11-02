@@ -108,7 +108,7 @@ height:100px;
 }
 #top_menu {background-image:url(img/top_menu_fon.jpg); height:30px; width:100%; background-repeat:repeat-x;}
 #img_cat {}
-a#pages_top,a.pages_top {color: #000066; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none; text-align:center;}
+a#pages_top,a.pages_top {color: #000066; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:80%; text-decoration:none; text-align:center;}
 a.pages_top2 {color: #ec3c43 !important; font-family:Verdana, Arial, Helvetica, sans-serif !important; font-size:12px !important; text-decoration:none !important; text-align:center !important;}
 
 a#pages,a.pages {color: #FFFFFF; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:20px; text-decoration:none; text-align:center;}

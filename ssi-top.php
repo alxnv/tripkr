@@ -1,7 +1,20 @@
 <?
 require_once "tools/funct.php";
+// переключение https://gokoreatour.ru/qa/ismobile/1
+// https://gokoreatour.ru/qa/ismobile/0
 
-$_SESSION['scrwidth']=1280; // !!!here
+$choosemobile=(isset($_GET['uid']) && isset($_GET['uid2']) && $_GET['uid']=='ismobile');
+if ($choosemobile) {
+    if (intval($_GET['uid2'])) {
+    $_SESSION['scrwidth']=500;
+    } else {
+    $_SESSION['scrwidth']=1280;
+    }
+}
+
+$_SESSION['scrwidth']=500; //!!!here
+
+
 if (!isset($_SESSION['scrwidth'])) {
     if (isset($_COOKIE['scrwidth'])) {
         $_SESSION['scrwidth']=intval($_COOKIE['scrwidth']);
@@ -15,6 +28,7 @@ document.cookie = 'scrwidth='+screen.width+'; path=/; expires=' + date.toUTCStri
         exit();
     }
 }
+
 
 if (!isset($_SESSION['notfirstpagethissession'])) {
 	$_SESSION['notfirstpagethissession']=1;

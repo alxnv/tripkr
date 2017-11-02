@@ -18,8 +18,8 @@ class my_htmlparser {
     public $str1=null; // исходная строка которая парсится
     public $count=null; // количество распарсенных тэгов
 
-    function __construct($regex,$s) {
-        $this->regex=$regex;
+    function __construct($tags,$s) {
+        $this->regex='/(\<('.$tags.')([^>]+)\>)/mi';
         $this->str1=$s;
         $this->parsestr($this->afrom,$this->ato);
         //var_dump($this->afrom,$this->ato);
@@ -130,7 +130,7 @@ class my_htmlparser {
      * @return string
      */
 function repldomain($s) {
-    $pr=new my_htmlparser('/(\<(img)([^>]+)\>)/mi',$s);
+    $pr=new my_htmlparser('img',$s);
     for ($i=0;$i<$pr->count;$i++) {
         if ($pr->hasAttr($i, 'src')) {
             $addr=$pr->getValue($i,'src');
