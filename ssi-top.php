@@ -191,7 +191,9 @@ notfpthissess=<?=$notfirstpagethissession?>;
                 
             </div>
 		<div id="content">
-<?/*<img src="<?=BS?>img/dog.gif" width="800" height=800" />*/?>
+    <img src="<?=BS?>img/dog.gif" width="800" height=800" />
+                    
+                    
 
 <? /*<body>
 <table class="bgwhite" id="osnova" width="100%">

@@ -3,6 +3,7 @@ html, body, #app
 {
   padding: 0;
   margin: 0;
+  min-width:min-content;
 }
 
 html {
@@ -26,6 +27,8 @@ font-size:12pt;
 {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  flex:1;
 }
 
 #header
