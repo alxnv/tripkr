@@ -38,6 +38,8 @@ class my3 {
         $hostname=$_SERVER['SERVER_NAME'];
         $scheme=$_SERVER["REQUEST_SCHEME"];
         
+        var_dump('hh',$hostname,$scheme);
+        
         if ($hostname<>'localhost' && !($s1==$scheme && ($hostname==$shost || $hostname==$sh2))) {
 
             $s2=parse_url(substr($_SERVER["REQUEST_URI"],0,10000)); //$_SERVER['SCRIPT_NAME']
