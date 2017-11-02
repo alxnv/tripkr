@@ -47,10 +47,10 @@ class my3 {
             if (isset($s2['query'])) $s.='?'.$s2['query'];
             if (isset($s2['fragment'])) $s.='#'.$s2['fragment'];
 
-            //var_dump('si',$s);
-            header("HTTP/1.1 301 Moved Permanently"); 
+            var_dump('si',$s);
+            /*header("HTTP/1.1 301 Moved Permanently"); 
             header("Location: ".$s); 
-            exit();
+            exit();*/
         }
         
 
