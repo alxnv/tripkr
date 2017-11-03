@@ -47,7 +47,7 @@ class my3 {
         
         //var_dump('hh',$hostname,$scheme);
         
-        if ($hostname<>'localhost' && !($s1==$scheme && ($hostname==$shost || $hostname==$sh2))) {
+        if ($hostname<>'localhost' && !($s1==$scheme && ($hostname==$shost))) {
 
             $s2=parse_url(substr($_SERVER["REQUEST_URI"],0,10000)); //$_SERVER['SCRIPT_NAME']
             $s=my3::SITE.$s2['path'];

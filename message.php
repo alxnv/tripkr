@@ -6,8 +6,6 @@ if (!isset($conf35)) die;
 include_once "tools/my4.php";
 require_once "tools/funct.php";
 $title='US Korea. Сообщение';
-$my3->ismobile=(intval($_SESSION['scrwidth'])<768); // просмотр с мобильного устройства
-$my3->onecolumn=$my3->ismobile; // выводим все на экран в одну колонку
 
 ?>
 <? include "ssi-top.php"; ?>
