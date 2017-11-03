@@ -139,9 +139,12 @@ body {
 #valuta2 {
 padding:3px !important;
 border:#00CCFF !important; border-width:1px !important; border-style:dotted !important;
-background-color:#3c63c8 !important;
 color:white !important;
 font-size:90% !important;
+}
+
+#valuta2 .left_menu {
+background-color:#3c63c8 !important;
 }
 
 #contentContainer
