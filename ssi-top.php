@@ -12,7 +12,7 @@ if ($choosemobile) {
     }
 }
 
-$_SESSION['scrwidth']=500; //!!!here
+$_SESSION['scrwidth']=1200; //!!!here
 
 
 if (!isset($_SESSION['scrwidth'])) {
@@ -71,7 +71,9 @@ $my3->onecolumn=$my3->ismobile; // выводим все на экран в од
   })();
 
 </script>
-<? } ?>
+<? } 
+if (!$my3->ismobile) {
+?>
 <script src="<?=BS?>js/jquery-1.7.1.min.js"></script>
 <? echo '<script type="text/javascript" src="'.BS.'js/popupjq.js"></script>'; ?>
 <script type="text/javascript">
@@ -83,22 +85,26 @@ $(document).ready(function(){
     }
     runIt();
 });
+</script>
+<? } // !$my3->ismobile?>
+<script type="text/javascript">
 BSJS='<?=BS?>'; // путь url до начальной папки проекта
 notfpthissess=<?=$notfirstpagethissession?>;
 </script>
 </head>
 <?
+$p=($my3->ismobile ? 'pagesm' : 'pages_top');
 // меню
 $s8='                        <a href="'.BS.'index/about"
-                         class="pagesm">&middot;&nbsp;О&nbsp;нас&nbsp;&middot; &nbsp;</a>
+                         class="'.$p.'">&middot;&nbsp;О&nbsp;нас&nbsp;&middot; &nbsp;</a>
                         <a href="'.BS.'allnews/0" 
-                           class="pagesm">&middot;&nbsp;Новости&nbsp;&middot; &nbsp;</a>
+                           class="'.$p.'">&middot;&nbsp;Новости&nbsp;&middot; &nbsp;</a>
                         <a href="'.BS.'index/contacts" 
-                             class="pagesm">&middot;&nbsp;Контакты&nbsp;&middot; &nbsp;</a>
-                        <a href="'.BS.'qa" class="pagesm">&middot;&nbsp;Вопрос/ответ&nbsp;&middot; &nbsp;</a>
-                        <a href="'.BS.'page/285" class="pagesm">&middot;&nbsp;Отзывы&nbsp;и&nbsp;благодарности&nbsp;&middot; &nbsp;</a>
+                             class="'.$p.'">&middot;&nbsp;Контакты&nbsp;&middot; &nbsp;</a>
+                        <a href="'.BS.'qa" class="'.$p.'">&middot;&nbsp;Вопрос/ответ&nbsp;&middot; &nbsp;</a>
+                        <a href="'.BS.'page/285" class="'.$p.'">&middot;&nbsp;Отзывы&nbsp;и&nbsp;благодарности&nbsp;&middot; &nbsp;</a>
                         <a href="'.BS.'video" class="pages_top2">&middot;&nbsp;Видео&nbsp;о&nbsp;Корее&nbsp;&middot; &nbsp;</a>
-                        <a href="'.BS.'index/info" class="pagesm">&middot;&nbsp;Полезные&nbsp;ссылки&nbsp;&middot; &nbsp;</a>
+                        <a href="'.BS.'index/info" class="'.$p.'">&middot;&nbsp;Полезные&nbsp;ссылки&nbsp;&middot; &nbsp;</a>
 ';
 if ($my3->ismobile) {
     $s8='<div  id="fon2">'.$s8.' 
