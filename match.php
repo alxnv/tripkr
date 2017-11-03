@@ -27,9 +27,38 @@ class my_htmlparser {
     }
     
     /**
+ * добавить к обработке атрибут (обычно style), с разделетилем (обычно ";")
+     * (чтобы парсить атрибут style или другие)
+     * пока расчитано только на один атрибут
+ * @param string $attrs
+ * @param string $delimeter
+ * @return string 
+ * 
+ */
+    function add2level($attrs,$delimeter) {
+        for ($i=0;$i<$this->count;$i++) {
+            if ($this->hasAttr($i, $attrs)) {
+                $jindex=$this->afrom[$i][4][$attrs];
+                $s=$this->afrom[$i][2][$jindex][2][0]; // for example - width:40px;height:10px
+                $mtch=array();
+                preg_match_all('/([^\\'.$delimeter.']+)/mi',$s,$mtch,PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
+                for ($j=0;$j<count($mtch);$j++) {
+                    $mtch2=array();
+                    if (preg_match('/^\s*([^\:\s]+)\s*\:\s*([^\:\s]+)\s*$/mi',$mtch[$j][1][0],$mtch2,PREG_OFFSET_CAPTURE)) {
+                        $mtch[$j][2]=$mtch2;
+                    } else {
+                        $mtch[$j][2]=false;
+                    };
+                }
+                $this->afrom[$i][5]=$mtch;
+            }
+        }
+    }
+
+    /**
  * получить указанный атрибут $i тэга
  * @param integer $i
- * @param strin $attrname
+ * @param string $attrname
  * @return string 
  * 
  */
@@ -110,7 +139,7 @@ class my_htmlparser {
             preg_match_all($reg2,$mtch[$i][3][0],$mtch3, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
         //    var_dump('mtch_'.$i.'=',$reg2,'s=',$mtch[$i][3][0],$mtch3);
 
-            $mtch2[]=array($mtch[$i][1][0],$mtch[$i][1][1],$mtch3,$mtch[$i][3]);
+            $mtch2[]=array($mtch[$i][1][0],$mtch[$i][1][1],$mtch3,$mtch[$i][3],false);
         }
         $mtchto=$mtch2;
         // проставляем ассоциативнй массив для быстрого поиска атрибутов
@@ -197,7 +226,7 @@ function repltextarray($s,$arr1,$arr2) {
 
 $s='<p align="center">
         <img width="40" 
-        src="https://www.гокореатур.рф/jjkjk/" />
+        src="https://www.гокореатур.рф/jjkjk/" style="width:10px;hjhk; height: 30px " />
         <b>go</b> <img name="hgfdh">
             ';
 
@@ -216,12 +245,14 @@ for ($i=0;$i<count($mtch);$i++) {
     $mtch2[]=array($mtch[$i][1][0],$mtch[$i][1][1],$mtch3);
 }*/
 echo '<pre>';
-var_dump($s,repldomain($s));
-//$pr=new my_htmlparser($regex,$s);
+//var_dump($s,repldomain($s));
+$pr=new my_htmlparser('img',$s);
+$pr->add2level('style', ';');
+var_dump($pr->afrom,$pr->ato);
 //var_dump($pr->hasAttr(1,'name'));
 //$pr->setValue(1,'name','vasya');
 //$pr->setValue(0,'width','1000');
-//var_dump($pr->repltextarray());
+var_dump($pr->repltextarray());
 //var_dump('$regex=',$regex);
 //var_dump('$s=',$s);
 //var_dump('$zam=',$zam);

@@ -10,9 +10,10 @@ if ($choosemobile) {
     } else {
     $_SESSION['scrwidth']=1280;
     }
+} else {
+$_SESSION['scrwidth']=1200; //!!!here
 }
 
-$_SESSION['scrwidth']=1200; //!!!here
 
 
 if (!isset($_SESSION['scrwidth'])) {
