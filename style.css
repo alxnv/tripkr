@@ -81,11 +81,11 @@ font-size:90% !important;
 #contentContainer
 {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1;
   overflow: auto;
   height: 100%;
-  width: 100%;
+  /*width: 100%;*/
   align-items:stretch;
 
 }

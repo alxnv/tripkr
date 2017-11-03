@@ -178,7 +178,7 @@ notfpthissess=<?=$notfirstpagethissession?>;
     </div>
     <div id="contentContainer">
 
-	<div id="content2">
+	<!--<div id="content2">-->
             <div id="leftbl">
                 <div id="menu" style="margin-top:10px"> <?//здесь сдвиг от верхнего желтого банера?>
                 <?

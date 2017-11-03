@@ -16,6 +16,7 @@
                                 
                             </div>
                         </div>
+      <!--</div>-->
       </div>
       <div id="footer">
           <hr class="hr2" noshade="noshade" />
@@ -25,7 +26,6 @@
             &copy; Воробьёв А.Б., 2012-<?php echo date('Y') ?>
             </p>
 
-      </div>
     </div>
   </div>
 </div>
