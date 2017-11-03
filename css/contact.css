@@ -36,7 +36,7 @@ background-color:#3c63c8; color:#ddd;}
 #contact-container br {clear:both;}
 #contact-container form {margin:0; padding:0;}
 #contact-container label {clear:left; display:block;  padding-right:4px;}
-#contact-container .contact-input {background:#eee; border:1px solid #fff; padding:2px; margin:2px; width:300px;}
+#contact-container .contact-input {overflow-x: hidden; background:#eee; border:1px solid #fff; padding:2px; margin:2px; width:300px}
 #contact-container textarea {height:114px;}
 #contact-container .contact-cc {cursor:default; font-size:14px; vertical-align:top;}
 #contact-container .contact-top {cursor:pointer;background-color:#3c63c8; height:13px; margin:0; padding:0; -webkit-border-top-left-radius:8px; -webkit-border-top-right-radius:8px; -moz-border-radius-topleft:8px; -moz-border-radius-topright:8px; border-radius:8px 8px 0 0;}

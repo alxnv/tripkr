@@ -1,23 +1,38 @@
                             <? include "ssi-bottomnews.php"; ?>
-			</div>
-                        <div id="rightbl">
-                            <div id="search">
-                                <form action="<?=BS?>search/" method="get">
-                                <p class="poisk">ПОИСК<br />
-                                Введите название<br />
-                                <input  type="hidden" name="page" value="0" />
-                                <input name="search" type="text" size="25" style="width:180px" maxlength="70" value="<?=(isset($sname35) ? 
-                                        htmlspecialchars($sname35) : '')?>" /><br />
-                                <input type="submit" value="Искать" />
-                                </p>
-                                </form>
+            </div>
+        </div>
+            <div id="leftbl">
+                <div id="menu" style="margin-top:10px"> <?//здесь сдвиг от верхнего желтого банера?>
+                <?
+                if (isset($menu)) {
+                    echo $menu;
+                }
+                ?>
+                </div>
+                <? if (true || APPLICATION_ENV=='production') include "ssi-banners-left-tripkrcom.php" ?>	
+                
+            </div>
+            <div id="rightbl">
+                <div id="search">
+                    <form action="<?=BS?>search/" method="get">
+                    <p class="poisk">ПОИСК<br />
+                    Введите название<br />
+                    <input  type="hidden" name="page" value="0" />
+                    <input name="search" type="text" size="25" style="width:180px" maxlength="70" value="<?=(isset($sname35) ? 
+                            htmlspecialchars($sname35) : '')?>" /><br />
+                    <input type="submit" value="Искать" />
+                    </p>
+                    </form>
+                    <br />
+                    <? include "ssi-rightcol.php"; ?>
 
-                                <? include "ssi-rightcol.php"; ?>
-                                
-                            </div>
-                        </div>
+                </div>
+            </div>
       <!--</div>-->
-      </div>
+	</div><!-- .middle-->
+
+</div><!-- .wrapper -->
+
       <div id="footer">
           <hr class="hr2" noshade="noshade" />
             <p id="svyaz">Тел.: (495) 728-88-95 |
@@ -27,8 +42,6 @@
             </p>
 
     </div>
-  </div>
-</div>
 <? include "ssi-contact-popup.php"; ?>
 </body>
 </html>

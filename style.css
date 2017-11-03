@@ -1,14 +1,86 @@
 /* CSS Document */
-html, body, #app
-{
-  padding: 0;
-  margin: 0;
-  min-width:min-content;
+* {
+	margin: 0;
+	padding: 0;
 }
 
 html {
-font-size:12pt;
+	height: 100%;
 }
+body {
+	font: 12pt;
+	height: 100%;
+        min-width:min-content;
+}
+.wrapper {
+	width: 100%;
+	min-width: 1000px;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+}
+
+
+/* Middle
+-----------------------------------------------------------------------------*/
+.middle {
+	width: 100%;
+	padding: 0 0 50px;
+	position: relative;
+}
+.middle:after {
+	display: table;
+	clear: both;
+	content: '';
+}
+.container {
+	width: 100%;
+	float: left;
+	overflow: hidden;
+}
+.content {
+	padding: 0 240px 0 270px;
+}
+
+
+/* Left Sidebar
+-----------------------------------------------------------------------------*/
+#leftbl {
+	float: left;
+	width: 250px;
+	margin-left: -100%;
+	position: relative;
+}
+
+
+/* Right Sidebar
+-----------------------------------------------------------------------------*/
+#rightbl {
+	float: left;
+	width: 220px;
+	margin-left: -220px;
+	position: relative;
+}
+
+
+/* Footer
+-----------------------------------------------------------------------------*/
+#footer {
+	margin: -50px auto 0;
+	min-width: 1000px;
+	height: 50px;
+	position: relative;
+}
+
+
+
+
+
+
+
+
+
+
 
 @media screen and (max-device-width: 768px)  {
   html {
@@ -16,12 +88,6 @@ font-size:12pt;
   }
 }
 
-#app, #appContainer
-{
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
 
 #container5
 {
@@ -98,23 +164,11 @@ font-size:90% !important;
   justify-content: space-between;
 }
 
-#footer
-{
-  /*display: flex;
-  flex-direction: row;*/
-  /*height: 20px;
-  min-height: 20px;*/
-  margin: 0 auto;
-  width: 100%;
-}
 
 #astrip {
   display: flex;
   flex-direction: column;
     
-}
-#leftbl {
-width:300px;
 }
 #content {
 /*margin-left:-300px;
@@ -124,9 +178,6 @@ padding-right:300px;*/
 margin-right:15px;
 width:100%;
 
-}
-#rightbl {
-width:300px;
 }
 #clocks {
     min-width:200px;
@@ -446,4 +497,8 @@ text-decoration: underline;
 }
 #menu a:hover {
 text-decoration:none;
+}
+
+p {
+    margin:3px;
 }

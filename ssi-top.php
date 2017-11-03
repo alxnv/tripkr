@@ -89,8 +89,7 @@ notfpthissess=<?=$notfirstpagethissession?>;
 </head>
 
 <body>
-<div id="app">
-  <div id="appContainer">
+<div class="wrapper">
     <div id="header">
         <div id="container4">
             <div id="logo">
@@ -176,22 +175,12 @@ notfpthissess=<?=$notfirstpagethissession?>;
             </div>
         </div>
     </div>
-    <div id="contentContainer">
+    <div class="middle">
 
+        <div class="container">
+                <div class="content">
 	<!--<div id="content2">-->
-            <div id="leftbl">
-                <div id="menu" style="margin-top:10px"> <?//здесь сдвиг от верхнего желтого банера?>
-                <?
-                if (isset($menu)) {
-                    echo $menu;
-                }
-                ?>
-                </div>
-                <? if (true || APPLICATION_ENV=='production') include "ssi-banners-left-tripkrcom.php" ?>	
-                
-            </div>
-		<div id="content">
-    <img src="<?=BS?>img/dog.gif" width="800" height=800" />
+<?/*    <img src="<?=BS?>img/dog.gif" width="800" height=800" />*/?>
                     
                     
 
