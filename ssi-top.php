@@ -178,9 +178,9 @@ notfpthissess=<?=$notfirstpagethissession?>;
     <div class="middle">
 
         <div class="container">
-                <div class="content">
+                <div class="content"> 
 	<!--<div id="content2">-->
-<?/*    <img src="<?=BS?>img/dog.gif" width="800" height=800" />*/?>
+<?/* jkjkjk   <img src="<?=BS?>img/dog.gif" width="800" height=800" />*/?>
                     
                     
 
