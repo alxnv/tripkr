@@ -64,13 +64,42 @@ class my3 {
     }
     /**
      * парсит html и заменяет если текущий сайт домен на https://www.gokoreatour.ru
+     * обращается к $my3->ismobile, если оно true, то заменяет alt:='' для img
+     *  и меняет &nbsp; на пробел
+     *  а также в тэге iframe и img width and height масштабирует
      * @param string $s исходная строка
      * @return string
      */
 public static function repldomain($s) {
     include_once dirname(__FILE__)."/../app35/controllers/My/htmlparser.php";
+    global $my3;
+    $delalt=$my3->ismobile;
+
+    $pr2=new my_htmlparser('iframe',$s);
+    for ($i=0;$i<$pr2->count;$i++) {
+        if ($pr2->hasAttr($i, 'width') && $pr2->hasAttr($i, 'height')) {
+            $w=$pr2->getValue($i,'width');
+            $h=$pr2->getValue($i,'height');
+            $pr2->setValue($i, 'width', $w*2);
+            $pr2->setValue($i, 'height', $h*2);
+        }
+    }
+    $s=$pr2->repltextarray();
+    
     $pr=new my_htmlparser('img',$s);
     for ($i=0;$i<$pr->count;$i++) {
+        if ($delalt) {
+            // обнуляем тэг alt
+            if ($pr->hasAttr($i, 'alt')) {
+                $pr->setValue($i,'alt','');
+            }
+        }
+        if ($pr->hasAttr($i, 'width') && $pr->hasAttr($i, 'height')) {
+            $w=$pr->getValue($i,'width');
+            $h=$pr->getValue($i,'height');
+            $pr->setValue($i, 'width', $w*2);
+            $pr->setValue($i, 'height', $h*2);
+        }
         if ($pr->hasAttr($i, 'src')) {
             $addr=$pr->getValue($i,'src');
             $s2=parse_url($addr);
@@ -93,7 +122,9 @@ public static function repldomain($s) {
             }
         }
     }
-    return $pr->repltextarray();
+    $s9=$pr->repltextarray();
+    if ($my3->ismobile) $s9= str_replace ('&nbsp;', ' ', $s9); // убираем &nbsp; в мобильной версии
+    return $s9;
     
 }
 

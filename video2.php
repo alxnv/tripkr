@@ -15,8 +15,8 @@ $menu='';
 	
 include "ssi-top.php";
 echo '<h1 class="title"><a href="'.BS.'video">Видео о Корее</a> / '.my3::nbsh($row2->naim).'</h1>';
-echo '<br /><br /><center>'.$row2->html2;
-echo '</center><br /><br />'.$row2->html;
+echo '<br /><br /><center>'.my3::repldomain($row2->html2);
+echo '</center><br /><br />'.my3::repldomain($row2->html);
 
 include "ssi-bottom.php";
 ?>

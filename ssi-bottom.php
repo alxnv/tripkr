@@ -1,3 +1,4 @@
+        <? if (!$my3->ismobile) { ?>
                             <? include "ssi-bottomnews.php"; ?>
             </div>
         </div>
@@ -28,11 +29,13 @@
 
                 </div>
             </div>
+        <? } // !$my3->ismobile ?>
       <!--</div>-->
-	</div><!-- .middle-->
+	</div><!-- .middle or content for mobile-->
 
 </div><!-- .wrapper -->
 
+        <? if (!$my3->ismobile) { ?>
       <div id="footer">
           <hr class="hr2" noshade="noshade" />
             <p id="svyaz">Тел.: (495) 728-88-95 |
@@ -42,7 +45,8 @@
             </p>
 
     </div>
-<? include "ssi-contact-popup.php"; ?>
+        <? } // !$my3->ismobile ?>
+<? if (!$my3->ismobile) include "ssi-contact-popup.php"; ?>
 </body>
 </html>
 

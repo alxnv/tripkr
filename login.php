@@ -16,18 +16,19 @@ if (isset($_SESSION['err34'])) {
 <table class="logtab" style="margin:0 auto">
 <tr>
 <td>Логин:</td>
-<td><input type="text" name="login" style="width:150px" />
+<td><input type="text" name="login" style="width:100%" />
 </tr>
 <tr>
 <td>Пароль:</td>
-<td><input type="password" name="password" style="width:150px" />
+<td><input type="password" name="password" style="width:100%" />
 </tr>
 
 <tr valign="top">
 <td>Число для проверки <span class="red">*</span>:</td>
 <td>
-<img src="<?=BS?>kcaptcha/index.php?<?php echo session_name()?>=<?php echo session_id()?>" border="0" width="120" height="60" /><br />
-<input type="text" name="keystring" style="width:150px" /></td>
+<img src="<?=BS?>kcaptcha/index.php?<?php echo session_name()?>=<?php echo session_id()?>" border="0"
+     <? echo ($my3->ismobile ? 'width="400" height="200"' :'width="120" height="60"')?> /><br />
+<input type="text" name="keystring" style="width:100%" /></td>
 </tr>
 
 <tr>

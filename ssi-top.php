@@ -87,10 +87,83 @@ BSJS='<?=BS?>'; // путь url до начальной папки проект�
 notfpthissess=<?=$notfirstpagethissession?>;
 </script>
 </head>
+<?
+// меню
+$s8='                        <a href="'.BS.'index/about"
+                         class="pagesm">&middot;&nbsp;О&nbsp;нас&nbsp;&middot; &nbsp;</a>
+                        <a href="'.BS.'allnews/0" 
+                           class="pagesm">&middot;&nbsp;Новости&nbsp;&middot; &nbsp;</a>
+                        <a href="'.BS.'index/contacts" 
+                             class="pagesm">&middot;&nbsp;Контакты&nbsp;&middot; &nbsp;</a>
+                        <a href="'.BS.'qa" class="pagesm">&middot;&nbsp;Вопрос/ответ&nbsp;&middot; &nbsp;</a>
+                        <a href="'.BS.'page/285" class="pagesm">&middot;&nbsp;Отзывы&nbsp;и&nbsp;благодарности&nbsp;&middot; &nbsp;</a>
+                        <a href="'.BS.'video" class="pages_top2">&middot;&nbsp;Видео&nbsp;о&nbsp;Корее&nbsp;&middot; &nbsp;</a>
+                        <a href="'.BS.'index/info" class="pagesm">&middot;&nbsp;Полезные&nbsp;ссылки&nbsp;&middot; &nbsp;</a>
+';
+if ($my3->ismobile) {
+    $s8='<div  id="fon2">'.$s8.' 
+                    <a href="'.BS.'page/7" class="pagesm">&middot;&nbsp;Туристам&nbsp;&middot; &nbsp;</a><a 
+                            href="'.BS.'page/41" class="pagesm">&middot;&nbsp;ТурОператорам&nbsp;&middot; &nbsp;</a>
+                    <a href="'.BS.'page/292" class="pagesm">&middot;&nbsp;Гостиницы&nbsp;Кореи&nbsp;&middot; &nbsp;</a>		
+            </div>';
+} else {
+    
+    $s8=                    '<center>
+                        <table class="menu3">
+                            <tr class="mtr1">
+                                <td class="mtd11" style="background:url('.BS.'img/menu/top-left_01.gif)"></td>
+                                <td class="mtd12" style="background:url('.BS.'img/menu/top-center_01.gif)"></td>
+                                <td class="mtd13" style="background:url('.BS.'img/menu/top-right_01.gif)"></td>
+                            </tr>
+                            <tr>
+                                <td class="mtd21" style="background:url('.BS.'img/menu/top-left_02.gif)"></td>
+                                <td class="mtd22" align="center">'.
+            $s8.
+
+                                '</td>
+                                <td class="mtd23" style="background:url('.BS.'img/menu/top-right_02.gif)"></td>
+                            </tr>
+                            <tr class="mtr3">
+                                <td class="mtd31" style="background:url('.BS.'img/menu/top-left_03.gif)"></td>
+                                <td class="mtd32" style="background:url('.BS.'img/menu/top-center_03.gif)"></td>
+                                <td class="mtd33" style="background:url('.BS.'img/menu/top-right_03.gif)"></td>
+                            </tr>
+                        </table>
+                        </center>';
+};
+
+?>
 
 <body>
 <div class="wrapper">
     <div id="header">
+            <? if ($my3->ismobile) { ?>
+        <div id="container7">
+            <div style="margin:0 auto;text-align: center">
+                <img src="<?=BS?>img/tripkr-zag.jpg" alt="" width="1300" height="342" />
+            <? // 1803 475 ?>
+            </div>
+            <div id="menu2">
+                <? echo $s8; ?>
+            </div>
+                
+            <? /*<div id="astrip">
+                <div id="fon1" style="background:url(<?=BS?>img/menu/top_menu_fon_01.gif)"></div>
+                <div id="fon2">
+                    <a href='<?=BS?>page/7' class='pages'>&middot;&nbsp;Туристам&nbsp;&middot; &nbsp;</a><a 
+                            href='<?=BS?>page/41' class='pages'>&middot;&nbsp;ТурОператорам&nbsp;&middot; &nbsp;</a>
+                    <a href='<?=BS?>page/292' class='pages'>&middot;&nbsp;Гостиницы&nbsp;Кореи&nbsp;&middot; &nbsp;</a>		
+                </div>
+                <div id="fon3" style="background:url(<?=BS?>img/menu/top_menu_fon_03.gif)"></div>
+
+            </div>*/ ?>
+        </div>
+
+    <!-- остаток -->
+    </div>
+                <div class="content"> 
+            <? } else { ?>
+            
         <div id="container4">
             <div id="logo">
             <a href="<?=BS?>"><img src="<?=BS?>img/top_logo.png"
@@ -112,37 +185,7 @@ notfpthissess=<?=$notfirstpagethissession?>;
                     </div>
                 </div>
                 <div id="menu2">
-                    <center>
-                        <table class="menu3">
-                            <tr class="mtr1">
-                                <td class="mtd11" style="background:url(<?=BS?>img/menu/top-left_01.gif)"></td>
-                                <td class="mtd12" style="background:url(<?=BS?>img/menu/top-center_01.gif)"></td>
-                                <td class="mtd13" style="background:url(<?=BS?>img/menu/top-right_01.gif)"></td>
-                            </tr>
-                            <tr>
-                                <td class="mtd21" style="background:url(<?=BS?>img/menu/top-left_02.gif)"></td>
-                                <td class="mtd22" align="center">
-                        <a href='<?=BS?>index/about'
-                         class='pages_top'>&middot;&nbsp;О&nbsp;нас&nbsp;&middot; &nbsp;</a>
-                        <a href='<?=BS?>allnews/0' 
-                           class='pages_top'>&middot;&nbsp;Новости&nbsp;&middot; &nbsp;</a>
-                        <a href='<?=BS?>index/contacts' 
-                             class='pages_top'>&middot;&nbsp;Контакты&nbsp;&middot; &nbsp;</a>
-                        <a href='<?=BS?>qa' class='pages_top'>&middot;&nbsp;Вопрос/ответ&nbsp;&middot; &nbsp;</a>
-                        <a href='<?=BS?>page/285' class='pages_top'>&middot;&nbsp;Отзывы&nbsp;и&nbsp;благодарности&nbsp;&middot; &nbsp;</a>
-                        <a href='<?=BS?>video' class='pages_top2'>&middot;&nbsp;Видео&nbsp;о&nbsp;Корее&nbsp;&middot; &nbsp;</a>
-                        <a href='<?=BS?>index/info' class='pages_top'>&middot;&nbsp;Полезные&nbsp;ссылки&nbsp;&middot; &nbsp;</a>
-
-                                </td>
-                                <td class="mtd23" style="background:url(<?=BS?>img/menu/top-right_02.gif)"></td>
-                            </tr>
-                            <tr class="mtr3">
-                                <td class="mtd31" style="background:url(<?=BS?>img/menu/top-left_03.gif)"></td>
-                                <td class="mtd32" style="background:url(<?=BS?>img/menu/top-center_03.gif)"></td>
-                                <td class="mtd33" style="background:url(<?=BS?>img/menu/top-right_03.gif)"></td>
-                            </tr>
-                        </table>
-                        </center>
+                    <? echo $s8; ?>
                 </div>
             </div>
             <div id="weather">
@@ -174,78 +217,16 @@ notfpthissess=<?=$notfirstpagethissession?>;
                 <? if (true || APPLICATION_ENV=='production') include "ssi-social.php"; ?>                
             </div>
         </div>
+
+    <!-- остаток -->
     </div>
     <div class="middle">
 
         <div class="container">
                 <div class="content"> 
+            <? }; // $my3>ismobile ?>
 	<!--<div id="content2">-->
 <?/* jkjkjk   <img src="<?=BS?>img/dog.gif" width="800" height=800" />*/?>
                     
                     
 
-<? /*<body>
-<table class="bgwhite" id="osnova" width="100%">
-<tr class="bw0" id="tr_verh">
-<td valign="top" width="260">
-</td>
-
-<td align="center" valign="bottom">
-
-    
-
-<table class="bgwhite" cellpadding="0" cellspacing="0" style="height:80px">
-<tr class="bw0">
-<td id="top_tabl1" width="29">&nbsp;</td><td id="top_tabl2" width="650"><center>
-<a href='<?=BS?>index/about'
- class='pages_top'>&middot;&nbsp;О&nbsp;нас&nbsp;&middot; &nbsp;</a>
-<a href='<?=BS?>allnews/0' 
-   class='pages_top'>&middot;&nbsp;Новости&nbsp;&middot; &nbsp;</a>
-<a href='<?=BS?>index/contacts' 
-     class='pages_top'>&middot;&nbsp;Контакты&nbsp;&middot; &nbsp;</a>
-<a href='<?=BS?>qa' class='pages_top'>&middot;&nbsp;Вопрос/ответ&nbsp;&middot; &nbsp;</a>
-<a href='<?=BS?>page/285' class='pages_top'>&middot;&nbsp;Отзывы&nbsp;и&nbsp;благодарности&nbsp;&middot; &nbsp;</a>
-<a href='<?=BS?>video' class='pages_top2'>&middot;&nbsp;Видео&nbsp;о&nbsp;Корее&nbsp;&middot; &nbsp;</a>
-<a href='<?=BS?>index/info' class='pages_top'>&middot;&nbsp;Полезные&nbsp;ссылки&nbsp;&middot; &nbsp;</a>
-		</center>
-
-</td><td id="top_tabl3" width="29">&nbsp;</td></tr></table>
-</td>
-<td id="valcell" style="height:110px" align="right" width="260">
-<? if (APPLICATION_ENV=='production') { ?><a target="_blank" href="http://clck.yandex.ru/redir/dtype=stred/pid=7/cid=1228/*http://pogoda.yandex.ru/seoul"><img
-        src="https://info.weather.yandex.net/seoul/2_white.ru.png" border="0" alt=""/><img width="1" height="1" src="https://clck.yandex.ru/click/dtype=stred/pid=7/cid=1227/*http://img.yandex.ru/i/pix.gif" alt="" border="0"/></a>
-<? } ?></td>
-
-</tr>
-<tr class="bw0 pr1">
-<td colspan="3" id="top_menu" valign="middle" align="center"> 
-<a href='<?=BS?>page/7' class='pages'>&middot;&nbsp;Туристам&nbsp;&middot; &nbsp;</a><a 
-        href='<?=BS?>page/41' class='pages'>&middot;&nbsp;ТурОператорам&nbsp;&middot; &nbsp;</a>
-<a href='<?=BS?>page/292' class='pages'>&middot;&nbsp;Гостиницы&nbsp;Кореи&nbsp;&middot; &nbsp;</a>		
-		</td>
-</tr>*/?>
-
-<?/*<tr class="bw0 pr1">
-<td><div style="width:100%;position:relative"><? if (APPLICATION_ENV=='production') include "ssi-clocks.php";?></div></td>
-<td><div style="margin:0 auto;width:601px"><img src="<?=BS?>img/tripkr-zag.jpg" alt="" id="img_cat" width="601" height="125" /></div></td>
-<td valign="top" align="right"><? if (true || APPLICATION_ENV=='production') include "ssi-social.php"; ?></td>
-</tr>
-
-<tr>
-<? if (!$my3->onecolumn) { ?><td width="200" valign="top">
-    <?/*<img src="<?=BS?>img/ex.gif" width="240">
-    <br />
-<div id="menu" style="margin-top:10px"> <?//здесь сдвиг от верхнего желтого банера?>
-<?
-if (isset($menu)) {
-    echo $menu;
-}
-?>
-
-      
-	       
-    </div>
-<? if (true || APPLICATION_ENV=='production') include "ssi-banners-left-tripkrcom.php" ?>	
-</td><? } //(!$my3->onecolumn) ?>
-    <td valign="top" <?=($my3->onecolumn ? ' colspan="3" ' : '')?> class="content">
-<div class="content2">*/ ?>

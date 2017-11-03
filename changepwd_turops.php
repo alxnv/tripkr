@@ -22,12 +22,12 @@ if (isset($_SESSION['err34'])) {
 <table class="logtab" style="margin:0 auto">
 <tr>
 <td>Новый пароль:</td>
-<td><input type="password" name="pwd" style="width:150px" />
+<td><input type="password" name="pwd" style="width:100%" />
 </tr>
 
 <tr>
 <td>Повторите пароль:</td>
-<td><input type="password" name="pwd2" style="width:150px" />
+<td><input type="password" name="pwd2" style="width:100%" />
 </tr>
 
 <tr>

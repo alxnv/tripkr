@@ -26,65 +26,65 @@ if (isset($_SESSION['psv3'])) {
 <table class="logtab" style="margin:0 auto">
 <tr>
 <td>Логин <span class="red">*</span>:</td>
-<td><input type="text" name="login" style="width:150px" value="<?=my3::nbsh($v->login)?>" /></td>
+<td><input type="text" name="login" style="width:100%" value="<?=my3::nbsh($v->login)?>" /></td>
 </tr>
 <tr>
 <td>Пароль <span class="red">*</span>:</td>
-<td><input type="password" name="pwd" style="width:150px" /></td>
+<td><input type="password" name="pwd" style="width:100%" /></td>
 </tr>
 
 <tr>
 <td>Повторите пароль <span class="red">*</span>:</td>
-<td><input type="password" name="pwd2" style="width:150px" /></td>
+<td><input type="password" name="pwd2" style="width:100%" /></td>
 </tr>
 
 <tr>
 <td>Название компании <span class="red">*</span>:</td>
-<td><input type="text" name="naim" style="width:150px"  value="<?=my3::nbsh($v->naim)?>" /></td>
+<td><input type="text" name="naim" style="width:100%"  value="<?=my3::nbsh($v->naim)?>" /></td>
 </tr>
 
 <tr>
 <td>Имя (ФИО) <span class="red">*</span>:</td>
-<td><input type="text" name="fio" style="width:150px"  value="<?=my3::nbsh($v->fio)?>" /></td>
+<td><input type="text" name="fio" style="width:100%"  value="<?=my3::nbsh($v->fio)?>" /></td>
 </tr>
 
 <tr>
 <td>Должность <span class="red">*</span>:</td>
-<td><input type="text" name="dolgn" style="width:150px" value="<?=my3::nbsh($v->dolgn)?>"  /></td>
+<td><input type="text" name="dolgn" style="width:100%" value="<?=my3::nbsh($v->dolgn)?>"  /></td>
 </tr>
 
 <tr>
 <td>E-mail <span class="red">*</span>:</td>
-<td><input type="text" name="email" style="width:150px"  value="<?=my3::nbsh($v->email)?>" /></td>
+<td><input type="text" name="email" style="width:100%"  value="<?=my3::nbsh($v->email)?>" /></td>
 </tr>
 
 <tr>
 <td>Контактный телефон <span class="red">*</span>:</td>
-<td><input type="text" name="phone" style="width:150px"  value="<?=my3::nbsh($v->phone)?>" /></td>
+<td><input type="text" name="phone" style="width:100%"  value="<?=my3::nbsh($v->phone)?>" /></td>
 </tr>
 
 <tr>
 <td>Номер в &quot;Едином Федеральном Реестре Туроператоров&quot; 
  <a target="_blank" href="http://reestr.russiatourism.ru/">http://reestr.russiatourism.ru/</a> <span class="red">*</span><br />
  (для нероссийских ТО укажите номер лицензии или прочий идентификационный номер) :</td>
-<td><input type="text" name="rnum" style="width:150px"  value="<?=my3::nbsh($v->rnum)?>" /></td>
+<td><input type="text" name="rnum" style="width:100%"  value="<?=my3::nbsh($v->rnum)?>" /></td>
 </tr>
 
 <tr>
 <td>Сайт компании <span class="red">*</span>:</td>
-<td><input type="text" name="site" style="width:150px"  value="<?=my3::nbsh($v->site)?>" /></td>
+<td><input type="text" name="site" style="width:100%"  value="<?=my3::nbsh($v->site)?>" /></td>
 </tr>
 
 <tr>
 <td>Город <span class="red">*</span>:</td>
-<td><input type="text" name="city" style="width:150px"  value="<?=my3::nbsh($v->city)?>" /></td>
+<td><input type="text" name="city" style="width:100%"  value="<?=my3::nbsh($v->city)?>" /></td>
 </tr>
 
 <tr valign="top">
 <td>Число для проверки <span class="red">*</span>:</td>
 <td>
-<img src="<?=BS?>kcaptcha/index.php?<?php echo session_name()?>=<?php echo session_id()?>" border="0" width="120" height="60" /><br />
-<input type="text" name="keystring" style="width:150px" /></td>
+<img src="<?=BS?>kcaptcha/index.php?<?php echo session_name()?>=<?php echo session_id()?>" border="0" width="400" height="200" /><br />
+<input type="text" name="keystring" style="width:100%" /></td>
 </tr>
 
 <tr>
