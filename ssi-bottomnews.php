@@ -11,6 +11,10 @@ function onenews4(&$row) {
 	$img_http=my3::baseurl().'img2/';
 	$noimg=($row->pict=='' || ($szs=@getimagesize($img_dir.$row->pict))===false || $szs[0]==0);
 	if (!$noimg) {
+                if ($my3->ismobile) {
+                    $szs[0]=$szs[0]*my3::imagefactor;
+                    $szs[1]=$szs[1]*my3::imagefactor;
+                }
 		$s.='<a href="'.BS.'news/'.$row->uid.'"><img class="imfl" border="0" src="'.$img_http.$row->pict.'" '.$szs[3].'></a>';
 	};
 	$s.='<p class="newsdate">'.$row->df.'

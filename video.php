@@ -32,6 +32,10 @@ echo '<h1 class="title">Видео о Корее</h1>';
 						if ($noimg) {
 							//echo '<font color=green>Нет изображения</font>';
 						} else {
+                                                        if ($my3->ismobile) {
+                                                            $szs[0]=$szs[0]*my3::imagefactor;
+                                                            $szs[1]=$szs[1]*my3::imagefactor;
+                                                        }
 							$menu.='<a href="'.my3::baseurl().'video2/'.$arr[$i]->uid.'"><img border="0" src="'.$img_http.$arr[$i]->pict.'" '.$szs[3].'></a>';
 						}
 						

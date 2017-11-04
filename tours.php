@@ -40,6 +40,10 @@ if (count($arr)>0) {
                 //echo '<font color=green>Нет изображения</font>';
                 $menu.='<a href="'.my3::baseurl().'tour/'.$arr[$i]->uid.'/'.$ttype.'"><img border="0"  src="'.BS.'img/stub.jpg" width="150" height="105" alt="" /></a>';
             } else {
+                if ($my3->ismobile) {
+                    $szs[0]=$szs[0]*my3::imagefactor;
+                    $szs[1]=$szs[1]*my3::imagefactor;
+                }
                 $menu.='<a href="'.my3::baseurl().'tour/'.$arr[$i]->uid.'/'.$ttype.'"><img border="0" src="'.$img_http.$arr[$i]->pict.'" '.$szs[3].'></a>';
             }
             
