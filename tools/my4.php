@@ -8,6 +8,10 @@ public static function txtesc($s) {
     return htmlspecialchars($s);
 }
 
+/*public static function cutlinebreak($s) {
+    return str_replace("\n",$s);
+}*/
+
 
 public static function printpages($arr) {
 // печатает на экран список номеров страниц гиперссылками (paginator)

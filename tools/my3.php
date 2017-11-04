@@ -105,11 +105,19 @@ public static function repldomain($s) {
                 $s81=$s8;
                 $n8=$mtch[0][0][1];
                 $m=25;
-                $n=strpos($s8,'/',$m);
+                if (strlen($s8)<=$m) {
+                    $n=false;
+                } else {
+                    $n=strpos($s8,'/',$m);
+                }
                 while ($n!==false) {
                     $s8=substr($s8,0,$n+1).' '.substr($s8,$n+1);
                     $m+=25;
-                    $n=strpos($s8,'/',$m);
+                    if (strlen($s8)<=$m) {
+                        $n=false;
+                    } else {
+                        $n=strpos($s8,'/',$m);
+                    }
                 }
                 $s8=substr($s2,0,$n8).$s8.substr($s2,$n8+strlen($s81));
                 //var_dump($s8);

@@ -528,3 +528,6 @@ input {
 }
 
 .pagesm { font-size:80%; color:#fff; }
+li,h1 {
+    margin:1%;
+}

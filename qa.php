@@ -15,12 +15,11 @@ $arr=my3::qlist("select b.* from et_tree a,et_ta_html b
         where a.idtree=4 and a.uid=b.uid and b.html2<>'' order by a.ordr");
 
 //getmonth35($arr);
-echo '<h3><ol>';
 for ($i=0;$i<count($arr);$i++) {
     $ar2=$arr[$i];
-    echo '<li><a href="#qa'.$ar2->uid.'">'.nl2br(my4::txtesc($ar2->html)).'</a></li>';
+    echo '<h3>'.($i+1).'. <a href="#qa'.$ar2->uid.'">'.nl2br(my4::txtesc(trim($ar2->html))).'</a></h3>';
 };
-echo '</ol></h3><br />';
+echo '<br />';
 
 for ($i=0;$i<count($arr);$i++) {
     $ar2=$arr[$i];
