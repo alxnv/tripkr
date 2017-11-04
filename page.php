@@ -60,6 +60,7 @@ if ((!$hotel_info && !$hotelsincity && $uid2<>299 && !$tourop_page_not_logged) &
 		}
 		$menu.='</ul>';
 	}
+        $menu99=$menu;
 }
 	
 include "ssi-top.php";
@@ -120,6 +121,10 @@ switch ($uid2) {
 		} else {
 			// не тур, а обычная страница        
 			// выводим таблицу дочерних страниц с картинками
+                        if ($uid2==142 && $my3->ismobile) { // Туристам / Где приобрести наши туры в Корею
+                            // показываем меню которое обычно слева
+                            echo $menu99.'<br />';
+                        }
 			echo mailaddrreplacer(my3::repldomain($row2->html));
 
 			echo '<br /><br />';
