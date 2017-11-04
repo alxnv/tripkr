@@ -96,161 +96,162 @@ public static function repldomain($s) {
     if ($my3->ismobile) $s9= str_replace ('&nbsp;', ' ', $s); // убираем &nbsp; в мобильной версии
         else $s9=$s;
     $html = str_get_html($s9);
-    if ($my3->ismobile) {
-        foreach($html->find('iframe') as $ifr) {
+    if ($html!==false) {
+        if ($my3->ismobile) {
+            foreach($html->find('iframe') as $ifr) {
 
-            if (isset($ifr->width) && isset($ifr->height)) {
-                $ifr->width=round(intval($ifr->width)*$factor);
-                $ifr->height=round(intval($ifr->height)*$factor);
-            }
-        }
-        // убираем style у span,ul
-        // не всегда определяет эти тэги. может быть некорректный html там
-        foreach($html->find('span, ul, stong, em, b, u') as $span) {
-
-            if (isset($span->style)) {
-                //var_dump($span->style);
-                $span->style=null;
-            }
-        }
-        // добавляем пробел к длинным строкам веб-адресам (разбиваем их) по знаку '/'
-        foreach($html->find('text') as $txt) {
-            $s2=$txt->innertext;
-            //preg_match_all('/\S{10,}/mi',$s2,$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
-            preg_match_all('/[\\|\/|\:|\.|\?|\_|\=|0-9a-z]{30,}/mi',$s2,$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
-            if (count($mtch)>0) {
-                //var_dump($mtch,$s2);
-                $s8=$mtch[0][0][0];
-                $s81=$s8;
-                $n8=$mtch[0][0][1];
-                $m=25;
-                if (strlen($s8)<=$m) {
-                    $n=false;
-                } else {
-                    $n=strpos($s8,'/',$m);
+                if (isset($ifr->width) && isset($ifr->height)) {
+                    $ifr->width=round(intval($ifr->width)*$factor);
+                    $ifr->height=round(intval($ifr->height)*$factor);
                 }
-                while ($n!==false) {
-                    $s8=substr($s8,0,$n+1).' '.substr($s8,$n+1);
-                    $m+=25;
+            }
+            // убираем style у span,ul
+            // не всегда определяет эти тэги. может быть некорректный html там
+            foreach($html->find('span, ul, stong, em, b, u') as $span) {
+
+                if (isset($span->style)) {
+                    //var_dump($span->style);
+                    $span->style=null;
+                }
+            }
+            // добавляем пробел к длинным строкам веб-адресам (разбиваем их) по знаку '/'
+            foreach($html->find('text') as $txt) {
+                $s2=$txt->innertext;
+                //preg_match_all('/\S{10,}/mi',$s2,$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
+                preg_match_all('/[\\|\/|\:|\.|\?|\_|\=|0-9a-z]{30,}/mi',$s2,$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
+                if (count($mtch)>0) {
+                    //var_dump($mtch,$s2);
+                    $s8=$mtch[0][0][0];
+                    $s81=$s8;
+                    $n8=$mtch[0][0][1];
+                    $m=25;
                     if (strlen($s8)<=$m) {
                         $n=false;
                     } else {
                         $n=strpos($s8,'/',$m);
                     }
+                    while ($n!==false) {
+                        $s8=substr($s8,0,$n+1).' '.substr($s8,$n+1);
+                        $m+=25;
+                        if (strlen($s8)<=$m) {
+                            $n=false;
+                        } else {
+                            $n=strpos($s8,'/',$m);
+                        }
+                    }
+                    $s8=substr($s2,0,$n8).$s8.substr($s2,$n8+strlen($s81));
+                    //var_dump($s8);
+                    $txt->innertext=$s8;
                 }
-                $s8=substr($s2,0,$n8).$s8.substr($s2,$n8+strlen($s81));
-                //var_dump($s8);
-                $txt->innertext=$s8;
-            }
 
-            /*if (isset($ifr->width) && isset($ifr->height)) {
-                $ifr->width=round(intval($ifr->width)*$factor);
-                $ifr->height=round(intval($ifr->height)*$factor);
-            }*/
+                /*if (isset($ifr->width) && isset($ifr->height)) {
+                    $ifr->width=round(intval($ifr->width)*$factor);
+                    $ifr->height=round(intval($ifr->height)*$factor);
+                }*/
+            }
         }
-    }
 
-    /*$pr2=new my_htmlparser('iframe',$s);
-    for ($i=0;$i<$pr2->count;$i++) {
-        if ($pr2->hasAttr($i, 'width') && $pr2->hasAttr($i, 'height')) {
-            $w=$pr2->getValue($i,'width');
-            $h=$pr2->getValue($i,'height');
-            $pr2->setValue($i, 'width', $w*2);
-            $pr2->setValue($i, 'height', $h*2);
-        }
-    }
-    $s=$pr2->repltextarray();*/
-    
-    foreach($html->find('img') as $img) {
-        if ($delalt) {
-            // обнуляем тэг alt
-            if (isset($img->alt)) {
-                $img->alt='';
+        /*$pr2=new my_htmlparser('iframe',$s);
+        for ($i=0;$i<$pr2->count;$i++) {
+            if ($pr2->hasAttr($i, 'width') && $pr2->hasAttr($i, 'height')) {
+                $w=$pr2->getValue($i,'width');
+                $h=$pr2->getValue($i,'height');
+                $pr2->setValue($i, 'width', $w*2);
+                $pr2->setValue($i, 'height', $h*2);
             }
         }
-        if ($my3->ismobile) {
-            // заменяем ширину и высоту
-            if (isset($img->width) && isset($img->height)) {
-                $img->width=round(intval($img->width)*$factor);
-                $img->height=round(intval($img->height)*$factor);
-            }
-            // заменяем ширину и высоту в тэге style
-            if (isset($img->style)) {
-                $ps=new styleparser($img->style);
-                if ($ps->hasAttr('width') &&  $ps->hasAttr('height') && 
-                        my3::px_parse($ps->getValue('width'),$n1) &&
-                        my3::px_parse($ps->getValue('height'),$n2)) {
-                    $ps->setValue('width',round($n1*$factor).'px');
-                    $ps->setValue('height',round($n2*$factor).'px');
-                    $s98=$ps->write();
-                    if ($img->style<>$s98) $img->style=$s98;
-                }
-            }
-        }
-        if (isset($img->src)) {
-            $addr=$img->src;
-            $s2=parse_url($addr);
-            if (isset($s2['host'])) {
-                $sl=strtolower($s2['host']);
-                $hashost=1;
-            } else {
-                $hashost=0;
-            };
-            $s3=$addr;
-            if ($hashost && in_array($sl,
-                    array('gokoreatour.ru','гокореатур.рф','tripkr.ru',
-                        'www.gokoreatour.ru','www.гокореатур.рф','www.tripkr.ru'))) {
-                if (!($s2['scheme']=='https' && $sl=='www.gokoreatour.ru')) {
-                    // заменяем на https://www.gokoreatour.ru
-                    $s3='https://www.gokoreatour.ru'.$s2['path'];
-                    if (isset($s2['query'])) $s3.='?'.$s2['query'];
-                }
-            if ($s3<>$addr) $img->src=$s3;    
-            }
-        }
-    }
-    /*$pr=new my_htmlparser('img',$s);
-    for ($i=0;$i<$pr->count;$i++) {
-        if ($delalt) {
-            // обнуляем тэг alt
-            if ($pr->hasAttr($i, 'alt')) {
-                $pr->setValue($i,'alt','');
-            }
-        }
-        if ($pr->hasAttr($i, 'width') && $pr->hasAttr($i, 'height')) {
-            $w=$pr->getValue($i,'width');
-            $h=$pr->getValue($i,'height');
-            $pr->setValue($i, 'width', $w*2);
-            $pr->setValue($i, 'height', $h*2);
-        }
-        if ($pr->hasAttr($i, 'src')) {
-            $addr=$pr->getValue($i,'src');
-            $s2=parse_url($addr);
-            if (isset($s2['host'])) {
-                $sl=strtolower($s2['host']);
-                $hashost=1;
-            } else {
-                $hashost=0;
-            };
-            $s3=$addr;
-            if ($hashost && in_array($sl,
-                    array('gokoreatour.ru','гокореатур.рф','tripkr.ru',
-                        'www.gokoreatour.ru','www.гокореатур.рф','www.tripkr.ru'))) {
-                if (!($s2['scheme']=='https' && $sl=='www.gokoreatour.ru')) {
-                    // заменяем на https://www.gokoreatour.ru
-                    $s3='https://www.gokoreatour.ru'.$s2['path'];
-                    if (isset($s2['query'])) $s3.='?'.$s2['query'];
-                }
-            if ($s3<>$addr) $pr->setValue($i,'src',$s3);    
-            }
-        }
-    }
-    $s9=$pr->repltextarray();*/
-    $s9 = $html->save();
-    // clean up memory
-    $html->clear();
-    unset($html);
+        $s=$pr2->repltextarray();*/
 
+        foreach($html->find('img') as $img) {
+            if ($delalt) {
+                // обнуляем тэг alt
+                if (isset($img->alt)) {
+                    $img->alt='';
+                }
+            }
+            if ($my3->ismobile) {
+                // заменяем ширину и высоту
+                if (isset($img->width) && isset($img->height)) {
+                    $img->width=round(intval($img->width)*$factor);
+                    $img->height=round(intval($img->height)*$factor);
+                }
+                // заменяем ширину и высоту в тэге style
+                if (isset($img->style)) {
+                    $ps=new styleparser($img->style);
+                    if ($ps->hasAttr('width') &&  $ps->hasAttr('height') && 
+                            my3::px_parse($ps->getValue('width'),$n1) &&
+                            my3::px_parse($ps->getValue('height'),$n2)) {
+                        $ps->setValue('width',round($n1*$factor).'px');
+                        $ps->setValue('height',round($n2*$factor).'px');
+                        $s98=$ps->write();
+                        if ($img->style<>$s98) $img->style=$s98;
+                    }
+                }
+            }
+            if (isset($img->src)) {
+                $addr=$img->src;
+                $s2=parse_url($addr);
+                if (isset($s2['host'])) {
+                    $sl=strtolower($s2['host']);
+                    $hashost=1;
+                } else {
+                    $hashost=0;
+                };
+                $s3=$addr;
+                if ($hashost && in_array($sl,
+                        array('gokoreatour.ru','гокореатур.рф','tripkr.ru',
+                            'www.gokoreatour.ru','www.гокореатур.рф','www.tripkr.ru'))) {
+                    if (!($s2['scheme']=='https' && $sl=='www.gokoreatour.ru')) {
+                        // заменяем на https://www.gokoreatour.ru
+                        $s3='https://www.gokoreatour.ru'.$s2['path'];
+                        if (isset($s2['query'])) $s3.='?'.$s2['query'];
+                    }
+                if ($s3<>$addr) $img->src=$s3;    
+                }
+            }
+        }
+        /*$pr=new my_htmlparser('img',$s);
+        for ($i=0;$i<$pr->count;$i++) {
+            if ($delalt) {
+                // обнуляем тэг alt
+                if ($pr->hasAttr($i, 'alt')) {
+                    $pr->setValue($i,'alt','');
+                }
+            }
+            if ($pr->hasAttr($i, 'width') && $pr->hasAttr($i, 'height')) {
+                $w=$pr->getValue($i,'width');
+                $h=$pr->getValue($i,'height');
+                $pr->setValue($i, 'width', $w*2);
+                $pr->setValue($i, 'height', $h*2);
+            }
+            if ($pr->hasAttr($i, 'src')) {
+                $addr=$pr->getValue($i,'src');
+                $s2=parse_url($addr);
+                if (isset($s2['host'])) {
+                    $sl=strtolower($s2['host']);
+                    $hashost=1;
+                } else {
+                    $hashost=0;
+                };
+                $s3=$addr;
+                if ($hashost && in_array($sl,
+                        array('gokoreatour.ru','гокореатур.рф','tripkr.ru',
+                            'www.gokoreatour.ru','www.гокореатур.рф','www.tripkr.ru'))) {
+                    if (!($s2['scheme']=='https' && $sl=='www.gokoreatour.ru')) {
+                        // заменяем на https://www.gokoreatour.ru
+                        $s3='https://www.gokoreatour.ru'.$s2['path'];
+                        if (isset($s2['query'])) $s3.='?'.$s2['query'];
+                    }
+                if ($s3<>$addr) $pr->setValue($i,'src',$s3);    
+                }
+            }
+        }
+        $s9=$pr->repltextarray();*/
+        $s9 = $html->save();
+        // clean up memory
+        $html->clear();
+        unset($html);
+    }
     return $s9;
     
 }

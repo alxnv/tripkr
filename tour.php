@@ -1,5 +1,7 @@
 <?
 // uid - идентификатор записи, uid2 - признак информации для  всех, агентов или операторов
+// для подтуров fpnum=3 idtree=2 (медицинский туризм = в разделе админки "Туры")
+// для туров fpnum=1 idtree=1
 if (!isset($conf35)) die;
 if (!isset($_GET['uid']) || !isset($_GET['uid2'])) die;
 include_once "tools/my4.php";
