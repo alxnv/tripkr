@@ -55,7 +55,14 @@ if (count($arr)>0) {
             }
             
 			$isnew=($ttype=='tours' && $arr[$i]->newtour) || ($ttype=='agents' && $arr[$i]->newtourta);
-			$newhtml='<img class="blinking" src="'.my3::baseurl().'images/newcart.gif" widht="39" height="11" />';
+                        
+                        $szs=array(39,11);
+                        if ($my3->ismobile) {
+                            $szs[0]=$szs[0]*my3::imagefactor;
+                            $szs[1]=$szs[1]*my3::imagefactor;
+                        }
+                        $szs[3]=' width="'.$szs[0].'" height="'.$szs[1].'" ';
+			$newhtml='<img class="blinking" src="'.my3::baseurl().'images/newcart.gif" '.$szs[3].' />';
             $menu.='</td><td width="470"><h3>'.($isnew ? $newhtml : '').' <a href="'.my3::baseurl().'tour/'.$arr[$i]->uid.'/'.$ttype.'">'.
 			my3::nbsh($arr[$i]->naim).
                 '</a></h3></td></tr>';
