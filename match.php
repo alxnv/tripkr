@@ -248,11 +248,11 @@ echo '<pre>';
 //var_dump($s,repldomain($s));
 $pr=new my_htmlparser('img',$s);
 $pr->add2level('style', ';');
-var_dump($pr->afrom,$pr->ato);
+//var_dump($pr->afrom,$pr->ato);
 //var_dump($pr->hasAttr(1,'name'));
 //$pr->setValue(1,'name','vasya');
 //$pr->setValue(0,'width','1000');
-var_dump($pr->repltextarray());
+//var_dump($pr->repltextarray());
 //var_dump('$regex=',$regex);
 //var_dump('$s=',$s);
 //var_dump('$zam=',$zam);
@@ -261,4 +261,14 @@ var_dump($pr->repltextarray());
 //var_dump($mtch2);
 //$s3=  repltextarray($s, $mtch2, $zam2);
 //var_dump('$3=',$s3);
+
+// проверка разборки style="xxxxxxx"
+include_once dirname(__FILE__).'/tools/my3.php';
+$s=' width : 40px ;jklj;height: 30px ';
+$sp=new styleparser($s);
+var_dump($sp->hasAttr('jkjk'));
+$sp->setValue('width','50px');
+var_dump($sp->write());
+var_dump(my3::px_parse(' 17 px ',$n));
+var_dump($n);
 ?>

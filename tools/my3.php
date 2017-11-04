@@ -5,7 +5,7 @@
  * основной класс для клиентской части (суперглобальный), с теми же названиями фунций что и в zend/my3.php
  * должен заменить my4 и использоваться вместо него
  
- my3.php для бэкэнда находится в каталоге application/userobj
+ my3.php для бэкэнда (my7.php) находится в каталоге app35/userobj
 */
 class my3 {
     public $baseurl=null;
@@ -22,6 +22,23 @@ class my3 {
     }
 
     /**
+     * разбирает сторку, возвращает true если она оканчивается на px,
+     *  возвращает числовое значение
+     * 
+     */
+
+    function px_parse($s,&$n) {
+        if (preg_match('/\s*(\d+)\s*px\s*/mi',$s,$mtch)) {
+            $n=intval($mtch[1]);
+            $b=true;
+        } else {
+            $b=false;
+        }
+        return $b;
+    }
+    
+    /**
+    }
      * делает редирект, если текущий сайт не my3::SITE с www или без
      * 
      */
@@ -124,10 +141,10 @@ public static function repldomain($s) {
                 $txt->innertext=$s8;
             }
 
-            if (isset($ifr->width) && isset($ifr->height)) {
+            /*if (isset($ifr->width) && isset($ifr->height)) {
                 $ifr->width=round(intval($ifr->width)*$factor);
                 $ifr->height=round(intval($ifr->height)*$factor);
-            }
+            }*/
         }
     }
 
@@ -150,9 +167,22 @@ public static function repldomain($s) {
             }
         }
         if ($my3->ismobile) {
+            // заменяем ширину и высоту
             if (isset($img->width) && isset($img->height)) {
                 $img->width=round(intval($img->width)*$factor);
                 $img->height=round(intval($img->height)*$factor);
+            }
+            // заменяем ширину и высоту в тэге style
+            if (isset($img->style)) {
+                $ps=new styleparser($img->style);
+                if ($ps->hasAttr('width') &&  $ps->hasAttr('height') && 
+                        my3::px_parse($ps->getValue('width'),$n1) &&
+                        my3::px_parse($ps->getValue('height'),$n2)) {
+                    $ps->setValue('width',round($n1*$factor).'px');
+                    $ps->setValue('height',round($n2*$factor).'px');
+                    $s98=$ps->write();
+                    if ($img->style<>$s98) $img->style=$s98;
+                }
             }
         }
         if (isset($img->src)) {
@@ -364,7 +394,7 @@ return $s;
      * @return string
      */
 
-    static function repltextarray($s,$arr1,$arr2) {
+    public static function repltextarray($s,$arr1,$arr2) {
 
         $last=strlen($s);
         $s2='';
@@ -457,4 +487,71 @@ public static  function encodeheader($input, $charset = 'UTF-8')
     }
 
 } // end class
+
+
+/**
+ * парсер тэга style
+ */
+class styleparser {
+    public $afrom=null;
+    public $ato=null;
+    public $aindex=null;
+    public $str;
+/**
+     * @param string $style строк со стилем
+ */
+    function __construct($style) {
+        $arr=array();
+        $this->str=$style;
+        $this->afrom=array();
+        $this->ato=array();
+        $this->aindex=array();
+        preg_match_all('/\s*([^\;|\s]+)\s*\:\s*([^\;]+)/mi',$style,$arr, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
+        for ($i=0;$i<count($arr);$i++) {
+            $this->afrom[]=$arr[$i][2];
+            $this->ato[]=$this->afrom[$i][0];
+            $this->aindex[$arr[$i][1][0]]=$i;
+        }
+        //var_dump($this->afrom,$this->ato,$this->aindex);
+    }    
+    /**
+ * получить указанный атрибут
+ * @param string $attrname
+ * @return string 
+ * 
+ */
+    function getValue($attrname) {
+        $jindex=$this->aindex[$attrname];
+        return $this->ato[$jindex];
+    }
+    
+    /**
+ * записать указанный атрибут
+ * @param string $attrname
+ * @param string $value
+ * 
+ */
+    function setValue($attrname,$value) {
+        $jindex=$this->aindex[$attrname];
+        $this->ato[$jindex]=$value;
+    }
+ 
+   /**
+ * проверить, имеется ли указанный атрибут
+ * @param string $attrname
+ * @param string $value
+ * 
+ */
+    function hasAttr($attrname) {
+        return isset($this->aindex[$attrname]);
+    }
+
+   /**
+ * перезаписать строку и вернуть ее
+  */
+    function write() {
+        return my3::repltextarray($this->str, $this->afrom, $this->ato);
+    }
+}
+
 ?>
