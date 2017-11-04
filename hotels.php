@@ -2,7 +2,7 @@
 require_once "tools/funct.php";
 
 $arr=my3::qlist("select uid,naim from et_tree where idtree=11 and topid=292 order by ordr");
-echo '<div style="width:250px;padding-top:8px;float:left"><ul style="line-height:10px">';
+echo '<div style="width:250px;padding-top:8px;float:left"><ul>';
 for ($i=0;$i<count($arr);$i++) {
 	$ar48=$arr[$i];
 	echo '<li><h3><a href="'.my3::baseurl().'page/'.$arr[$i]->uid.'">'.my3::nbsh($arr[$i]->naim).

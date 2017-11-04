@@ -87,8 +87,8 @@ public static function repldomain($s) {
                 $ifr->height=round(intval($ifr->height)*$factor);
             }
         }
-        // убираем style у span
-        foreach($html->find('span') as $span) {
+        // убираем style у span,ul
+        foreach($html->find('span, ul') as $span) {
 
             if (isset($span->style)) {
                 $span->style=null;

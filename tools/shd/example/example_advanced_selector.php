@@ -35,6 +35,23 @@ foreach($html->find('ul') as $ul) {
 }
 
 // -----------------------------------------------------------------------------
+// nested selector
+$str = <<<HTML
+<ul id="ul1">
+    <li>item:<span>1</span></li>
+    <li>item:<span>2</span></li>
+</ul>
+<ul id="ul2">
+    <li>item:<span>3</span></li>
+    <li>item:<span>4</span></li>
+</ul>
+HTML;
+
+$html = str_get_html($str);
+foreach($html->find('ul,li') as $ul) {
+        echo htmlspecialchars($ul->outertext) . '<br>';
+}
+// -----------------------------------------------------------------------------
 // parsing checkbox
 $str = <<<HTML
 <form name="form1" method="post" action="">
