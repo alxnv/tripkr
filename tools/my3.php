@@ -14,7 +14,7 @@ class my3 {
     public $onecolumn=null;
     const SITEMAIL='mow.ustravel@gmail.com'; //  mail администратора сайта. на него отсылаются все оповещения
     const SITE='https://www.gokoreatour.ru'; //  сайт
-    const imagefactor=2.1; // во сколько раз увеличивать картинки для мобильного просмотра 
+    const imagefactor=2; // во сколько раз увеличивать картинки для мобильного просмотра 
     function __construct() {
         $this->baseurl=dirname($_SERVER['SCRIPT_NAME']).'/';
         if ($this->baseurl=='//') $this->baseurl='/';
