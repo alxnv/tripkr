@@ -105,9 +105,11 @@ public static function repldomain($s) {
             }
         }
         // убираем style у span,ul
+        // не всегда определяет эти тэги. может быть некорректный html там
         foreach($html->find('span, ul, stong, em, b, u') as $span) {
 
             if (isset($span->style)) {
+                //var_dump($span->style);
                 $span->style=null;
             }
         }

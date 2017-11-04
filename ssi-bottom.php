@@ -34,9 +34,7 @@
 	</div><!-- .middle or content for mobile-->
 
 </div><!-- .wrapper -->
-
-        <? if (!$my3->ismobile) { ?>
-      <div id="footer">
+      <div id="<?=($my3->ismobile ? 'footer2' : 'footer')?>">
           <hr class="hr2" noshade="noshade" />
             <p id="svyaz">Тел.: (495) 728-88-95 |
 
@@ -45,7 +43,6 @@
             </p>
 
     </div>
-        <? } // !$my3->ismobile ?>
 <? if (!$my3->ismobile) include "ssi-contact-popup.php"; ?>
 </body>
 </html>

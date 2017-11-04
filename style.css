@@ -74,6 +74,10 @@ body {
         padding-top:5px;
 }
 
+#footer2 {
+        padding-top:5%;
+        font-size:70%;
+}
 
 
 
@@ -235,7 +239,7 @@ margin:5px;
 }
 a {color:#000000; text-decoration:none;}
 h1 {
-font-size:160%;
+font-size:130%;
 }
 h3 {
     font-size:110%;
@@ -334,7 +338,7 @@ a#pages,a.pages {color: #FFFFFF; font-family:Verdana, Arial, Helvetica, sans-ser
 #svyaz {margin:0;padding:0; text-align:center;
 margin-top:5px;
 color:black;
-font-size:90%;
+/*font-size:90%;*/
 
 }
 #svyaz a {

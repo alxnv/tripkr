@@ -46,7 +46,9 @@ include "ssi-top.php";
 echo '<h1 class="title">'.$kroh.' / '.my3::nbsh($t2).'</h1>';
 
 //echo my3::nbsh($row2->naim).'<br /><br />';
-echo mailaddrreplacer(my3::repldomain($row2->html)).'<br /><br />';
+$s96=mailaddrreplacer(my3::repldomain($row2->html));
+echo $s96.'<br /><br />';
+//var_dump(htmlspecialchars($s96));
 
 if ($ttype=='tours') {
 	$arr=my3::qlist("select a.uid,a.naim,b.html,b.html2,b.data from et_tree a,et_ta_html b 
