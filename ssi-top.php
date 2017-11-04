@@ -14,18 +14,24 @@ if ($choosemobile) {
 //$_SESSION['scrwidth']=1200; //!!!here
 
 
-
-if (!isset($_SESSION['scrwidth'])) {
-    if (isset($_COOKIE['scrwidth'])) {
-        $_SESSION['scrwidth']=intval($_COOKIE['scrwidth']);
+$s10=$_SERVER["HTTP_USER_AGENT"];
+if (strpos($s10,'+http://www.google.com/bot.html')!==false ||
+        strpos($s10,'+http://yandex.com/bots')!==false) {
+    // google bot или yandex bot
+    $_SESSION['scrwidth']=1280;
     } else {
-        // передаем переменные с размерами
-        echo "<script language='javascript'>\n"
-        . "var date = new Date(new Date().getTime() + 3600 * 1000);
-document.cookie = 'scrwidth='+screen.width+'; path=/; expires=' + date.toUTCString();\n";
-        echo "  location.href=location.href\n";
-        echo "</script>\n";
-        exit();
+    if (!isset($_SESSION['scrwidth'])) {
+        if (isset($_COOKIE['scrwidth'])) {
+            $_SESSION['scrwidth']=intval($_COOKIE['scrwidth']);
+        } else {
+            // передаем переменные с размерами
+            echo "<script language='javascript'>\n"
+            . "var date = new Date(new Date().getTime() + 3600 * 1000);
+    document.cookie = 'scrwidth='+screen.width+'; path=/; expires=' + date.toUTCString();\n";
+            echo "  location.href=location.href\n";
+            echo "</script>\n";
+            exit();
+        }
     }
 }
 

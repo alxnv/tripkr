@@ -71,11 +71,59 @@ class my3 {
      * @return string
      */
 public static function repldomain($s) {
-    include_once dirname(__FILE__)."/../app35/controllers/My/htmlparser.php";
+    include_once dirname(__FILE__)."/shd/simple_html_dom.php";
     global $my3;
+    $factor=2.3; // во сколько раз увеличивать картинки для мобильного просмотра
     $delalt=$my3->ismobile;
 
-    $pr2=new my_htmlparser('iframe',$s);
+    if ($my3->ismobile) $s9= str_replace ('&nbsp;', ' ', $s); // убираем &nbsp; в мобильной версии
+        else $s9=$s;
+    $html = str_get_html($s9);
+    if ($my3->ismobile) {
+        foreach($html->find('iframe') as $ifr) {
+
+            if (isset($ifr->width) && isset($ifr->height)) {
+                $ifr->width=round(intval($ifr->width)*$factor);
+                $ifr->height=round(intval($ifr->height)*$factor);
+            }
+        }
+        // убираем style у span
+        foreach($html->find('span') as $span) {
+
+            if (isset($span->style)) {
+                $span->style=null;
+            }
+        }
+        // добавляем пробел к длинным строкам веб-адресам (разбиваем их) по знаку '/'
+        foreach($html->find('text') as $txt) {
+            $s2=$txt->innertext;
+            //preg_match_all('/\S{10,}/mi',$s2,$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
+            preg_match_all('/[\\|\/|\:|\.|\?|\_|\=|0-9a-z]{30,}/mi',$s2,$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
+            if (count($mtch)>0) {
+                //var_dump($mtch,$s2);
+                $s8=$mtch[0][0][0];
+                $s81=$s8;
+                $n8=$mtch[0][0][1];
+                $m=25;
+                $n=strpos($s8,'/',$m);
+                while ($n!==false) {
+                    $s8=substr($s8,0,$n+1).' '.substr($s8,$n+1);
+                    $m+=25;
+                    $n=strpos($s8,'/',$m);
+                }
+                $s8=substr($s2,0,$n8).$s8.substr($s2,$n8+strlen($s81));
+                //var_dump($s8);
+                $txt->innertext=$s8;
+            }
+
+            if (isset($ifr->width) && isset($ifr->height)) {
+                $ifr->width=round(intval($ifr->width)*$factor);
+                $ifr->height=round(intval($ifr->height)*$factor);
+            }
+        }
+    }
+
+    /*$pr2=new my_htmlparser('iframe',$s);
     for ($i=0;$i<$pr2->count;$i++) {
         if ($pr2->hasAttr($i, 'width') && $pr2->hasAttr($i, 'height')) {
             $w=$pr2->getValue($i,'width');
@@ -84,9 +132,44 @@ public static function repldomain($s) {
             $pr2->setValue($i, 'height', $h*2);
         }
     }
-    $s=$pr2->repltextarray();
+    $s=$pr2->repltextarray();*/
     
-    $pr=new my_htmlparser('img',$s);
+    foreach($html->find('img') as $img) {
+        if ($delalt) {
+            // обнуляем тэг alt
+            if (isset($img->alt)) {
+                $img->alt='';
+            }
+        }
+        if ($my3->ismobile) {
+            if (isset($img->width) && isset($img->height)) {
+                $img->width=round(intval($img->width)*$factor);
+                $img->height=round(intval($img->height)*$factor);
+            }
+        }
+        if (isset($img->src)) {
+            $addr=$img->src;
+            $s2=parse_url($addr);
+            if (isset($s2['host'])) {
+                $sl=strtolower($s2['host']);
+                $hashost=1;
+            } else {
+                $hashost=0;
+            };
+            $s3=$addr;
+            if ($hashost && in_array($sl,
+                    array('gokoreatour.ru','гокореатур.рф','tripkr.ru',
+                        'www.gokoreatour.ru','www.гокореатур.рф','www.tripkr.ru'))) {
+                if (!($s2['scheme']=='https' && $sl=='www.gokoreatour.ru')) {
+                    // заменяем на https://www.gokoreatour.ru
+                    $s3='https://www.gokoreatour.ru'.$s2['path'];
+                    if (isset($s2['query'])) $s3.='?'.$s2['query'];
+                }
+            if ($s3<>$addr) $img->src=$s3;    
+            }
+        }
+    }
+    /*$pr=new my_htmlparser('img',$s);
     for ($i=0;$i<$pr->count;$i++) {
         if ($delalt) {
             // обнуляем тэг alt
@@ -122,8 +205,12 @@ public static function repldomain($s) {
             }
         }
     }
-    $s9=$pr->repltextarray();
-    if ($my3->ismobile) $s9= str_replace ('&nbsp;', ' ', $s9); // убираем &nbsp; в мобильной версии
+    $s9=$pr->repltextarray();*/
+    $s9 = $html->save();
+    // clean up memory
+    $html->clear();
+    unset($html);
+
     return $s9;
     
 }
