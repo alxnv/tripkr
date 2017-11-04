@@ -105,7 +105,7 @@ public static function repldomain($s) {
             }
         }
         // убираем style у span,ul
-        foreach($html->find('span, ul') as $span) {
+        foreach($html->find('span, ul, stong, em, b, u') as $span) {
 
             if (isset($span->style)) {
                 $span->style=null;
