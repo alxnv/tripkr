@@ -38,7 +38,13 @@ if (count($arr)>0) {
             $noimg=($arr[$i]->pict=='' || ($szs=@getimagesize($img_dir.$arr[$i]->pict))===false || $szs[0]==0);
             if ($noimg) {
                 //echo '<font color=green>Нет изображения</font>';
-                $menu.='<a href="'.my3::baseurl().'tour/'.$arr[$i]->uid.'/'.$ttype.'"><img border="0"  src="'.BS.'img/stub.jpg" width="150" height="105" alt="" /></a>';
+                $szs=array(150,105);
+                if ($my3->ismobile) {
+                    $szs[0]=$szs[0]*my3::imagefactor;
+                    $szs[1]=$szs[1]*my3::imagefactor;
+                }
+                $szs[3]=' width="'.$szs[0].'" height="'.$szs[1].'" ';
+                $menu.='<a href="'.my3::baseurl().'tour/'.$arr[$i]->uid.'/'.$ttype.'"><img border="0"  src="'.BS.'img/stub.jpg" '.$szs[3].' alt="" /></a>';
             } else {
                 if ($my3->ismobile) {
                     $szs[0]=$szs[0]*my3::imagefactor;
