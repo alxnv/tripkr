@@ -36,6 +36,7 @@ echo '<h1 class="title">Видео о Корее</h1>';
                                                             $szs[0]=$szs[0]*my3::imagefactor;
                                                             $szs[1]=$szs[1]*my3::imagefactor;
                                                         }
+                                                        $szs[3]=' width="'.$szs[0].'" height="'.$szs[1].'" ';
 							$menu.='<a href="'.my3::baseurl().'video2/'.$arr[$i]->uid.'"><img border="0" src="'.$img_http.$arr[$i]->pict.'" '.$szs[3].'></a>';
 						}
 						

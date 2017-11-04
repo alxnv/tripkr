@@ -15,6 +15,7 @@ function onenews4(&$row) {
                     $szs[0]=$szs[0]*my3::imagefactor;
                     $szs[1]=$szs[1]*my3::imagefactor;
                 }
+                $szs[3]=' width="'.$szs[0].'" height="'.$szs[1].'" ';
 		$s.='<a href="'.BS.'news/'.$row->uid.'"><img class="imfl" border="0" src="'.$img_http.$row->pict.'" '.$szs[3].'></a>';
 	};
 	$s.='<p class="newsdate">'.$row->df.'
