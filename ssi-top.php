@@ -152,7 +152,7 @@ if ($my3->ismobile) {
             <? if ($my3->ismobile) { ?>
         <div id="container7">
             <div style="margin:0 auto;text-align: center">
-                <img src="<?=BS?>img/tripkr-zag.jpg" alt="" width="1300" height="342" />
+                <a href="<?=BS?>"><img src="<?=BS?>img/tripkr-zag.jpg" alt="" width="1300" height="342" /></a>
             <? // 1803 475 ?>
             </div>
             <div id="menu2">
