@@ -14,7 +14,7 @@ class my3 {
     public $onecolumn=null;
     const SITEMAIL='mow.ustravel@gmail.com'; //  mail администратора сайта. на него отсылаются все оповещения
     const SITE='https://www.gokoreatour.ru'; //  сайт
-
+    const imagefactor=2.3; // во сколько раз увеличивать картинки для мобильного просмотра 
     function __construct() {
         $this->baseurl=dirname($_SERVER['SCRIPT_NAME']).'/';
         if ($this->baseurl=='//') $this->baseurl='/';
@@ -73,7 +73,7 @@ class my3 {
 public static function repldomain($s) {
     include_once dirname(__FILE__)."/shd/simple_html_dom.php";
     global $my3;
-    $factor=2.3; // во сколько раз увеличивать картинки для мобильного просмотра
+    $factor=my3::imagefactor; // во сколько раз увеличивать картинки для мобильного просмотра
     $delalt=$my3->ismobile;
 
     if ($my3->ismobile) $s9= str_replace ('&nbsp;', ' ', $s); // убираем &nbsp; в мобильной версии

@@ -140,6 +140,11 @@ switch ($uid2) {
 						if ($noimg) {
 							//echo '<font color=green>Нет изображения</font>';
 						} else {
+                                                    if ($my3->ismobile) {
+                                                        $szs[0]=$szs[0]*my3::imagefactor;
+                                                        $szs[1]=$szs[1]*my3::imagefactor;
+                                                    }
+                                                    $szs[3]=' width="'.$szs[0].'" height="'.$szs[1].'" ';
 							$menu.='<a href="'.my3::baseurl().'page/'.$arr[$i]->uid.'"><img border="0" src="'.$img_http.$arr[$i]->pict.'" '.$szs[3].'></a>';
 						}
 						
