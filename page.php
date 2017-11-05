@@ -47,6 +47,7 @@ if ($row2->idtree==12) { // раздел туроператорам
 
 
 $menu='';
+$menu99='';
 
 if ((!$hotel_info && !$hotelsincity && $uid2<>299 && !$tourop_page_not_logged) && !($tourpriceintree || $uid2==299) ) {
 

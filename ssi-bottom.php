@@ -5,8 +5,8 @@
             <div id="leftbl">
                 <div id="menu" style="margin-top:10px"> <?//здесь сдвиг от верхнего желтого банера?>
                 <?
-                if (isset($menu)) {
-                    echo $menu;
+                if (isset($menu99)) {
+                    echo $menu99;
                 }
                 ?>
                 </div>
