@@ -76,7 +76,8 @@ exit; // !!!  выход
 
 
 if (($sfl=isfl3('./'.$sname))=='') {
- header("HTTP/1.0 404 Not Found");
+ header("Location: /404.php");
+// header("HTTP/1.0 404 Not Found");
  //   echo '<br /><br /><br /><br /><br /><br /><p align="center">Страница не найдена.</p>';
  exit;
 }

@@ -1,4 +1,5 @@
 <?
+header("HTTP/1.0 404 Not Found");
 error_reporting (E_ALL);
 
 if (!isset($conf35)) die;
