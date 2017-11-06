@@ -24,7 +24,8 @@ if($sid=='index') {
 <? include "ssi-top.php"; ?>
 
 <?
-if ($sid<>'index') echo '<h1 class="title">'.my3::nbsh($row->naim).'</h1>';
+//if ($sid<>'index') 
+echo '<h1 class="title">'.my3::nbsh($row->naim).'</h1>';
 echo mailaddrreplacer(my3::repldomain($row->html));
 ?>
 

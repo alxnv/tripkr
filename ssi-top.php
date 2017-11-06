@@ -19,7 +19,7 @@ if (strpos($s10,'+http://www.google.com/bot.html')!==false ||
         strpos($s10,'+http://yandex.com/bots')!==false) {
     // google bot или yandex bot
     $_SESSION['scrwidth']=1280;
-    } else {
+} else {
     if (!isset($_SESSION['scrwidth'])) {
         if (isset($_COOKIE['scrwidth'])) {
             $_SESSION['scrwidth']=intval($_COOKIE['scrwidth']);
@@ -59,6 +59,7 @@ $my3->onecolumn=$my3->ismobile; // выводим все на экран в од
 <meta name="description" content="US Korea - сайт о Корее для туристов и профессионалов турбизнеса. Корея, туры" />
 <meta name="keywords" content="Korea, Корея, US Korea, US Travel, туры" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="viewport" content="width=device-width, initial-scale=0.1" />
 <link rel="icon" type="image/png" href="<?=BS?>images/favicon.png" />
 <link rel="stylesheet" type="text/css" href="<?=BS?>style.css" />
 <link rel="stylesheet" type="text/css" href="<?=BS?>css/contact.css" />
