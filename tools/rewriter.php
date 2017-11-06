@@ -76,8 +76,8 @@ exit; // !!!  выход
 
 
 if (($sfl=isfl3('./'.$sname))=='') {
- //header("HTTP/1.0 404 Not Found");
-    echo '<br /><br /><br /><br /><br /><br /><p align="center">Страница не найдена.</p>';
+ header("HTTP/1.0 404 Not Found");
+ //   echo '<br /><br /><br /><br /><br /><br /><p align="center">Страница не найдена.</p>';
  exit;
 }
 
@@ -89,7 +89,7 @@ if ($sparm<>'') {
     for ($i=0;$i<count($ar858);$i++) {
         if ($i==0) $s='uid';
             else $s='uid'.($i+1);
-        $_GET[$s]=$ar858[$i];    
+        $_GET[$s]=$ar858[$i];
     }
     //$_GET['uid']=$sparm;
 }
