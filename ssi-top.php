@@ -59,7 +59,7 @@ $my3->onecolumn=$my3->ismobile; // выводим все на экран в од
 <meta name="description" content="US Korea - сайт о Корее для туристов и профессионалов турбизнеса. Корея, туры" />
 <meta name="keywords" content="Korea, Корея, US Korea, US Travel, туры" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
-<meta name="viewport" content="width=device-width, initial-scale=0.1" />
+<meta name="viewport" content="width=device-width, initial-scale=0.25" />
 <link rel="icon" type="image/png" href="<?=BS?>images/favicon.png" />
 <link rel="stylesheet" type="text/css" href="<?=BS?>style.css" />
 <link rel="stylesheet" type="text/css" href="<?=BS?>css/contact.css" />
@@ -154,7 +154,7 @@ if ($my3->ismobile) {
         <div id="container7">
             <div style="margin:0 auto;text-align: center">
                 <a href="<?=BS?>"><img src="<?=BS?>img/tripkr-zag.jpg" alt="" width="1300" height="342" /></a>
-            <? // 1803 475 ?>
+            <? // 1300 342  ,1803 475 ?>
             </div>
             <div id="menu2">
                 <? echo $s8; ?>

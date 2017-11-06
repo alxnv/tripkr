@@ -90,7 +90,7 @@ body {
 
 @media screen and (max-device-width: 768px)  {
   html {
-    font-size: 70pt;
+    font-size: 48pt;
   }
 .content {
 	padding: 0;
