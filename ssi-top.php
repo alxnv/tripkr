@@ -59,7 +59,7 @@ $my3->onecolumn=$my3->ismobile; // выводим все на экран в од
 <meta name="description" content="US Korea - сайт о Корее для туристов и профессионалов турбизнеса. Корея, туры" />
 <meta name="keywords" content="Korea, Корея, US Korea, US Travel, туры" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
-<meta name="viewport" content="width=device-width, initial-scale=0.25" />
+<meta name="viewport" content="width=device-width, initial-scale=0.37" />
 <link rel="icon" type="image/png" href="<?=BS?>images/favicon.png" />
 <link rel="stylesheet" type="text/css" href="<?=BS?>style.css" />
 <link rel="stylesheet" type="text/css" href="<?=BS?>css/contact.css" />
