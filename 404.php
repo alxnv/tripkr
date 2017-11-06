@@ -1,5 +1,4 @@
 <?
-if(!isset($_GET['uid'])) exit;
 error_reporting (E_ALL);
 
 if (!isset($conf35)) die;
