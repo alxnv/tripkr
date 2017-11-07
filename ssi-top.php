@@ -78,6 +78,18 @@ $my3->onecolumn=$my3->ismobile; // выводим все на экран в од
   })();
 
 </script>
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Organization",
+  "name" : "US Korea",
+  "url" : "https://www.gokoreatour.ru",
+  "sameAs" : [
+    "https://vk.com/club10332326",
+    "https://www.facebook.com/USKorea"
+  ]
+}
+</script>
 <? } 
 if (!$my3->ismobile) {
 ?>
