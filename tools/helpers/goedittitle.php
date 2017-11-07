@@ -10,7 +10,7 @@ if ((isset($_SESSION['login']) && ($_SESSION['login']=='admin5'))) {
         top.location.href="'.my3::baseurl().'";
         </script>';
 } else {
-    var_dump($_SESSION);
+    //var_dump($_SESSION);
     die('Неправильные параметры (1)');
 }
 ?>

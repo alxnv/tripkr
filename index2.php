@@ -22,6 +22,12 @@ $sname=$_SERVER["SCRIPT_NAME"];
 $k=strrpos($sname,'/');
 if ($k===FALSE) exit;
 $spath=substr($sname,0,$k+1);
+
+session_start();
+require_once dirname(__FILE__).'/tools/my3.php';
+$my3=new my3();
+my3::redirectifnotdomain();
+
 if (substr($sr,strlen($spath),2)<>'a7' && substr($sr,strlen($spath),3)<>'ta_') {
     include 'tools/rewriter.php';
     exit;

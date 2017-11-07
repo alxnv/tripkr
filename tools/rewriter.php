@@ -14,11 +14,12 @@
 //  на редактирование title, keywords этой страницы
 // страницы сайта предположительно д.б. в utf-8
 // определяется константа BS - локальный урл каталога сайта
+/*
 session_start();
-//echo getcwd();
 require_once dirname(__FILE__).'/my3.php';
 $my3=new my3();
 my3::redirectifnotdomain();
+*/
 
 $sstr=substr($sr,strlen($spath)); // url с параметрами относительно домашнего каталога без начального слэша и без якоря
 //var_dump($sstr,$sr,$spath);
