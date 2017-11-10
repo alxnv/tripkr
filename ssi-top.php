@@ -18,7 +18,7 @@ $s10=$_SERVER["HTTP_USER_AGENT"];
 if ((strpos($s10,'+http://www.google.com/bot.html')!==false ||
         strpos($s10,'+http://yandex.com/bots')!==false)) {
     // google bot или yandex bot
-    $_SESSION['scrwidth']=1280;
+    $_SESSION['scrwidth']=1280; 
 } else {
     if (!isset($_SESSION['scrwidth'])) {
         if (isset($_COOKIE['scrwidth'])) {
