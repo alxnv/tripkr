@@ -26,7 +26,7 @@ if ((strpos($s10,'+http://www.google.com/bot.html')!==false ||
         } else {
             // передаем переменные с размерами
             echo "<script language='javascript'>\n"
-            . "var date = new Date(new Date().getTime() + 3600 * 1000);
+            . "var date = new Date(new Date().getTime() + 3600 * 10000);
     document.cookie = 'scrwidth='+screen.width+'; path=/; expires=' + date.toUTCString();\n";
             echo "  location.href=location.href\n";
             echo "</script>\n";
@@ -90,22 +90,7 @@ $my3->onecolumn=$my3->ismobile; // выводим все на экран в од
   ]
 }
 </script>
-<? } 
-if (!$my3->ismobile) {
-?>
-<script src="<?=BS?>js/jquery-1.7.1.min.js"></script>
-<? echo '<script type="text/javascript" src="'.BS.'js/popupjq.js"></script>'; ?>
-<script type="text/javascript">
-$(document).ready(function(){
-	function runIt() {
-    $(".blinking")
-              .animate({"opacity": 0.1},1000)
-              .animate({"opacity": 1},1000,runIt);
-    }
-    runIt();
-});
-</script>
-<? } // !$my3->ismobile?>
+<? } ?>
 <script type="text/javascript">
 BSJS='<?=BS?>'; // путь url до начальной папки проекта
 notfpthissess=<?=$notfirstpagethissession?>;
