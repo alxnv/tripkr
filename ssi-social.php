@@ -1,10 +1,12 @@
+<? /*
 <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
 <div class="yashare-auto-init" style="margin-top:20px" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj"></div> 
+*/?>
 <?
 $uri2=htmlspecialchars(substr('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
 $dummy='http://gokoreatour.ru';
 ?>
-<?/*<div style="position:absolute;top:10px">
+<div style="margin-top:10px">
 <a href="https://twitter.com/share" class="twitter-share-button" id="tweet5">Tweet</a>
 <script type="text/javascript">
 document.getElementById('tweet5').setAttribute( 'data-text',"<?=my3::nbsh($title).' '.$uri2?>");
@@ -13,16 +15,16 @@ document.getElementById('tweet5').setAttribute( 'data-hashtags',"USTravel");
 </script>
 <script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </div>
-<div style="position:absolute;top:40px">
+<div style="margin-top:10px">
 <script type="text/javascript">
 document.write(VK.Share.button(false,{type: "round", text: "ПОДЕЛИТЬСЯ"}));
 </script>
 </div>
-<div style="position:absolute;top:70px">
+<div style="margin-top:10px">
 <a onclick="window.open('http://www.livejournal.com/update.bml?event=<?=$uri2?>&amp;subject=<?=$title?>', 'lj', 'width=700, height=900'); return false;" rel="nofollow" href="http://www.livejournal.com/update.bml?event=<?=$uri2?>&amp;subject=<?=$title?>" title="Опубликовать в своем блоге livejournal.com"><img src="<?=BS?>img/ljLike.gif" alt="Опубликовать в своем блоге livejournal.com" width="105" height="18" /></a>
 </div>
 
-<div style="margin-top:98px">
+<div style="margin-top:10px">
 <div id="fb-root"></div>
 <div class="fb-like" id="fb7" style="margin-right:20px"></div>
 </div>
