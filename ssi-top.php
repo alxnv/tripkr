@@ -65,8 +65,7 @@ $my3->onecolumn=$my3->ismobile; // выводим все на экран в од
 <link rel="stylesheet" type="text/css" href="<?=BS?>css/contact.css" />
 <? /*<script type="text/javascript" src="https://vk.com/js/api/share.js?11" charset="windows-1251"></script>
 */?>
- * <? if (APPLICATION_ENV=='production') { ?>
- */
+<? if (APPLICATION_ENV=='production') { ?>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
