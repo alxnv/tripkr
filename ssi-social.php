@@ -6,6 +6,7 @@
 $uri2=htmlspecialchars(substr('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
 $dummy='http://gokoreatour.ru';
 ?>
+<? /*
 <div style="margin-top:10px">
 <a href="https://twitter.com/share" class="twitter-share-button" id="tweet5">Tweet</a>
 <script type="text/javascript">
@@ -52,9 +53,8 @@ document.getElementById('fb7').setAttribute( 'data-action',"recommend");
 </div>
  * 
  */?>
- <?
- /*
-    <div class="newsocial" style="margin-left:60px; width:110px;height:120px;margin-top:20px;">
+ 
+     <div class="newsocial" style="margin-left:60px; width:110px;height:120px;margin-top:20px;">
         <div class="newsocial2">
             <div>
                 <a target="_blank" href="http://twitter.com/share?text=Туры в Южную Корею&url=<?=$uri2?>"><img src="<?=BS?>images/c_tweetter.jpg"
