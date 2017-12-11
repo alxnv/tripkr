@@ -1,8 +1,6 @@
-<?
-/*
 <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
 <div class="yashare-auto-init" style="margin-top:20px" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj"></div> 
-*/
+<?
 $uri2=htmlspecialchars(substr('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
 $dummy='http://gokoreatour.ru';
 ?>
@@ -52,6 +50,8 @@ document.getElementById('fb7').setAttribute( 'data-action',"recommend");
 </div>
  * 
  */?>
+ <?
+ /*
     <div class="newsocial" style="margin-left:60px; width:110px;height:120px;margin-top:20px;">
         <div class="newsocial2">
             <div>
@@ -80,8 +80,8 @@ document.getElementById('fb7').setAttribute( 'data-action',"recommend");
             <a target="_blank" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=<?=($uri2)?>&st.comments=Поделитесь страничкой с сайта gokoreatour.ru"><img
                 src="<?=BS?>images/c_ok.jpg"
                width="33" height="33" border="0" /></a>
-        </div>*/?>
-</div>
+        </div>
+</div>*/?>
 <?
 /*
 <div class="title1 netLinks">
