@@ -49,7 +49,7 @@ $von=round((floatval($von)),2);
 
     // Формируем ссылку  
 
-    $link = "https://www.cbr.ru";
+    $link = "www.cbr.ru";
     $link2="/scripts/XML_daily.asp?date_req=$date";  
 
     // Загружаем HTML-страницу  
@@ -58,7 +58,7 @@ $von=round((floatval($von)),2);
     if ($_SERVER["SERVER_NAME"]=='localhost') {
         $fd=false;
     } else {
-        $fd = @fsockopen($link, 80, $errno, $errstr, 1);
+        $fd = @fsockopen('https://'.$link, 80, $errno, $errstr, 1);
     }
     
     if (!$fd) {
