@@ -6,6 +6,16 @@
 $uri2=htmlspecialchars(substr('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
 $dummy='http://gokoreatour.ru';
 ?>
+<script type="text/javascript">(function() {
+  if (window.pluso)if (typeof window.pluso.start == "function") return;
+  if (window.ifpluso==undefined) { window.ifpluso = 1;
+    var d = document, s = d.createElement('script'), g = 'getElementsByTagName';
+    s.type = 'text/javascript'; s.charset='UTF-8'; s.async = true;
+    s.src = ('https:' == window.location.protocol ? 'https' : 'http')  + '://share.pluso.ru/pluso-like.js';
+    var h=d[g]('body')[0];
+    h.appendChild(s);
+  }})();</script>
+<div class="pluso" style="margin-top:10px;width:150px" data-background="transparent" data-options="small,square,line,horizontal,nocounter,theme=04" data-services="vkontakte,facebook,twitter,livejournal,google"></div>
 <? /*
 <div style="margin-top:10px">
 <a href="https://twitter.com/share" class="twitter-share-button" id="tweet5">Tweet</a>
@@ -53,7 +63,7 @@ document.getElementById('fb7').setAttribute( 'data-action',"recommend");
 </div>
  * 
  */?>
- 
+ <? /*
      <div class="newsocial" style="margin-left:60px; width:110px;height:120px;margin-top:20px;">
         <div class="newsocial2">
             <div>
