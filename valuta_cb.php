@@ -49,7 +49,7 @@ $von=round((floatval($von)),2);
 
     // Формируем ссылку  
 
-    $link = "www.cbr.ru";
+    $link = "https://www.cbr.ru";
     $link2="/scripts/XML_daily.asp?date_req=$date";  
 
     // Загружаем HTML-страницу  
