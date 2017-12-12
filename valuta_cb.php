@@ -58,7 +58,7 @@ $von=round((floatval($von)),2);
     if ($_SERVER["SERVER_NAME"]=='localhost') {
         $fd=false;
     } else {
-        $fd = @fsockopen('https://'.$link, 80, $errno, $errstr, 1);
+        $fd = @fsockopen('ssl://'.$link, 80, $errno, $errstr, 1);
     }
     
     if (!$fd) {
