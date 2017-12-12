@@ -189,7 +189,7 @@ if ($my3->ismobile) {
             <div id="container3">
                 <div id="valuta">
                     <div id="valuta2">
-                        <? if (APPLICATION_ENV=='production')  { 
+                        <? if (true || APPLICATION_ENV=='production')  { 
                             include "valuta_cb.php";
                         } else { ?> Доллар - 58.16 руб, Евро - 67.71 руб, 1000 Вон - 52.19 руб
                         <? } ?>

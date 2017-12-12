@@ -55,10 +55,10 @@ $von=round((floatval($von)),2);
     // Загружаем HTML-страницу  
     $text="";  
     //var_dump($_SERVER["SERVER_NAME"]);
-    if ($_SERVER["SERVER_NAME"]=='localhost') {
+    if (false && $_SERVER["SERVER_NAME"]=='localhost') {
         $fd=false;
     } else {
-        $fd = @fsockopen('ssl://'.$link, 80, $errno, $errstr, 1);
+        $fd = @fsockopen('ssl://'.$link, 443, $errno, $errstr, 1);
     }
     
     if (!$fd) {
