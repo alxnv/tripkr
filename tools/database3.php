@@ -3,37 +3,84 @@
 // уровень записи для getkrohi возвращается в db3->prcnt, топ uid корня в db3->toplid
 
 class database3 {
+    var $mysql5=false;
     function connect() {
         global $conf35;
         if (!isset($this->handle)) {
-            $this->handle = mysql_connect ($conf35['production']['resources.db.params.host'],
+            if (function_exists('mysql_connect')) {
+                $this->mysql5=false;
+                $this->handle = mysql_connect ($conf35['production']['resources.db.params.host'],
                     $conf35['production']['resources.db.params.username'],
                     $conf35['production']['resources.db.params.password'])
                     or die (sprintf ("Не могу открыть соединение с MySQL [%s]: %s", mysql_errno (), mysql_error ()));
 
-            @mysql_select_db ($conf35['production']['resources.db.params.dbname'])
+                @mysql_select_db ($conf35['production']['resources.db.params.dbname'])
                     or die (sprintf ("Не могу выбрать базу данных [%s]: %s", mysql_errno (), mysql_error ()));
+            } else {
+                $this->mysql5=true;
+                $this->handle = mysqli_connect($conf35['production']['resources.db.params.host'],
+                    $conf35['production']['resources.db.params.username'],
+                    $conf35['production']['resources.db.params.password'],
+                    $conf35['production']['resources.db.params.dbname']);
+            };
         };
 
 
-        $sql='resources.db.params.driver_options.1002';
-        $this->q($conf35['production'][$sql]);
+        if ($this->mysql5) {
+            mysqli_set_charset($this->handle, 'utf8');
+        } else {
+            $sql='resources.db.params.driver_options.1002';
+            $this->q($conf35['production'][$sql]);
+        }
 
     }
 
     function escape($s) {
-        return mysql_real_escape_string($s);
+        if ($this->mysql5) {
+            return $this->handle->real_escape_string($s);
+        } else {
+            return mysql_real_escape_string($s);
+        }
     }
 
     function q($s) {
-        $sth = @mysql_query ($s, $this->handle)
+        if ($this->mysql5) {
+            $sth = @mysqli_query ($this->handle, $s)
+                or die (sprintf ("Не могу выполнить запрос [%s]: %s\nИсходная строка: %s", mysqli_errno ($this->handle), mysqli_error ($this->handle),$s));
+        } else {    
+            $sth = @mysql_query ($s, $this->handle)
                 or die (sprintf ("Не могу выполнить запрос [%s]: %s\nИсходная строка: %s", mysql_errno (), mysql_error (),$s));
+        }
         return $sth;
     }
+    
+    function num_rows($sth) {
+        if ($this->mysql5) {
+            return $sth->num_rows;
+        } else {
+            return mysql_num_rows($sth);
+        }
+    }
 
+    function fetch_object($sth) {
+        if ($this->mysql5) { 
+            return $sth->fetch_object();
+        } else {
+            return mysql_fetch_object($sth);
+        }
+    }
+    
     function qobj($s) {
         $sth=$this->q($s);
-        return mysql_fetch_object($sth);
+        if ($this->mysql5) {
+            if ($sth->num_rows===0) {
+                return (object)array();
+            } else {
+                return $sth->fetch_object();
+            }
+        } else {
+            return mysql_fetch_object($sth);
+        }
     }
 
     function getkrohi($tab,$uid2) {

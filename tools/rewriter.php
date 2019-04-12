@@ -34,7 +34,7 @@ $conf35['relurl']=$sstr;
 include_once 'tools/database3.php';
 $db3->connect();
 $sth=$db3->q("select * from ".$conf35['production']['dbprefix']."rewrite where url='".$db3->escape($sstr)."'");
-if (mysql_num_rows($sth)>0) $conf35['rewr']=mysql_fetch_object($sth);
+if ($db3->num_rows($sth)>0) $conf35['rewr']=$db3->fetch_object($sth);
 
 $ar=parse_url($sstr); //path,query
 if (!isset($ar['path'])) $ar['path']='';

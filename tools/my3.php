@@ -361,7 +361,7 @@ return $s;
         global $db3;
         $sth=$db3->q($s);
         $arr=array();
-        while($row=mysql_fetch_object($sth)) {
+        while($row=$db3->fetch_object($sth)) {
             array_push($arr,$row);
         }
         return $arr;
