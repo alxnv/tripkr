@@ -13,6 +13,9 @@ class my7 {
     public $basepath=null;
     public $hostname=null;
     public $_num=1;
+    public $mysqli;
+    public $db;
+    public $link;
 	const LOG_DATA=false; // работает ли функция log()
     const SITEMAIL='mow.ustravel@gmail.com'; //  mail администратора сайта. на него отсылаются все оповещения
 
@@ -22,8 +25,112 @@ class my7 {
         $this->hostname=$_SERVER['SERVER_NAME'];
         if ($this->baseurl=='//') $this->baseurl='/';
         $this->basepath=dirname($_SERVER["SCRIPT_FILENAME"]).'/';
+        $this->mysqli=!function_exists('mysql_connect');
+        //$this->db=Zend_Db_Table::getDefaultAdapter();
+        //$link=$this->db->getConnection();
     }
 
+ /**
+ * mysql_real_escape_string в зависимости от использования mysqli
+ * @param string $s
+ * @return string 
+ * 
+ */
+ static function mysql_escape_string($s) {
+     global $my7;
+     //return ($my7->mysqli ? mysqli_real_escape_string($s) : mysql_real_escape_string($s));
+     return $my7->db()->quote($s);
+ }
+ /**
+ * добавить слеш для специальных символов для базы данных
+ * @param char $lt
+ * @return string 
+ * 
+ */
+    static function myaddslash($lt) {
+            $addslash='';
+            if (stristr("\\%._",$lt)!==false) $addslash="\\";
+            return $addslash;
+    }
+    
+    
+    
+ /**
+ * заменяет в строке вхождения распарсенные parsestrall
+ * @param string $str1 - строка в которой заменять
+ * @param array $afrom - массив исходных данных для замены
+ * @param array $ato - массив конечных данных для замены
+ * @return string 
+ * 
+ */
+    function repltextarray3($str1,$afrom,$ato) {
+        $s=$str1;
+        $arr1=$afrom;
+        $arr2=$ato;
+        $last=strlen($s);
+        $s2='';
+        $modifiedindex1=-1;
+        for ($j=count($arr1)-1;$j>=0;$j--) {
+            if ($arr1[$j][0][0]!=$arr2[$j][0][0]) {
+                $joffset=$arr1[$j][0][1]; // смещение строки тэга в основной строке
+                $ps2=$joffset+strlen($arr1[$j][0][0]);
+                $s2=$arr2[$j][0][0].substr($s,$ps2,$last-$ps2).$s2;
+                $last=$joffset; //-$arr1[$j][0][1];
+                $modifiedindex1=$j;
+            }
+        }
+        if ($modifiedindex1==-1) {
+            $s2=$s;
+        } else {
+            $s2=substr($s,0,$last).$s2;
+        }
+        
+        /*$this->str1=$s2;
+        $this->afrom=$arr1;
+        $this->ato=$arr2;*/
+        return $s2;
+    }
+    
+function parsestrall(&$mtch,&$mtchto,$regex,$str1) {
+        $mtch=array();
+        preg_match_all($regex,$str1,$mtch, PREG_SET_ORDER+PREG_OFFSET_CAPTURE);
+        $mtchto=$mtch;
+}
+    
+ /**
+ * мое urlencode
+ * @param string $s
+ * @return string 
+ * 
+ */
+    static function myurlencodedollar($s) {
+        $s2='';
+        for ($i=0;$i<strlen($s);$i++) {
+            $toescape=0;
+            $lt=substr($s,$i,1);
+            if (stristr("\\%._",$lt)!==false) $toescape=1;
+            $s2.=($toescape ? '$'.dechex(ord($lt)) : $lt);
+        }
+        return $s2;
+    }
+ /**
+ * мое urldecode
+ * @param string $s
+ * @return string 
+ * 
+ */
+    static function myurldecodedollar($s) {
+        $afrom=array();
+        $ato=array();
+        my7::parsestrall($afrom,$ato,'/\$[\da-f]{2}/',$s);
+        //echo '<pre>';
+        //var_dump($ato);
+        for ($i=0;$i<count($ato);$i++) {
+            $ato[$i][0][0]=chr(hexdec(substr($ato[$i][0][0],1,2)));
+        }
+        $s2=my7::repltextarray3($s,$afrom,$ato);
+        return $s2;
+    }
  /**
  * генерировать случайный хэщ из заданного количества цифр и строчных и заглавных букв
  * @param integer $len
@@ -90,7 +197,8 @@ class my7 {
  * @param <type> $updleft 
  */
     static public function amessage($s,$updleft=0) {
-        my7::goUrl('a7-message/view/'.($updleft ? 'updleft/1/' : '').'id/'.urlencode($s));
+        $_SESSION['message8']=$s;
+        my7::goUrl('a7-message/view/'.($updleft ? 'updleft/1/' : ''));
     }
 
 /**
@@ -255,6 +363,16 @@ class my7 {
     }
 
     /**
+     * выполняет команду БД select и возвращает массив массивов
+     * @param <type> $s
+     * @return <type>
+     */
+    static public function qarray($s) {
+        $db=my7::db();
+        $db->setFetchMode(Zend_Db::FETCH_ASSOC);
+        return $db->fetchAll($s);
+    }
+    /**
      * выполняет команду БД select и возвращает 1 объект
      * @param <type> $s
      * @return <type>
@@ -263,6 +381,36 @@ class my7 {
         $db=my7::db();
         $db->setFetchMode(Zend_Db::FETCH_OBJ);
         return $db->fetchRow($s);
+    }
+
+    function makelist($arr,$selectednum,$default='') {
+        // сформировать текст выпадающего списка
+        // $arr - массив, каждая строка которого состоит из двух элементов - значения для строки
+        //      и текста
+        //      или если размерность массива x на 1 (1 элемент в каждой строке) то нумеруется все
+        //      по порядку с 1
+        // $selectednum - номер выбранного элемента(если 0, то первый элемент)
+        // если $default установлен, то это будет первый элемент строки с индексом 0
+        $s='';
+        //var_dump($arr);exit;
+        if (count($arr)==0) return '';
+        $is1dim=!is_array($arr[0]);
+        if (!$is1dim) $ark=array_keys($arr[0]);
+
+        $cnt=1;
+        if ($default<>'') $s.='<option value="0">'.my7::nbsh($default);
+        for ($i=0;$i<count($arr);$i++) {
+            if ($is1dim) {
+                $s.='<option value="'.$cnt.'"'.($cnt==$selectednum ? ' selected' : '').
+                        '>'.my7::nbsh($arr[$i]);
+                
+                $cnt++;
+            } else {
+                $s.='<option value="'.$arr[$i][$ark[0]].'"'.($arr[$i][$ark[0]]==$selectednum ? ' selected' : '').
+                        '>'.my7::nbsh($arr[$i][$ark[1]]);
+            }
+        }
+        return $s;
     }
 
 /**

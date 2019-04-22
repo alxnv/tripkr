@@ -21,7 +21,7 @@ class A7MessageController extends Zend_Controller_Action
     public function viewAction()
     {
         // action body
-        $msg = $this->_getParam('id', '');
+        $msg = $_SESSION['message8']; //$this->_getParam('id', '');
         $this->view->updleft = $this->_getParam('updleft', '');
         $this->view->alignleft = $this->_getParam('alignleft', 0);
         $this->view->insession = $this->_getParam('insession', 0);

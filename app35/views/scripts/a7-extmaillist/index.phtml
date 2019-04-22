@@ -1,0 +1,62 @@
+<script language="JavaScript">
+function delr(id) {
+if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
+ window.location.href='<?=my7::baseurl()?>a7-extmaillist/rdel/ml/<?=$this->id?>/id/'+id;
+ };
+};
+function izm(id) {
+window.location.href='<?=my7::baseurl()?>a7-extmaillist/edit/ml/<?=$this->id?>/id/'+id;
+};
+<?
+/*function clickCheckbox(id) {
+window.location.href='<?=my7::baseurl()?>a7-extmaillist/check/ml/<?=$this->id?>/id/'+id;
+};
+        /*function pere(id) {
+        pos=document.getElementById('pos'+id).value;
+        window.location.href='<?=my7::baseurl()?>a7-extmaillist/move/id/'+id+'/pos/'+parseInt(pos);
+    };*/
+?>
+</script>
+<div align="center">
+<h1 align="center">Внешняя база данных абонентов для почтового списка рассылки <?=my7::nbsh($this->maillist->name)?></h1>
+<a href="<?=my7::baseurl()?>a7-extmaillist/edit/ml/<?=$this->id?>/id/0">Добавить абонента</a><br>
+<br>
+<table border="1" cellpadding="3" cellspacing="0">
+<tr valign="top">
+    <th>Вести<br />отправку<br />почты</th><th>Отправлено</th><th>E-mail</th><th>Контактное лицо</th><th>Название компании(не обязательное поле)</th><th>Отправлено<br>без<br>ошибок</th><th>Действия</th>
+</tr>
+<?
+$psort = $this->psort;
+for ($i=0;$i<count($this->arr);$i++) {
+ $row=$this->arr[$i];
+ $uid2=$row->uid;
+ echo '<tr align="left" valign="top">';
+ echo '<td valign=top><input type="checkbox" name="tosend'.$row->uid.'" '.($row->tosendmail ? ' checked' : '');
+ echo ' onClick="clickCheckbox('.$row->uid.')" /></td>';
+ echo '<td>'.($row->mailsent ? 'Да' : 'Нет').'</td>';
+ //echo '<td valign=top><a href="'.my7::baseurl().'a7-maillists/edit/id/'.$row->uid.'">'.(trim($row->name=='') ? '-------' : nl2br($this->escape($row->name))).'</a>';
+ echo '<td>'.my7::nbsh($row->email).'</td>';
+ echo '<td>'.my7::nbsh($row->name).'</td>';
+ echo '<td>'.my7::nbsh($row->company).'</td>';
+ echo '<td>'.($row->error_sent=='' ? 'Да' : 'Нет').'</td>';
+ echo '<td valign=top><nobr><input type="button" onclick="javascript:izm('.$uid2.');" value="Изменить">'
+         . '&nbsp;<input type="button" onclick="javascript:delr('.$uid2.');" value="Удалить"></nobr>';
+ echo '</td></tr>';
+ $psort--;
+}
+?>
+</table>
+</div>
+<? 
+//var_dump($this->arq);
+echo '<br><b>'.$this->letter1.'</b>';
+my7::printpages($this->lend);
+$top=new My_textop();
+
+echo 'Фильтр по первым буквам поля E-mail: '.$top->lettersofpages($this->arq, $this->letter1, $this->cntletters, $this->href);
+
+//echo $top->numplusunit(21, 2);
+//echo my7::myurlencodedollar(".90$\\");
+//echo my7::myurldecodedollar('$7a_$ff$55\$a8j');
+
+?>

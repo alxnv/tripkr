@@ -1,0 +1,47 @@
+<script language="JavaScript">
+function delr(id) {
+if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
+ window.location.href='<?=my7::baseurl()?>a7-maillists/rdel/id/'+id;
+ };
+};
+function izm(id) {
+window.location.href='<?=my7::baseurl()?>a7-maillists/edit/id/'+id;
+};
+function clickCheckbox(id) {
+window.location.href='<?=my7::baseurl()?>a7-maillists/check/id/'+id;
+};
+    function pere(id) {
+        pos=document.getElementById('pos'+id).value;
+        window.location.href='<?=my7::baseurl()?>a7-maillists/move/id/'+id+'/pos/'+parseInt(pos);
+    };
+
+</script>
+<div align="center">
+<h1 align="center">Почтовые списки рассылки</h1>
+<a href="<?=my7::baseurl()?>a7-maillists/edit/id/0">Добавить список рассылки</a><br>
+<br>
+<table border="1" cellpadding="3" cellspacing="0">
+<tr valign="top">
+    <th>Порядковый<br />номер<br />отправки</th><th>Вести<br />отправку<br />почты</th><th>Наименование</th><th>Действия</th>
+</tr>
+<?
+$psort = $this->psort;
+for ($i=0;$i<count($this->arr);$i++) {
+ $row=$this->arr[$i];
+ $uid2=$row->uid;
+ echo '<tr align="left">';
+ echo '<td valign=top>'.$row->ordr;
+ echo '</td>';
+ echo '<td valign=top><input type="checkbox" name="uid'.$row->uid.'" '.($row->tosendmail ? ' checked' : '');
+ echo ' onClick="clickCheckbox('.$row->uid.')" /></td>';
+ echo '<td valign=top><a href="'.my7::baseurl().'a7-maillists/edit/id/'.$row->uid.'">'.(trim($row->name=='') ? '-------' : nl2br($this->escape($row->name))).'</a>';
+ echo '</td><td valign=top><nobr><input type="button" onclick="javascript:delr('.$uid2.');" value="Удалить">'
+         . '&nbsp;<input type="button" onclick="javascript:pere('.$uid2.');" value="Переместить в позицию: ">'
+         . '<input type="text" size="3" id="pos'.$uid2.'" value="'.$row->ordr.'" /></nobr>';
+ echo '</td></tr>';
+ $psort--;
+}
+?>
+</table>
+</div>
+<? my7::printpages($this->lend); ?>

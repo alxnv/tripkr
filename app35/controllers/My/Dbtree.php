@@ -4,6 +4,7 @@
 class My_Dbtree {
 
     // работа с таблицей дерева со структурой uid,topid,ordr,naim
+    // возможно работать без topid, тогда используются функции xxx_no_topid
     //  возможно появится еще поле istopic, но вряд ли
 
     public $tbl=null;
@@ -104,5 +105,57 @@ class My_Dbtree {
             my7::qdirect('unlock tables');
         }
     }
+
+    
+        function move_no_topid($id,$pos2) {
+        // перемещает запись внутри topid
+        $row=my7::qobj("select ordr from $this->tbl where uid=$id");
+        if ($row!==false) {
+            if ($pos2<1) $pos2=1;
+            $db=my7::db();
+            $id1=$row->ordr;
+            my7::qdirect("lock tables $this->tbl write");
+            $row2=my7::qobj("select max(ordr) as mo from $this->tbl");
+            $mxx1=$row2->mo;
+
+            if ($mxx1===false) {
+                $mxx1=0;
+            };
+            if ($pos2>$mxx1)
+                $pos2=$mxx1;
+
+            $mini=min($id1,$pos2);
+            $maxi=max($id1,$pos2);
+            if ($id1>$pos2) {
+                $mn1=$pos2;
+                $mx1=$id1-1;
+                $dir1=' desc';
+                $sg1='+1';
+            }
+            else {
+                $mn1=$id1+1;
+                $mx1=$pos2;
+                $dir1='';
+                $sg1='-1';
+            };
+
+            //$arr2=array();
+            $arr = my7::qlist("select uid from $this->tbl where ordr>=$mn1 and ordr<=$mx1 order by ordr".$dir1);
+
+            $b=0;
+            $s='';
+            for ($i=0;$i<count($arr);$i++) {
+                if ($b) $s.=',';
+                $s.=$arr[$i]->uid;
+                $b=1;
+            }
+            if ($s<>'') my7::qdirect("update $this->tbl set ordr=ordr $sg1 where uid in ($s)");
+
+            $db->update($this->tbl,array('ordr'=>$pos2),"uid=$id");
+            //update $ob4->tbl set ordr=$pos2 where uid=$uid2");
+            my7::qdirect('unlock tables');
+        }
+    }
+
 }
 ?>

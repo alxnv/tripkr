@@ -1,0 +1,67 @@
+<?
+my7::inithtmleditor();
+//echo $this->row->html;
+	echo '<form enctype="multipart/form-data" action="'.$this->baseUrl().'/a7-maillists/save/id/'.$this->id.'" method="post" style="margin:0;padding:0;">';
+
+        if ($this->id) echo '<input type="hidden" name="id" value="'.$this->id.'" />';
+        ?>
+<h2 align="center">Редактирование почтового списка рассылки</h2>
+<?
+my7::showerror();
+
+/*echo '<br>Изображение:<br>';
+$img_dir=my7::basepath().'img2/';
+$img_http=my7::baseurl().'img2/';
+$noimg=($this->row->pict=='' || ($szs=@getimagesize($img_dir.$this->row->pict))===false || $szs[0]==0);
+if (!$this->id || $noimg) {
+    echo '<font color=green>Нет изображения</font>';
+} else {
+    echo '<img src="'.$img_http.$this->row->pict.'" '.$szs[3].'>';
+}
+echo '<br />';
+echo 'Добавить/заменить изображение: <input name="userfile[]" type="file"><br>';
+echo 'Максимальный размер изображения: '.ini_get('upload_max_filesize').'б';
+if ($this->id) {
+    echo '<br><input name="img_del1" type="checkbox" id=dd1><label for=dd1>Удаление изображения</label><br>';
+};
+echo '<br />';
+*/
+?>
+Наименование: <input type="text" name="name" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->name)?>" /><br>
+<br><input type="checkbox" id=tosend" name="tosend" <?=($this->row->tosendmail ? ' checked' : '')?> /><label for=tosend"> Начать рассылку</label><br>
+<?
+if ($this->id) {
+    //echo '<br><a href="'.my7::baseurl().'a7-dbmaillist/index/id/'.$this->id.'">Редактировать список рассылки из базы данных сайта</a><br>';
+    echo '<br><a href="'.my7::baseurl().'a7-extmaillist/index/id/'.$this->id.'">Редактировать список абонентов рассылки</a><br>';
+    echo '<br><hr><input type="checkbox" id="delext" name"delext" /><label for="delext"> Удалить внешний список рассылки</label><br>';
+    echo '<br>Импортировать данные во внешний список рассылки из файла Excel: <input type="file" name="xlfile" /> '
+    . '<br>Формат файла: 1-й столбец - email, 2-й столбец - адресат, 3-й столбец(необязательный) - название компании'
+    . '<br><input type="checkbox" checked id="excludewhatindb" name="excludewhatindb" /><label for="excludewhatindb"> Не импортировать email-ы из файла которые есть в таблице пользователей на сайте</label><br><br>';
+    echo '<br>Импортировать данные из списка рассылки: <select name="importfrom">'.my7::makelist($this->maillists,0,' -- Не импортировать --').'</select><br>';
+    echo '<hr>';
+}
+echo '<br>Маска заголовка почтового сообщения: <input type="text" name="mask" size="45" value="'.my7::nbsh($this->row->mask).'" /><br>'
+    . '(В тексте можно использоать следущие строки: %n - адресат, %c - наименование компании)<br>';
+?>
+                                <div>
+<br>Html текст списка рассылки:<br>
+<?
+        //echo '<h2 align=center>'.$this->escape($this->row->naim).'</h2>';
+        my7::editorfield('html',$this->row->html,'','350');
+
+?>
+                                </div>
+
+
+<br /><div class="savediv"><input type="submit" value="Сохранить" name="save" /> 
+<input type="submit" value="Сохранить и начать рассылку" name="saveandsend" /></div>
+</div>
+</form>
+<script type="text/javascript">
+$(function(){
+
+        // Accordion
+        $("#accordion").accordion({ header: "h3",fillSpace:true});
+
+});
+</script>

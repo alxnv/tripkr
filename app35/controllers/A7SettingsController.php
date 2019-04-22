@@ -24,10 +24,12 @@ class A7SettingsController extends Zend_Controller_Action
         // action body
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
+            $formData['every10minutesnummails']=intval($formData['every10minutesnummails']);
             $db=my7::db();
             $db->update($this->tbl,
                         $formData,
                         '');
+//            echo 1; exit;
             my7::amessage('Данные сохранены');
         }
     }

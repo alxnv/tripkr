@@ -1,0 +1,39 @@
+<?
+//my7::inithtmleditor();
+//echo $this->row->html;
+	echo '<form enctype="multipart/form-data" action="'.$this->baseUrl().'/a7-extmaillist/save/id/'.$this->id.'" method="post" style="margin:0;padding:0;">';
+
+        //if ($this->id) echo '<input type="hidden" name="id" value="'.$this->id.'" />';
+        echo '<input type="hidden" name="ml" value="'.$this->maillist.'" />';
+        ?>
+<h2 align="center">Редактирование данных абонента из внешнего списка рассылки</h2>
+<?
+my7::showerror();
+
+/*echo '<br>Изображение:<br>';
+$img_dir=my7::basepath().'img2/';
+$img_http=my7::baseurl().'img2/';
+$noimg=($this->row->pict=='' || ($szs=@getimagesize($img_dir.$this->row->pict))===false || $szs[0]==0);
+if (!$this->id || $noimg) {
+    echo '<font color=green>Нет изображения</font>';
+} else {
+    echo '<img src="'.$img_http.$this->row->pict.'" '.$szs[3].'>';
+}
+echo '<br />';
+echo 'Добавить/заменить изображение: <input name="userfile[]" type="file"><br>';
+echo 'Максимальный размер изображения: '.ini_get('upload_max_filesize').'б';
+if ($this->id) {
+    echo '<br><input name="img_del1" type="checkbox" id=dd1><label for=dd1>Удаление изображения</label><br>';
+};
+echo '<br />';
+*/
+?>
+E-mail: <input type="text" name="email" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->email)?>" /><br>
+Контактное лицо: <input type="text" name="name" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->name)?>" /><br>
+Компания (необязательное поле): <input type="text" name="company" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->company)?>" /><br>
+<br><input type="checkbox" id="tosend" name="tosend" <?=($this->row->tosendmail ? ' checked' : '')?> /><label for="tosend"> Отсылать почтовое сообщение этому абоненту</label><br>
+<br><input type="checkbox" id="mailsent" name="mailsent" <?=($this->row->mailsent ? ' checked' : '')?> /><label for="mailsent"> Почтовое сообщение отослано</label><br>
+<br><input type="checkbox" id="error_sent" name="error_sent" <?=($this->row->error_sent=='' ? ' checked' : '')?> /><label for="error_sent"> Сообщение отправлено без ошибок</label><br>
+<br /><div class="savediv"><input type="submit" value="Сохранить" name="save" /> 
+</div>
+</form>
