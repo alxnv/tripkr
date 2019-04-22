@@ -10,6 +10,7 @@ class A7MaillistsController extends Zend_Controller_Action {
         $this->cnt=20; // кол-во записей на страницу
         $this->sess='page8139';
         $this->tbl=my7::getdbprefix().'maillists';
+        $this->tbldata=my7::getdbprefix().'dbmailexternal';
         //$this->rewrtbl=my7::getdbprefix().'rewrite';
     }
 
@@ -69,6 +70,38 @@ class A7MaillistsController extends Zend_Controller_Action {
             unset($_SESSION['postsv3']);
         };*/
     }
+    
+    /**
+     * читает xls или xlsx файл в список рассылки с указанным номером
+     *  читает $_FILE['xlfile'] если он загружен
+     * @param integer $idlist - номер списка рассылки
+     * 
+     */
+    protected function excelLoad($idlist) {
+    /** Include path **/
+
+        var_dump($_FILES['xlfile']['tmp_name']);
+        //exit;
+        if ($_FILES['xlfile']['tmp_name']<>'') {
+            set_include_path(get_include_path() . PATH_SEPARATOR . my7::basePath().'PHPExcel-1.8/Classes/');
+
+            /** PHPExcel_IOFactory */
+            include 'PHPExcel/IOFactory.php';
+
+
+            $inputFileName = $_FILES['xlfile']['tmp_name'];
+            echo 'Loading file ',pathinfo($inputFileName,PATHINFO_BASENAME),' using IOFactory to identify the format<br />';
+            $objPHPExcel = PHPExcel_IOFactory::load($inputFileName);
+
+
+            echo '<hr />';
+
+            $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
+            var_dump($sheetData);
+
+            exit;
+        }
+    }
  
     public function saveAction() {
         // сохраняем одну новость
@@ -98,16 +131,21 @@ class A7MaillistsController extends Zend_Controller_Action {
                 'mask'=>$formData['mask'],
                 'tosendmail'=>(isset($formData['tosend']) ? 1 :0)
                 );
+            my7::qdirect("lock tables $this->tbl write, $this->tbldata write");
             if ($id) {
                 $db->update($this->tbl,
                         $arr,
                         'uid='.$id);
+                if (isset($formData['deldata'])) 
+                    my7::qdirect("delete from $this->tbldata where idmaillist=$id");
             } else {
                 $q1=my7::qobj("select max(ordr) as mo from ".$this->tbl);
                 $arr['ordr']=intval($q1->mo)+1;
                 $db->insert($this->tbl,$arr);
-                //$id=$db->lastInsertId();
+                $id=$db->lastInsertId();
             }
+            $this->excelLoad($id); // загружаем данные из файла excel если он загружен
+            my7::qdirect('unlock tables');
             
 
             /*$aimnums = array();

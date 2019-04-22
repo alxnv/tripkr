@@ -7,6 +7,33 @@ if (confirm('Вы уверены, что хотите удалить этот э
 function izm(id) {
 window.location.href='<?=my7::baseurl()?>a7-extmaillist/edit/ml/<?=$this->id?>/id/'+id;
 };
+function click1(id) {
+//    alert(4);
+    n=(document.getElementById('tosend'+id).checked ? 1 : 0);
+    url2="<?=$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].my7::baseUrl()?>a7-extmaillist/check/uid/"+id+"/value/"+n;
+            //'/PHPSESSID/=session_id()';
+    //document.getElementById('jjj').innerHTML=url2;
+    $.ajax({
+            type:"GET",
+            // URL : / name of the controller for the site / name of the action to be                         
+            //                                                 executed
+            url:url2,
+            data:{},
+            success: function(data){
+                                   //The callback function, that is going to be executed 
+                                   //after the server response. data is the data returned
+                                   //from the server.
+
+                                   // Show the returned text
+                                   //$("#answer").text(data.text);
+//$('#jjj').html(data);
+                                    //alert(data);
+                                    },
+            error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status+' '+thrownError);
+                  }
+           });
+};
 <?
 /*function clickCheckbox(id) {
 window.location.href='<?=my7::baseurl()?>a7-extmaillist/check/ml/<?=$this->id?>/id/'+id;
@@ -17,8 +44,9 @@ window.location.href='<?=my7::baseurl()?>a7-extmaillist/check/ml/<?=$this->id?>/
     };*/
 ?>
 </script>
+<div id="jjj"></div>
 <div align="center">
-<h1 align="center">Внешняя база данных абонентов для почтового списка рассылки <?=my7::nbsh($this->maillist->name)?></h1>
+    <h1 align="center">Внешняя база данных абонентов для почтового списка рассылки <a href="<?=my7::baseUrl()?>a7-maillists/edit/id/<?=$this->id?>"><?=my7::nbsh($this->maillist->name)?></a></h1>
 <a href="<?=my7::baseurl()?>a7-extmaillist/edit/ml/<?=$this->id?>/id/0">Добавить абонента</a><br>
 <br>
 <table border="1" cellpadding="3" cellspacing="0">
@@ -31,8 +59,8 @@ for ($i=0;$i<count($this->arr);$i++) {
  $row=$this->arr[$i];
  $uid2=$row->uid;
  echo '<tr align="left" valign="top">';
- echo '<td valign=top><input type="checkbox" name="tosend'.$row->uid.'" '.($row->tosendmail ? ' checked' : '');
- echo ' onClick="clickCheckbox('.$row->uid.')" /></td>';
+ echo '<td valign=top><input class="sendcheckbox" style="zoom:3" type="checkbox" id="tosend'.$row->uid.'" '.($row->tosendmail ? ' checked' : '');
+ echo ' onclick="javascript:click1('.$row->uid.')" /></td>';
  echo '<td>'.($row->mailsent ? 'Да' : 'Нет').'</td>';
  //echo '<td valign=top><a href="'.my7::baseurl().'a7-maillists/edit/id/'.$row->uid.'">'.(trim($row->name=='') ? '-------' : nl2br($this->escape($row->name))).'</a>';
  echo '<td>'.my7::nbsh($row->email).'</td>';
@@ -48,7 +76,7 @@ for ($i=0;$i<count($this->arr);$i++) {
 </table>
 </div>
 <? 
-//var_dump($this->arq);
+//echo '<pre>';var_dump($this->arq);
 echo '<br><b>'.$this->letter1.'</b>';
 my7::printpages($this->lend);
 $top=new My_textop();

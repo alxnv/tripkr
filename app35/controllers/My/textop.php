@@ -10,7 +10,7 @@ class My_textop {
     }
     
     /**
-     * удаляем из начала названия неправильные символы
+     * !!! не используется !!! удаляем из начала названия неправильные символы
      * !!! всегда выполнять эту функцию для вставляемых email
      * @param type $email
      */
@@ -52,22 +52,21 @@ class My_textop {
         $j=0;
         //var_dump('cnt',$cnt,'letter1',$letter1);
         while ($j<count($arq)) {
-            $fl=$arq[$j]->firstletter;
-            $ll=$fl;
+            $lts=$arq[$j]->firstletter;
             $n=$arq[$j]->cnt;
             //var_dump('fl',$fl,'ll',$ll,'n',$n);
-            echo '<br>';
+            //echo '<br>';
             for ($i=$j+1;$i<count($arq);$i++) {
                 if ($n>=$cnt) {
                     break;
                 } else {
                     $n+=$arq[$i]->cnt;
-                    $ll=$arq[$i]->firstletter;
+                    $lts.=$arq[$i]->firstletter;
                 }
             }
             $j=$i;
             //var_dump('fl2',$fl,'ll2',$ll);echo '<br>';
-            $lts=$this->lettersfromtobyarray($fl,$ll,$ar3);
+            //$lts=$this->lettersfromtobyarray($fl,$ll,$ar3);
             //var_dump('fl',$fl,'ll',$ll,'ar3',$ar3,'lts',$lts);exit;
             if ($s<>'') $s.=' ';
             $s.=($lts<>$letter1 ? '<a href="'.$href.my7::myurlencodedollar($lts).'">' : '<b>').'['.$lts.']'

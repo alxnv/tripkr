@@ -570,6 +570,18 @@ function parsestrall(&$mtch,&$mtchto,$regex,$str1) {
     }
 
     /**
+     * проставляет значения чекбоксов из вида 'on' в вид 1,0
+     * @param array $arnames
+     * @param array $arpost
+     */
+    static public function setcheckboxes($arnames,&$arpost) {
+        for($i=0;$i<count($arnames);$i++) {
+            if (isset($arpost[$arnames[$i]])) $arpost[$arnames[$i]]=1;
+                else $arpost[$arnames[$i]]=0;
+        }
+    }
+
+    /**
      * запоминает сообщение об ошибке и $_POST в сессию, затем переходит на заданную страницу
      * @param <type> $url
      * @param <type> $s
