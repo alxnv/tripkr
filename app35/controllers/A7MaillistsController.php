@@ -83,6 +83,7 @@ class A7MaillistsController extends Zend_Controller_Action {
         var_dump($_FILES['xlfile']['tmp_name']);
         //exit;
         if ($_FILES['xlfile']['tmp_name']<>'') {
+            $db=my7::db();
             set_include_path(get_include_path() . PATH_SEPARATOR . my7::basePath().'PHPExcel-1.8/Classes/');
 
             /** PHPExcel_IOFactory */
@@ -90,16 +91,39 @@ class A7MaillistsController extends Zend_Controller_Action {
 
 
             $inputFileName = $_FILES['xlfile']['tmp_name'];
-            echo 'Loading file ',pathinfo($inputFileName,PATHINFO_BASENAME),' using IOFactory to identify the format<br />';
+            //echo 'Loading file ',pathinfo($inputFileName,PATHINFO_BASENAME),' using IOFactory to identify the format<br />';
             $objPHPExcel = PHPExcel_IOFactory::load($inputFileName);
 
 
-            echo '<hr />';
+            //echo '<hr />';
 
             $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
-            var_dump($sheetData);
+            //var_dump($sheetData);
 
-            exit;
+            $i=1;
+            $arr=array();
+            while (isset($sheetData[$i])) {
+                $ar2=$sheetData[$i];
+                $email=(isset($ar2['A']) ? $ar2['A'] : '');
+                if (is_null($email)) $email='';
+                $contacts=(isset($ar2['B']) ? $ar2['B'] : '');
+                if (is_null($contacts)) $contacts='';
+                $firm=(isset($ar2['C']) ? $ar2['C'] : '');
+                if (is_null($firm)) $firm='';
+                if ($email<>'' && $contacts<>'') {
+                    $email=$db->quote($email);
+                    $contacts=$db->quote($contacts);
+                    $firm=$db->quote($firm);
+                    array_push($arr, "($idlist,$email,1,$contacts,$firm,0,'')");
+                }
+                $i++;
+            }
+            $s=join(', ',$arr);
+            $s2="replace into $this->tbldata (idmaillist,email,tosendmail,name,"
+                    . "company,mailsent,error_sent) values $s";
+            //var_dump($s2);
+            my7::qdirect($s2);
+            //exit;
         }
     }
  

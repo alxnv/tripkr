@@ -37,8 +37,10 @@
       <div id="<?=($my3->ismobile ? 'footer2' : 'footer')?>">
           <hr class="hr2" noshade="noshade" />
             <p id="svyaz" style="font-size:90%">Тел.: (495) 728-88-95 |
-
-            E-mail: <?=mailaddrreplacer('<a href="mailto:master@gokoreatour.ru">master@gokoreatour.ru</a>')?><br />
+<?
+$q78=my3::qobj("select siteemail from et_settings");
+?>
+            E-mail: <?=mailaddrreplacer('<a href="mailto:'.$q78->siteemail.'">'.$q78->siteemail.'</a>')?><br />
             &copy; Воробьёв А.Б., 2012-<?php echo date('Y') ?>
             </p>
 

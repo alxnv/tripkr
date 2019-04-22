@@ -11,6 +11,7 @@ class A7ExtmaillistController extends Zend_Controller_Action {
         $this->cntletters=3; // количество записей на страницу для данного набора
         $this->sess='page8099';
         $this->sess2='page7099';
+        $this->sess3='page5099';
         $this->tbl=my7::getdbprefix().'dbmailexternal';
         $this->mailtbl=my7::getdbprefix().'maillists';
         //$this->rewrtbl=my7::getdbprefix().'rewrite';
@@ -58,11 +59,15 @@ class A7ExtmaillistController extends Zend_Controller_Action {
         public function indexAction() {
         // выводим список туроператоров в виде таблицы
 
-        $id = $this->_getParam('id', 0);
-        $pg1 = $this->_getParam('page', 0);
+        $id = intval($this->_getParam('id', (isset($_SESSION[$this->sess3])
+                ? $_SESSION[$this->sess3] : 0)));
+        $pg1 = intval($this->_getParam('page', (isset($_SESSION[$this->sess2])
+                ? $_SESSION[$this->sess2] : 0)));
         $letter1 = my7::myurldecodedollar($this->_getParam('lt', ''));
+        if ($letter1=='' && isset($_SESSION[$this->sess])) $letter1=$_SESSION[$this->sess];
         $_SESSION[$this->sess]=$letter1;
-        $_SESSION[$this->sess2]=intval($pg1);
+        $_SESSION[$this->sess2]=$pg1;
+        $_SESSION[$this->sess3]=$id;
 
         $this->view->id=$id;
         $arq=my7::qlist("select substring(email,1,1) as firstletter, count(*) as cnt from $this->tbl where idmaillist=$id and email<>'' group by firstletter");
@@ -90,7 +95,7 @@ class A7ExtmaillistController extends Zend_Controller_Action {
         //$letter1=(count($arq)>0 ? $top->lettersfromtobyarray($fl, $ll, $ar3) : '');
         //var_dump('arq',$arq);
         $this->view->letter1=$letter1;
-        $this->view->href=my7::baseUrl().'a7-extmaillist/index/id/'.$id.'/lt/';
+        $this->view->href=my7::baseUrl().'a7-extmaillist/index/id/'.$id.'/page/0/lt/';
         $this->view->maillist = my7::qobj("SELECT * from $this->mailtbl where uid=$id");
         $s8=$this->values2($letter1); // задать фильтр по началу email
         $page=$_SESSION[$this->sess2];

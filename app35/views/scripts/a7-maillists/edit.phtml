@@ -34,7 +34,7 @@ if ($this->id) {
     //echo '<br><a href="'.my7::baseurl().'a7-dbmaillist/index/id/'.$this->id.'">Редактировать список рассылки из базы данных сайта</a><br>';
     echo '<br><a href="'.my7::baseurl().'a7-extmaillist/index/id/'.$this->id.'">Редактировать список абонентов рассылки</a><br>';
     echo '<br><hr><input type="checkbox" id="deldata" name="deldata" /><label for="deldata"> Удалить данные из списка рассылки</label><br>';
-    echo '<br>Импортировать данные во внешний список рассылки из файла Excel: <input type="file" name="xlfile"  accept=".xls,.xlsx" /><br>'
+    echo '<br>Импортировать данные в список рассылки из файла Excel: <input type="file" name="xlfile"  accept=".xls,.xlsx" /><br>'
     . '<br>Формат файла: 1-й столбец - email, 2-й столбец - адресат, 3-й столбец(необязательный) - название компании<br><br>';
     //. '<br><input type="checkbox" checked id="excludewhatindb" name="excludewhatindb" /><label for="excludewhatindb"> Не импортировать email-ы из файла которые есть в таблице пользователей на сайте</label><br><br>';
     echo '<br>Импортировать данные из списка рассылки: <select name="importfrom">'.my7::makelist($this->maillists,0,' -- Не импортировать --').'</select><br>';
