@@ -201,7 +201,7 @@ class A7MaillistsController extends Zend_Controller_Action {
      */
     public function tosendwitherrors($id) {
         my7::qdirect("update $this->tbldata set mailsent=0,error_sent='' where idmaillist=$id"
-                . " and tosendmail=1 and error_sent<>''");
+                . " and error_sent<>''");
     }
     
     // добавляем к списку рассылки данные пользователей с сайта
