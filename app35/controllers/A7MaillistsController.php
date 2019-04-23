@@ -14,11 +14,60 @@ class A7MaillistsController extends Zend_Controller_Action {
         //$this->rewrtbl=my7::getdbprefix().'rewrite';
     }
 
+    public function preparecounters() { // сделать запросы к базе данных по количеству 
+              // различных данных в бд
+        $arr=my7::qlist("select idmaillist,count(*) as cnt from $this->tbldata group by idmaillist");
+        $aarr=array();
+        for ($i=0;$i<count($arr);$i++) {
+            $aarr[intval($arr[$i]->idmaillist)]=intval($arr[$i]->cnt);
+        }
+        $ar2=my7::qlist("select idmaillist,count(*) as cnt from $this->tbldata where tosendmail=1 and mailsent=0 group by idmaillist");
+        $aar2=array();
+        for ($i=0;$i<count($ar2);$i++) {
+            $aar2[intval($ar2[$i]->idmaillist)]=intval($ar2[$i]->cnt);
+        }
+        $ar3=my7::qlist("select idmaillist,count(*) as cnt from $this->tbldata where error_sent<>'' group by idmaillist");
+        $aar3=array();
+        for ($i=0;$i<count($ar3);$i++) {
+            $aar3[intval($ar3[$i]->idmaillist)]=intval($ar3[$i]->cnt);
+        }
+        $ar4=my7::qlist("select idmaillist,count(*) as cnt from $this->tbldata where mailsent=1 group by idmaillist");
+        $aar4=array();
+        for ($i=0;$i<count($ar4);$i++) {
+            $aar4[intval($ar4[$i]->idmaillist)]=intval($ar4[$i]->cnt);
+        }
+        return array('all'=>$aarr, 'tosend'=>$aar2,'witherror'=>$aar3,'sent'=>$aar4);
+    }
+    
+    public function whencompletemailsend($pr,$every10minutes) { 
+        // выполняется ли сейчас отправка почты и когда она завершится
+        if (intval($every10minutes)<=0) {
+            $num=0;
+        } else {
+            $arr=my7::qlist("select uid from $this->tbl where tosendmail=1");
+            // определяем количество почты которую остается отправить
+            $num=0;
+            for ($i=0;$i<count($arr);$i++) {
+                if (isset($pr['tosend'][intval($arr[$i]->uid)])) 
+                    $num+=$pr['tosend'][intval($arr[$i]->uid)];
+            }
+        }
+        return $num;
+    }
     public function indexAction() {
         // выводим список туроператоров в виде таблицы
         $pg1 = $this->_getParam('page', 0);
         $_SESSION[$this->sess]=intval($pg1);
 
+        // получаем настройки сайта
+        $so=new My_sitedbops();
+        $this->view->settings=$so->getsettings();
+        
+        $this->view->pr=$this->preparecounters(); // сделать запросы к базе данных по количеству 
+              // различных данных в бд
+        $this->view->compl=$this->whencompletemailsend($this->view->pr,$this->view->settings->every10minutesnummails); 
+          // выполняется ли сейчас отправка почты и когда она завершится
+        //var_dump($pr);
         $page=$_SESSION[$this->sess];
         $row = my7::qobj("SELECT count(*) as cnt from $this->tbl");
         $nrows=$row->cnt;
@@ -127,6 +176,36 @@ class A7MaillistsController extends Zend_Controller_Action {
         }
     }
  
+    /**
+     * Импорт данных из одного списка рассылки в другой
+     * @param integer $lfrom - идентификатор списка рассылки из которого импортировать
+     * @param integer $lto - идентификатор списка рассылки в который импортировать
+     */
+    public function importfrommaillist($lfrom,$lto) {
+        $arr=my7::qlist("select * from $this->tbldata where idmaillist=$lfrom");
+        $ar2=array();
+        $db=my7::db();
+        for ($i=0;$i<count($arr);$i++) {
+            $obj=$arr[$i];
+            $email=$db->quote($obj->email);
+            $name=$db->quote($obj->name);
+            $company=$db->quote($obj->company);
+            array_push($ar2,"($lto,$email,$obj->tosendmail,$name,$company,$obj->mailsent,"
+                    . "'$obj->error_sent')");
+        }
+        $s=join(', ',$ar2);
+        my7::qdirect("replace into $this->tbldata (idmaillist,email,tosendmail,"
+                . "name,company,mailsent,error_sent) values $s");
+    }
+
+    /**
+     * Проставляем новую отправку сообщений которые были отправлены с ошибкаами
+     */
+    public function tosendwitherrors($id) {
+        my7::qdirect("update $this->tbldata set mailsent=0,error_sent='' where idmaillist=$id"
+                . " and tosendmail=1 and error_sent<>''");
+    }
+
     public function saveAction() {
         // сохраняем одну новость
         $id = intval($this->_getParam('id', 0));
@@ -139,7 +218,7 @@ class A7MaillistsController extends Zend_Controller_Action {
             $s3='';
             
             // обрабатываем изображение
-            function crthumb($n, $fn1) {
+            /*function crthumb($n, $fn1) {
                 // callback-функция обработки изображения
                 global $edit4;
                 //$path1=my7::basepath().'img2/';
@@ -148,7 +227,7 @@ class A7MaillistsController extends Zend_Controller_Action {
                 my7::resamplejpeg3(150, 0, $fn1, $fn1);
                 //@unlink($fn1);
                 //@rename($path1.$in15,$fn1);
-            };
+            };*/
             $arr=array(
                 'name'=>$formData['name'],
                 'html'=>$formData['html'],
@@ -169,6 +248,8 @@ class A7MaillistsController extends Zend_Controller_Action {
                 $id=$db->lastInsertId();
             }
             $this->excelLoad($id); // загружаем данные из файла excel если он загружен
+            if (isset($formData['importfrom'])) $this->importfrommaillist(intval($formData['importfrom']),$id);
+            if (isset($formData['sendwitherrors'])) $this->tosendwitherrors($id); // проставляем новую отправку сообщений которые были отправлены с ошибкаами
             my7::qdirect('unlock tables');
             
 
@@ -210,10 +291,11 @@ class A7MaillistsController extends Zend_Controller_Action {
         
     }
      public function rdelAction() {
-        // удаляем одну новость
+        // удаляем один списко рассылки
         $id = intval($this->_getParam('id', 0));
         if ($id) {
             $q2=my7::qobj("select ordr from $this->tbl where uid=$id");
+            my7::qdirect("delete from $this->tbldata where idmaillist=$id");
             my7::db()->delete($this->tbl,"uid=$id");
             if ($q2) { // если есть такая запись
                 my7::qdirect("update $this->tbl set ordr=ordr-1 where ordr>$q2->ordr");

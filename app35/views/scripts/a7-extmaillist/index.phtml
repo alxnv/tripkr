@@ -7,6 +7,18 @@ if (confirm('Вы уверены, что хотите удалить этот э
 function izm(id) {
 window.location.href='<?=my7::baseurl()?>a7-extmaillist/edit/ml/<?=$this->id?>/id/'+id;
 };
+function fmpost() {
+    // отправка формы фильтра
+    //alert(4);
+    document.getElementById('fm').submit();
+}
+function fmpresspost() {
+    // отправка формы фильтра при нажатии enter
+    if(event.keyCode == 13) {
+        //alert("should get the innerHTML or text value here");
+        document.getElementById('fm').submit();
+    }    
+}
 function click1(id) {
 //    alert(4);
     n=(document.getElementById('tosend'+id).checked ? 1 : 0);
@@ -45,6 +57,9 @@ window.location.href='<?=my7::baseurl()?>a7-extmaillist/check/ml/<?=$this->id?>/
 ?>
 </script>
 <div id="jjj"></div>
+<?
+//var_dump($this->flt5);
+?>
 <div align="center">
     <h1 align="center">Внешняя база данных абонентов для почтового списка рассылки <a href="<?=my7::baseUrl()?>a7-maillists/edit/id/<?=$this->id?>"><?=my7::nbsh($this->maillist->name)?></a></h1>
 <a href="<?=my7::baseurl()?>a7-extmaillist/edit/ml/<?=$this->id?>/id/0">Добавить абонента</a><br>
@@ -54,6 +69,25 @@ window.location.href='<?=my7::baseurl()?>a7-extmaillist/check/ml/<?=$this->id?>/
     <th>Вести<br />отправку<br />почты</th><th>Отправлено</th><th>E-mail</th><th>Контактное лицо</th><th>Название компании(не обязательное поле)</th><th>Отправлено<br>без<br>ошибок</th><th>Действия</th>
 </tr>
 <?
+// фильтры
+$achk1=array(array('N','Все'), array(1,'Вкл'), array(0,'Выкл'));
+echo '<form id="fm" method="post" action="'.my7::baseurl().'a7-extmaillist/setfilter">';
+echo '<tr>';
+echo '<td><select name="tosendmail" onchange="javascript:fmpost()">';
+echo my7::makelist($achk1,$this->flt5->tosendmail);    
+echo '</select></td>';
+echo '<td><select name="mailsent" onchange="javascript:fmpost()">';
+echo my7::makelist($achk1,$this->flt5->mailsent);    
+echo '</select></td>';
+echo '<td><input type="text" onkeydown="fmpresspost()" size="10" style="max-width:100%" name="email" value="'.my7::nbsh($this->flt5->email).'" /></td>';
+echo '<td><input type="text" onkeydown="fmpresspost()" size="10" style="max-width:100%" name="name" value="'.my7::nbsh($this->flt5->name).'" /></td>';
+echo '<td><input type="text" onkeydown="fmpresspost()" size="10" style="max-width:100%" name="company" value="'.my7::nbsh($this->flt5->company).'" /></td>';
+echo '<td><select name="error_sent" onchange="javascript:fmpost()">';
+echo my7::makelist($achk1,$this->flt5->error_sent);    
+echo '</select></td>';
+echo '<td></td>';
+echo '</tr></form>';
+
 $psort = $this->psort;
 for ($i=0;$i<count($this->arr);$i++) {
  $row=$this->arr[$i];

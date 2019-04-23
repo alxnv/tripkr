@@ -406,7 +406,7 @@ function parsestrall(&$mtch,&$mtchto,$regex,$str1) {
                 
                 $cnt++;
             } else {
-                $s.='<option value="'.$arr[$i][$ark[0]].'"'.($arr[$i][$ark[0]]==$selectednum ? ' selected' : '').
+                $s.='<option value="'.$arr[$i][$ark[0]].'"'.((string)$arr[$i][$ark[0]]==$selectednum ? ' selected' : '').
                         '>'.my7::nbsh($arr[$i][$ark[1]]);
             }
         }

@@ -88,6 +88,11 @@ class My_textop {
         return $s2;
     }
     
+    function month($n) {
+        $arr=array('января','февраля','марта','апреля','мая','июня','июля','августа','сентября',
+                'октября','ноября','декабря');
+        return $arr[intval($n)-1];
+    }
  /**
  * вывод текста и единиц измерения числа в падеже 'через'
  * @param integer $num - число
@@ -96,7 +101,7 @@ class My_textop {
  * 
  */
     function numplusunit($num,$whichunit) {
-        return ' '.$num.' '.$this->unitstext($num,$whichunit);
+        return ($num==0 ? '' : ' '.$num.' '.$this->unitstext($num,$whichunit));
     }
     
  /**
@@ -111,6 +116,8 @@ class My_textop {
         $ar2=array(
             2=> array('минут','минуту','минуты'),
             3=> array('часов','час','часа'),
+            105=> array('сообщений','сообщение','сообщения'),
+            106=> array('почтовых','почтовое','почтовых'),
         );
                 
         $n2=$num % 100;
@@ -120,8 +127,9 @@ class My_textop {
         } else if ($n2>=5 && $n2<20) {
             $s=$ar2[$whichunit][0];
         } else if ($n2>=20 && $n2<100) {
+            $n2 = $n2 % 10;
             $arr=array(0,1,2,2,2,0,0,0,0,0);
-            $s=$ar2[$whichunit][$arr[$n2-20]];
+            $s=$ar2[$whichunit][$arr[$n2]];
         } else {
             $s='';
         }

@@ -1,3 +1,4 @@
+<a href="<?=my7::baseurl()?>a7-maillists">Перейти к спискам рассылки</a><br><br>
 <?
 my7::inithtmleditor();
 //echo $this->row->html;
@@ -32,7 +33,7 @@ echo '<br />';
 <?
 if ($this->id) {
     //echo '<br><a href="'.my7::baseurl().'a7-dbmaillist/index/id/'.$this->id.'">Редактировать список рассылки из базы данных сайта</a><br>';
-    echo '<br><a href="'.my7::baseurl().'a7-extmaillist/index/id/'.$this->id.'">Редактировать список абонентов рассылки</a><br>';
+    echo '<br><a href="'.my7::baseurl().'a7-extmaillist/index/init/1/id/'.$this->id.'">Редактировать список абонентов рассылки</a><br>';
     echo '<br><hr><input type="checkbox" id="deldata" name="deldata" /><label for="deldata"> Удалить данные из списка рассылки</label><br>';
     echo '<br>Импортировать данные в список рассылки из файла Excel: <input type="file" name="xlfile"  accept=".xls,.xlsx" /><br>'
     . '<br>Формат файла: 1-й столбец - email, 2-й столбец - адресат, 3-й столбец(необязательный) - название компании<br><br>';
@@ -40,6 +41,7 @@ if ($this->id) {
     echo '<br>Импортировать данные из списка рассылки: <select name="importfrom">'.my7::makelist($this->maillists,0,' -- Не импортировать --').'</select><br>';
     echo '<hr>';
 }
+echo '<br><input type="checkbox" id="sendwitherrors" name="sendwitherrors" /><label for="sendwitherrors"> Поставить в очередь на отправку все сообщения отправленные с ошибками</label><br>';
 echo '<br>Маска заголовка почтового сообщения: <input type="text" name="mask" size="45" value="'.my7::nbsh($this->row->mask).'" /><br>'
     . '(В тексте можно использоать следущие строки: %n - адресат, %c - наименование компании)<br>';
 ?>

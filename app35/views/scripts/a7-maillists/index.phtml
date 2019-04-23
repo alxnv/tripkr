@@ -18,11 +18,35 @@ window.location.href='<?=my7::baseurl()?>a7-maillists/check/id/'+id;
 </script>
 <div align="center">
 <h1 align="center">Почтовые списки рассылки</h1>
+<?
+date_default_timezone_set('Europe/Moscow');
+$top=new My_textop();
+if ($this->compl>0) {
+    echo 'Ведется рассылка<br>Осталось отправить '.$this->compl.' '.$top->unitstext($this->compl, 106).' '.$top->unitstext($this->compl, 105).'<br>';
+
+    $tm=time();
+    $mail10=intval($this->settings->every10minutesnummails);
+    $endinseconds=((ceil($this->compl/$mail10))*10+1)*60;
+    //$endinseconds=10*60*60+17*60;
+    //echo 'endins='.$endinseconds;
+    $inhours=floor($endinseconds/60/60);
+    $inminutes=floor(($endinseconds % (60*60))/60);
+    $sm=60*60; // делаем смещение на час, а то отстает
+    echo ' Отправка почтовых сообщений завершится приблизительно через '.$top->numplusunit($inhours,3).$top->numplusunit($inminutes,2).
+            ' в '.date('H:i:s d ',$tm+$endinseconds+$sm).$top->month(date('n',$tm+$endinseconds+$sm)).
+            '<br><br>';
+}
+?>
 <a href="<?=my7::baseurl()?>a7-maillists/edit/id/0">Добавить список рассылки</a><br>
 <br>
 <table border="1" cellpadding="3" cellspacing="0">
 <tr valign="top">
-    <th>Порядковый<br />номер<br />отправки</th><th>Вести<br />отправку<br />почты</th><th>Наименование</th><th>Действия</th>
+    <th>Порядковый<br />номер<br />отправки</th><th>Вести<br />отправку<br />почты</th><th>Наименование</th>
+    <th>Всего<br>элементов</th>
+    <th>В очереди<br>на отправку</th>
+    <th>Отправлено</th>
+    <th>Отправлено<br>с ошибками</th>
+    <th>Действия</th>
 </tr>
 <?
 $psort = $this->psort;
@@ -35,6 +59,10 @@ for ($i=0;$i<count($this->arr);$i++) {
  echo '<td valign=top><input type="checkbox" name="uid'.$row->uid.'" '.($row->tosendmail ? ' checked' : '');
  echo ' onClick="clickCheckbox('.$row->uid.')" /></td>';
  echo '<td valign=top><a href="'.my7::baseurl().'a7-maillists/edit/id/'.$row->uid.'">'.(trim($row->name=='') ? '-------' : nl2br($this->escape($row->name))).'</a>';
+ echo '<td>'.(isset($this->pr['all'][$uid2]) ? $this->pr['all'][$uid2] : 0).'</td>';
+ echo '<td>'.(isset($this->pr['tosend'][$uid2]) ? $this->pr['tosend'][$uid2] : 0).'</td>';
+ echo '<td>'.(isset($this->pr['sent'][$uid2]) ? $this->pr['sent'][$uid2] : 0).'</td>';
+ echo '<td>'.(isset($this->pr['witherror'][$uid2]) ? $this->pr['witherror'][$uid2] : 0).'</td>';
  echo '</td><td valign=top><nobr><input type="button" onclick="javascript:delr('.$uid2.');" value="Удалить">'
          . '&nbsp;<input type="button" onclick="javascript:pere('.$uid2.');" value="Переместить в позицию: ">'
          . '<input type="text" size="3" id="pos'.$uid2.'" value="'.$row->ordr.'" /></nobr>';
@@ -43,5 +71,6 @@ for ($i=0;$i<count($this->arr);$i++) {
 }
 ?>
 </table>
+<br><span style="color:red">*</span> Вы можете работать со списками рассылки во время отправки почты
 </div>
 <? my7::printpages($this->lend); ?>

@@ -7,8 +7,8 @@ class A7ExtmaillistController extends Zend_Controller_Action {
     public function init() {
         /* Initialize action controller here */
         my7::checkadm();
-        $this->cnt=2; // кол-во записей на страницу для данного $letter1
-        $this->cntletters=3; // количество записей на страницу для данного набора
+        $this->cnt=20; // кол-во записей на страницу для данного $letter1
+        $this->cntletters=60; // количество записей на страницу для данного набора
         $this->sess='page8099';
         $this->sess2='page7099';
         $this->sess3='page5099';
@@ -44,6 +44,61 @@ class A7ExtmaillistController extends Zend_Controller_Action {
         return $s;
     }
     
+    /**
+     * формируем фильтр 
+     * @param array $flt5 - массив из сессии с параметрами фильтра
+     * @param array $fltdata - сюда пишем параметры для вывода фильтра
+     * @return string - текст фильтра для sql
+     */
+    public function filters($flt5,&$fltdata) {
+        $db=my7::db();
+        $s='';
+        if (isset($flt5['email'])) {
+            $e1=$db->quote('%'.$flt5['email'].'%');
+            $s.=' and email like '.$e1;
+            $fltdata['email']=$flt5['email'];
+        } else {
+            $fltdata['email']='';
+        }
+        if (isset($flt5['tosendmail'])) {
+            $n1=intval($flt5['tosendmail']);
+            $s.=' and tosendmail='.$n1;
+            $fltdata['tosendmail']=$n1;
+        } else {
+            $fltdata['tosendmail']='N';
+        }
+        if (isset($flt5['name'])) {
+            $e1=$db->quote('%'.$flt5['name'].'%');
+            $s.=' and name like '.$e1;
+            $fltdata['name']=$flt5['name'];
+        } else {
+            $fltdata['name']='';
+        }
+        if (isset($flt5['company'])) {
+            $e1=$db->quote('%'.$flt5['company'].'%');
+            $s.=' and company like '.$e1;
+            $fltdata['company']=$flt5['company'];
+        } else {
+            $fltdata['company']='';
+        }
+        if (isset($flt5['mailsent'])) {
+            $n1=intval($flt5['mailsent']);
+            $s.=' and mailsent='.$n1;
+            $fltdata['mailsent']=$n1;
+        } else {
+            $fltdata['mailsent']='N';
+        }
+        if (isset($flt5['error_sent'])) {
+            $n1=intval($flt5['error_sent']);
+            if (!$n1) $s.=' and error_sent<>""';
+               else  $s.=' and error_sent=""';
+            $fltdata['error_sent']=($n1 ? 1 : 0);
+        } else {
+            $fltdata['error_sent']='N';
+        }
+        return $s;
+    } 
+    
     public function checkAction() {
         // нажат чекбокс в списке, вызов через ajax
 /*if($this->_request->isXmlHttpRequest())
@@ -56,9 +111,46 @@ class A7ExtmaillistController extends Zend_Controller_Action {
         $arr=array('sc'=>1);
         $this->_helper->json($arr);
     }
+    
+    /**
+     * Сохраняем значение фильтра
+     */
+    public function setfilterAction() {
+        if ($this->getRequest()->isPost()) {
+            $arr=array();
+            $fd = $this->getRequest()->getPost();
+            if (isset($fd['email']) && $fd['email']!=='') {
+                $arr['email']=$fd['email'];
+            }
+            if (isset($fd['tosendmail']) && $fd['tosendmail']!=='N') {
+                $arr['tosendmail']=intval($fd['tosendmail']);
+            }
+            if (isset($fd['mailsent']) && $fd['mailsent']!=='N') {
+                $arr['mailsent']=intval($fd['mailsent']);
+            }
+            if (isset($fd['name']) && $fd['name']!=='') {
+                $arr['name']=$fd['name'];
+            }
+            if (isset($fd['company']) && $fd['company']!=='') {
+                $arr['company']=$fd['company'];
+            }
+            if (isset($fd['error_sent']) && $fd['error_sent']!=='N') {
+                $arr['error_sent']=(intval($fd['error_sent']) ? 1 : 0);
+            }
+            
+            if (count($arr)>0) $_SESSION['flt55']=$arr;
+               else unset($_SESSION['flt55']);
+        }
+        my7::goUrl('a7-extmaillist/index/init/1');
+    }
         public function indexAction() {
         // выводим список туроператоров в виде таблицы
 
+        $toinit = intval($this->_getParam('init', 0));
+        if ($toinit) {
+            // сбрасываем указатели страниц
+            unset($_SESSION[$this->sess],$_SESSION[$this->sess2]);
+        }
         $id = intval($this->_getParam('id', (isset($_SESSION[$this->sess3])
                 ? $_SESSION[$this->sess3] : 0)));
         $pg1 = intval($this->_getParam('page', (isset($_SESSION[$this->sess2])
@@ -68,9 +160,12 @@ class A7ExtmaillistController extends Zend_Controller_Action {
         $_SESSION[$this->sess]=$letter1;
         $_SESSION[$this->sess2]=$pg1;
         $_SESSION[$this->sess3]=$id;
-
+        $this->view->flt5=array();
+        $s75=$this->filters(isset($_SESSION['flt55']) ? $_SESSION['flt55'] : array(),$this->view->flt5);
+        $this->view->flt5=(object)$this->view->flt5;
+        
         $this->view->id=$id;
-        $arq=my7::qlist("select substring(email,1,1) as firstletter, count(*) as cnt from $this->tbl where idmaillist=$id and email<>'' group by firstletter");
+        $arq=my7::qlist("select substring(email,1,1) as firstletter, count(*) as cnt from $this->tbl where idmaillist=$id and email<>'' $s75 group by firstletter");
         $this->view->arq=$arq;
         $this->view->cntletters=$this->cntletters;
         if ($letter1=='' and count($arq)<>0) {
@@ -100,9 +195,9 @@ class A7ExtmaillistController extends Zend_Controller_Action {
         $s8=$this->values2($letter1); // задать фильтр по началу email
         $page=$_SESSION[$this->sess2];
         $row = my7::qobj("SELECT count(*) as cnt from $this->tbl where idmaillist=$id "
-                . $s8);
+                . $s8." $s75");
         //var_dump("SELECT count(*) as cnt from $this->tbl where idmaillist=$id "
-          //      . $s8);
+          //      . $s8." $s75");
  //       $row = my7::qobj("SELECT count(*) as cnt from $this->tbl where idmaillist=$id "
    //             . "and email<>'' and substring(email,1,1)>='$fl' and substring(email,1,1)<='$ll'");
         $nrows=$row->cnt;
@@ -111,14 +206,12 @@ class A7ExtmaillistController extends Zend_Controller_Action {
             $page--;
             $lm=$page*$this->cnt;
             $this->view->arr=my7::qlist("SELECT * FROM $this->tbl where idmaillist=$id
-                $s8
+                $s8 $s75
                 order by email limit $lm,$this->cnt");
             //var_dump("SELECT * FROM $this->tbl where idmaillist=$id
-            //    $s8
-            //   order by email limit $lm,$this->cnt");
-/*            $this->view->arr=my7::qlist("SELECT * FROM $this->tbl where idmaillist=$id
-                and substring(email,1,1)>='$fl' and substring(email,1,1)<='$ll'
-                order by email limit $lm,$this->cnt");*/
+              //  $s8 $s75
+              //  order by email limit $lm,$this->cnt");
+            
             $nrowspage=count($this->view->arr);
         } while (($nrowspage==0) && ($page>0));
         
