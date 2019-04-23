@@ -31,17 +31,18 @@ echo '<br />';
 Наименование: <input type="text" name="name" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->name)?>" /><br>
 <br><input type="checkbox" id=tosend" name="tosend" <?=($this->row->tosendmail ? ' checked' : '')?> /><label for=tosend"> Начать рассылку</label><br>
 <?
-if ($this->id) {
     //echo '<br><a href="'.my7::baseurl().'a7-dbmaillist/index/id/'.$this->id.'">Редактировать список рассылки из базы данных сайта</a><br>';
-    echo '<br><a href="'.my7::baseurl().'a7-extmaillist/index/init/1/id/'.$this->id.'">Редактировать список абонентов рассылки</a><br>';
-    echo '<br><hr><input type="checkbox" id="deldata" name="deldata" /><label for="deldata"> Удалить данные из списка рассылки</label><br>';
-    echo '<br>Импортировать данные в список рассылки из файла Excel: <input type="file" name="xlfile"  accept=".xls,.xlsx" /><br>'
-    . '<br>Формат файла: 1-й столбец - email, 2-й столбец - адресат, 3-й столбец(необязательный) - название компании<br><br>';
-    //. '<br><input type="checkbox" checked id="excludewhatindb" name="excludewhatindb" /><label for="excludewhatindb"> Не импортировать email-ы из файла которые есть в таблице пользователей на сайте</label><br><br>';
-    echo '<br>Импортировать данные из списка рассылки: <select name="importfrom">'.my7::makelist($this->maillists,0,' -- Не импортировать --').'</select><br>';
-    echo '<hr>';
-}
-echo '<br><input type="checkbox" id="sendwitherrors" name="sendwitherrors" /><label for="sendwitherrors"> Поставить в очередь на отправку все сообщения отправленные с ошибками</label><br>';
+if ($this->id) echo '<br><a href="'.my7::baseurl().'a7-extmaillist/index/init/1/id/'.$this->id.'">Редактировать список абонентов рассылки</a><br>';
+echo '<hr>';
+if ($this->id) echo '<br><input type="checkbox" id="deldata" name="deldata" /><label for="deldata"> Удалить данные из списка рассылки</label><br>';
+echo '<br>Импортировать данные в список рассылки из файла Excel: <input type="file" name="xlfile"  accept=".xls,.xlsx" /><br>'
+. '<br>Формат файла: 1-й столбец - email, 2-й столбец - адресат, 3-й столбец(необязательный) - название компании<br><br>';
+//. '<br><input type="checkbox" checked id="excludewhatindb" name="excludewhatindb" /><label for="excludewhatindb"> Не импортировать email-ы из файла которые есть в таблице пользователей на сайте</label><br><br>';
+echo '<br>Импортировать данные из списка рассылки: <select name="importfrom">'.my7::makelist($this->maillists,0,' -- Не импортировать --').'</select><br>';
+echo '<br><input type="checkbox" id="addfromsite" name="addfromsite" /><label for="addfromsite"> Импортировать данные в список рассылки из списка пользователей сайта</label><br><br>';
+echo '<hr>';
+
+if ($this->id) echo '<br><input type="checkbox" id="sendwitherrors" name="sendwitherrors" /><label for="sendwitherrors"> Поставить в очередь на отправку все сообщения отправленные с ошибками</label><br>';
 echo '<br>Маска заголовка почтового сообщения: <input type="text" name="mask" size="45" value="'.my7::nbsh($this->row->mask).'" /><br>'
     . '(В тексте можно использоать следущие строки: %n - адресат, %c - наименование компании)<br>';
 ?>
@@ -56,7 +57,7 @@ echo '<br>Маска заголовка почтового сообщения: <
 
 
 <br /><div class="savediv"><input type="submit" value="Сохранить" name="save" /> 
-<input type="submit" value="Сохранить и начать рассылку" name="saveandsend" /></div>
+</div>
 </div>
 </form>
 <script type="text/javascript">

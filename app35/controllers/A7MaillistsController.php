@@ -105,9 +105,7 @@ class A7MaillistsController extends Zend_Controller_Action {
         $db=my7::db();
         $id = intval($this->_getParam('id', 0));
         $this->view->id=$id;
-        if ($id) {
-            $this->view->maillists=my7::qarray("select uid,name from $this->tbl where uid<>$id order by name");
-        }
+        $this->view->maillists=my7::qarray("select uid,name from $this->tbl where uid<>$id order by name");
         $this->view->row=my7::qobj("select * from $this->tbl where uid=$id");
         if ($this->view->row===false) $this->view->row=(object)array('uid'=>0,'name'=>'',
                             'html'=>'', 'mask'=>'%n', 'tosendmail'=>0);
@@ -205,6 +203,25 @@ class A7MaillistsController extends Zend_Controller_Action {
         my7::qdirect("update $this->tbldata set mailsent=0,error_sent='' where idmaillist=$id"
                 . " and tosendmail=1 and error_sent<>''");
     }
+    
+    // добавляем к списку рассылки данные пользователей с сайта
+    public function toaddfromsite($id) {
+        $arr=my7::qlist("select email,fio,naimfirm from et_zayav where ismoderated=1");
+        $ar2=array();
+        $db=my7::db();
+        for ($i=0;$i<count($arr);$i++) {
+            $obj=$arr[$i];
+            $email=$db->quote($obj->email);
+            $name=$db->quote($obj->fio);
+            $company=$db->quote($obj->naimfirm);
+            array_push($ar2,"($id,$email,1,$name,$company,0,"
+                    . "'')");
+        }
+        $s=join(', ',$ar2);
+        my7::qdirect("replace into $this->tbldata (idmaillist,email,tosendmail,"
+                . "name,company,mailsent,error_sent) values $s");
+        
+    }
 
     public function saveAction() {
         // сохраняем одну новость
@@ -234,7 +251,9 @@ class A7MaillistsController extends Zend_Controller_Action {
                 'mask'=>$formData['mask'],
                 'tosendmail'=>(isset($formData['tosend']) ? 1 :0)
                 );
-            my7::qdirect("lock tables $this->tbl write, $this->tbldata write");
+            if (isset($formData['addfromsite'])) $s79=' ,et_zayav read';
+                else $s79='';
+            my7::qdirect("lock tables $this->tbl write, $this->tbldata write $s79");
             if ($id) {
                 $db->update($this->tbl,
                         $arr,
@@ -247,9 +266,15 @@ class A7MaillistsController extends Zend_Controller_Action {
                 $db->insert($this->tbl,$arr);
                 $id=$db->lastInsertId();
             }
+            //$n4=my7::qobj("select count(*) as cnt from $this->tbldata where idmaillist=$id");
             $this->excelLoad($id); // загружаем данные из файла excel если он загружен
-            if (isset($formData['importfrom'])) $this->importfrommaillist(intval($formData['importfrom']),$id);
+            //$n4=my7::qobj("select count(*) as cnt from $this->tbldata where idmaillist=$id");
+            if (intval($formData['importfrom'])<>0) $this->importfrommaillist(intval($formData['importfrom']),$id);
+            //$n4=my7::qobj("select count(*) as cnt from $this->tbldata where idmaillist=$id");
             if (isset($formData['sendwitherrors'])) $this->tosendwitherrors($id); // проставляем новую отправку сообщений которые были отправлены с ошибкаами
+            //$n4=my7::qobj("select count(*) as cnt from $this->tbldata where idmaillist=$id");
+            if (isset($formData['addfromsite'])) $this->toaddfromsite($id); // добавляем к списку рассылки данные пользователей с сайта
+            //$n4=my7::qobj("select count(*) as cnt from $this->tbldata where idmaillist=$id");
             my7::qdirect('unlock tables');
             
 
