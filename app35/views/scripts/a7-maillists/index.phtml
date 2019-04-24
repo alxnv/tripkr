@@ -19,7 +19,7 @@ window.location.href='<?=my7::baseurl()?>a7-maillists/check/id/'+id;
 <div align="center">
 <h1 align="center">Почтовые списки рассылки</h1>
 <?
-date_default_timezone_set('Europe/Moscow');
+//date_default_timezone_set('Europe/Moscow');
 $top=new My_textop();
 if ($this->compl>0) {
     echo 'Ведется рассылка<br>Осталось отправить '.$this->compl.' '.$top->unitstext($this->compl, 106).' '.$top->unitstext($this->compl, 105).'<br>';

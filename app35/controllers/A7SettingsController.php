@@ -1,5 +1,5 @@
 <?php
-// Copyright (C) 2010 Воробьев Александр
+// Copyright (C) 2019 Воробьев Александр
 
 // страничка с настройками отображения сайта, и ее сохранение
 
@@ -25,6 +25,7 @@ class A7SettingsController extends Zend_Controller_Action
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
             $formData['every10minutesnummails']=intval($formData['every10minutesnummails']);
+            $formData['moremailsent']=intval($formData['moremailsent']);
             $db=my7::db();
             $db->update($this->tbl,
                         $formData,

@@ -52,10 +52,10 @@ if (isset($_GET['uid']) && $_GET['uid']=='retpwd' && count($_POST)>0) {
 	// вход по паролю и логину
 	if (!isset($_POST['login']) || !isset($_POST['keystring']))  die('Не все параметры указаны');
 	$s3='';
-	$login1=mysql_real_escape_string(substr($_POST['login'],0,70));
+	$login1=$db3->escape(substr($_POST['login'],0,70));
 	$lgn=my3::qobj("select login,pwd,email,fio from et_zayav where login='$login1' and ismoderated=1 limit 1");
 	if (!$lgn) $s3.="Неправильный логин\n";
-	if(isset($_SESSION['captcha_keystring']) && $_SESSION['captcha_keystring'] ==  $_POST['keystring']){
+	if (($_SERVER['SERVER_NAME']=='localhost') || (isset($_SESSION['captcha_keystring']) && $_SESSION['captcha_keystring'] ==  $_POST['keystring'])){
 	}else{
 		$s3.="Проверочное слово введено неправильно\n";
 	};
@@ -78,7 +78,7 @@ if (isset($_GET['uid']) && $_GET['uid']=='retpwd' && count($_POST)>0) {
 		$headers .= "Content-type: text/plain; charset=utf-8\nContent-Transfer-Encoding: 8bit\n";
 		$hdr2=my3::encodeHeader('Ваш пароль для сайта www.gokoreatour.ru');
 
-		@mail($sitemail,$hdr2,$msg, $headers);
+		@sd::mail($sitemail,$hdr2,$msg, $headers);
 		
 		my3::gotomessage('Пароль был отправлен на e-mail указанный при регистрации');	
 	}
@@ -192,7 +192,7 @@ var_dump($_SESSION);*/
 		$headers .= "Content-type: text/plain; charset=utf-8\nContent-Transfer-Encoding: 8bit\n";
 		$hdr2=my3::encodeHeader('На сайте www.gokoreatour.ru туроператор добавил заявку на доступ к конфиденциальной информации');
 
-		if (mail($sitemail,$hdr2,$msg, $headers)) {
+		if (sd::mail($sitemail,$hdr2,$msg, $headers)) {
         		my3::gotomessage('Ваш запрос отправлен');
                 } else my3::gotomessage('Ошибка отправки почты');
 	}
@@ -246,7 +246,7 @@ if (isset($_GET['uid']) && $_GET['uid']=='tourcomments') {
     $headers .= "Content-type: text/plain; charset=utf-8\nContent-Transfer-Encoding: 8bit\n";
     $hdr2=my3::encodeHeader('www.gokoreatour.ru - добавлен комментарий/вопрос к туру "'.$naim.'"');
 
-    @mail($sitemail,$hdr2,$msg, $headers);
+    @sd::mail($sitemail,$hdr2,$msg, $headers);
     $name2=  mysql_escape_string($name1);
     $mess2=  mysql_escape_string($mess1);
     $row2=my3::qobj("select max(ordr) as mx from et_tree where idtree=3 and topid=$uid2");
@@ -322,7 +322,7 @@ $vi2=intval($_POST['vi']);
     $headers .= "Content-type: text/plain; charset=utf-8\nContent-Transfer-Encoding: 8bit\n";
     $hdr2=my3::encodeHeader('www.gokoreatour.ru - задан вопрос в разделе Вопросы-ответы');
 
-    @mail($sitemail,$hdr2,$msg, $headers);
+    @sd::mail($sitemail,$hdr2,$msg, $headers);
     $name2=  mysql_escape_string($name1);
     $name3=mysql_escape_string(my3::mnogot($name1,100));
     $mess2=  mysql_escape_string($mess1);

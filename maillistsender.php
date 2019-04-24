@@ -8,17 +8,152 @@
 $sendadminmailperiod=30; // минимальное время между отправками почты администратору о
     // успешном завершении отсылки списков в минутах
 
+function updaterecord(&$obj) {
+    $obj2=my3::setnulls($obj);
+    my3::q("update et_tracemailsend set badbegin=from_unixtime($obj->badbegin), goodbegin=from_unixtime($obj->goodbegin),"
+            . "endsend=from_unixtime($obj->endsend), cntgood=$obj->cntgood, cntbad=$obj->cntbad,"
+            . "goodminutes=$obj2->goodminutes, badminutes=$obj2->badminutes,"
+            . "every10=$obj->every10 where uid=$obj->uid");
+}
+
+/**
+ * закрыть запись и начать новую
+ * @param object $obj
+ */
+function closerecord(&$obj,$every10,&$isnewrec) {
+    $obj->endsend=time();
+    calcdurations($obj);
+    updaterecord($obj);
+    $obj=(object)array('badbegin'=>0,'goodbegin'=>time(),'endsend'=>0,
+            'cntgood'=>0,'cntbad'=>0,'every10'=>$every10);
+    $isnewrec=1;
+
+    
+}
+
+/**
+ * запись в бд данных об отправленных успешно и неуспешно email, и за какое время
+ * @param integer $numsuccess
+ * @param integer $numerrors
+ * @param integer $curtime
+ * @param boolean $allsent
+ * @param integer $every10
+ */
+function tracemailsending($numsuccess,$numerrors,$allsent,$every10,$mailtos) {
+    $isnewrec=0;
+    $obj=my3::qobj("select uid,UNIX_TIMESTAMP(badbegin) as badbegin,"
+            . "UNIX_TIMESTAMP(goodbegin) as goodbegin,UNIX_TIMESTAMP(endsend) as endsend,"
+            . "cntgood,cntbad,every10,goodminutes,badminutes from et_tracemailsend order by uid desc limit 0,1");
+    
+    $tableempty=($obj===false);
+    if (!$tableempty) {
+        if (is_null($obj->goodbegin)) $obj->goodbegin=0;
+        if (is_null($obj->badbegin)) $obj->badbegin=0;
+        if (is_null($obj->endsend)) $obj->endsend=0;
+    }
+    
+    if ($tableempty) $isnewrec=1;
+    if (($numsuccess+$numerrors==0 || $every10<=0) && $mailtos<>0) {
+        // ничего не отослали
+        // закрываем если нужно запись
+        if (!$tableempty && $obj->endsend==0) {
+            $obj->endsend=time();
+            updaterecord($obj);
+        }
+        return;
+    }
+    
+    if (!$tableempty && ($obj->endsend<>0)) $isnewrec=1; // если закрыта запись(закончена)
+    
+    
+    $b8=0;
+    if ($obj->every10<>$every10 && !$tableempty) {
+        $b8=1;
+        closerecord($obj,$every10,$isnewrec);
+    }
+    
+    if ($isnewrec) {
+        $obj=(object)array('badbegin'=>0,'goodbegin'=>time(),'endsend'=>0,
+            'cntgood'=>0,'cntbad'=>0,'every10'=>$every10);
+    }
+
+    if ($numerrors==0 && ($obj->badbegin==0)) {
+        // пишем правильное
+        $obj->cntgood+=$numsuccess;
+    } else if ($numerrors<>0 && (0==$obj->badbegin)) {
+        // пишем правильное и ошибки
+        $obj->badbegin=time();
+        $obj->cntgood+=$numsuccess;
+        $obj->cntbad+=$numerrors;
+        
+    } else if (($obj->badbegin<>0) && $numsuccess==0) {
+        // пишем ошибки
+        $obj->cntbad+=$numerrors;
+        
+    } else if (($obj->badbegin<>0) && $numsuccess<>0) {
+        
+        closerecord($obj,$every10,$isnewrec);
+        $obj->cntgood+=$numsuccess;
+        if ($numerrors<>0) {
+            $obj->badbegin=time();
+            $obj->cntbad+=$numerrors;
+        }
+        
+    }
+    if ($allsent && !$b8) {
+        closerecord($obj,$every10,$isnewrec);
+    }
+    
+    if ($isnewrec) {
+        calcdurations($obj);
+        $obj2=my3::setnulls($obj);
+        my3::q("insert into et_tracemailsend (badbegin,goodbegin,endsend,cntgood,cntbad,"
+                . "goodminutes,badminutes,every10) values (from_unixtime($obj2->badbegin),from_unixtime($obj2->goodbegin),from_unixtime($obj2->endsend),"
+                . "$obj2->cntgood,$obj2->cntbad,$obj2->goodminutes,$obj2->badminutes,$obj2->every10)");
+    } else {
+        calcdurations($obj);
+        updaterecord($obj);
+
+    }
+}
+
+/**
+ * Проставить длительности хорошего и плохого периодов
+ * @param object $obj
+ */
+function calcdurations(&$obj) {
+    if ($obj->goodbegin==0) $obj->goodbegin=time();
+    if ($obj->badbegin==0) {
+        $obj->goodminutes=(($obj->endsend==0) ? null : $obj->endsend-$obj->goodbegin);
+        $obj->badminutes=null;
+    } else {
+        $obj->goodminutes=$obj->badbegin-$obj->goodbegin;
+        $obj->badminutes=($obj->endsend==0 ? null : $obj->endsend-$obj->badbegin);
+        
+    }
+}
+
 $ar2=my3::qobj("select * from et_settings");
 //$ar2->lastsentadminmail=0;
 $every10=intval($ar2->every10minutesnummails);
-if ($every10<=0) exit;
+$moremail=intval($ar2->moremailsent);
+$mailtos=$every10-$moremail;
+if ($mailtos<0) $mailtos=0;
+$n45=min($every10,$moremail);
+if ($n45<>0) my3::q("update et_settings set moremailsent=moremailsent-$n45");
+
+if ($every10<=0) {
+    tracemailsending(0,0,0,0,$mailtos);
+    exit;
+}
 
 // получаем сообщения которые будем отправлять
-$arr=my3::qlist("select a.uid as idlist,a.name as namelist,a.html,a.mask,"
+if ($mailtos==0) $arr=array();
+    else $arr=my3::qlist("select a.uid as idlist,a.name as namelist,a.html,a.mask,"
         . " b.email,b.name,b.company,b.uid"
         . " from et_maillists a, et_dbmailexternal b"
         . " where a.tosendmail=1 and a.uid=b.idmaillist and b.tosendmail=1 and b.mailsent=0"
-        . " limit 0,$every10");
+        . " limit 0,$mailtos");
 
 echo '<pre>';
 //var_dump($arr);
@@ -30,6 +165,8 @@ if (count($arr)==0) echo 'Нет сообщений для отправки<br>'
     else echo 'Отправка почтовых сообщений на следующие email: <br>';
 
 if (count($arr)>0) echo '<table>';    
+$numsuccess=0;
+$numerrors=0;
 for ($i=0;$i<count($arr);$i++) {
     $obj=$arr[$i];
     $idlist=intval($obj->idlist);
@@ -46,7 +183,9 @@ for ($i=0;$i<count($arr);$i++) {
 
     
     $b=mail($obj->email,$hdr2,$msg, $headers);
-    echo '<tr><td>'.htmlspecialchars($obj->email).'</td><td>'.htmlspecialchars($contacts).'</td></tr>';
+    if ($b) $numsuccess++;
+       else $numerrors++;
+    echo '<tr><td>'.htmlspecialchars($obj->email).'</td><td>'.htmlspecialchars($contacts).'</td><td>'.($b ? 'Success' : 'Fail').'</td></tr>';
     //var_dump('b',$b,'email',$obj->email,'sitemail',$sitemail,'contacts',$contacts,'msg',$msg);
     $b2=($b ? "''" : "'1'");
     my3::q("update et_dbmailexternal set mailsent=1, error_sent=$b2 where uid=$obj->uid");
@@ -109,9 +248,14 @@ if (count($ar6)>0 && time()>=$ar2->lastsentadminmail+$sendadminmailperiod*60) {
     $hdr2=my3::encodeHeader($s45);
 
     
-    $b=mail($sitemail,$hdr2,$msg, $headers);
+    $b=sd::mail($sitemail,$hdr2,$msg, $headers);
     
     // записываем время когда отправили сообщение администратору
     $t=time();
     my3::q("update et_settings set lastsentadminmail=$t");
 }
+
+//$numerrors=3;
+//$numsuccess=0;
+//$sentall=1;
+tracemailsending($numsuccess,$numerrors,$sentall,$every10,$mailtos);

@@ -24,6 +24,7 @@ if ($k===FALSE) exit;
 $spath=substr($sname,0,$k+1);
 
 session_start();
+require_once dirname(__FILE__).'/tools/sd.php'; // site dependent functions
 require_once dirname(__FILE__).'/tools/my3.php';
 $my3=new my3();
 my3::redirectifnotdomain();

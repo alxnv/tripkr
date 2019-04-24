@@ -1,0 +1,70 @@
+<script language="JavaScript">
+function delr(id) {
+if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
+ window.location.href='<?=my7::baseurl()?>a7-tracemail/rdel/id/'+id;
+ };
+};
+function izm(id) {
+window.location.href='<?=my7::baseurl()?>a7-tracemail/edit/id/'+id;
+};
+function clickCheckbox(id) {
+window.location.href='<?=my7::baseurl()?>a7-tracemail/check/id/'+id;
+};
+    function pere(id) {
+        pos=document.getElementById('pos'+id).value;
+        window.location.href='<?=my7::baseurl()?>a7-tracemail/move/id/'+id+'/pos/'+parseInt(pos);
+    };
+
+</script>
+<a href="<?=my7::baseurl()?>a7-tracemail">Обновить страницу</a><br><br>
+<div align="center">
+    <h1 align="center">Отслеживание рассылки почтовых рассылок <span style="color:red">(не изменять!!!)</span></h1>
+<?
+//date_default_timezone_set('Europe/Moscow');
+$top=new My_textop();
+//<a href="<?=my7::baseurl()a7-maillists/edit/id/0">Добавить список рассылки</a><br>
+
+function formatdate1($ts) {
+    /*if (is_null($ts)) {
+        return '---';
+    }
+    return date('d/m/Y H:i:s',$ts);*/
+    return $ts;
+}
+
+?>
+<br>
+<table border="1" cellpadding="3" cellspacing="0">
+<tr valign="top">
+    <th>uid</th><th>goodbegin</th><th>cntgood</th>
+    <th>goodminutes</th>
+    <th>badbegin</th>
+    <th>cntbad</th>
+    <th>badminutes</th>
+    <th>endsend</th>
+    <th>every10</th>
+    <th>Действия</th>
+</tr>
+<?
+$psort = $this->psort;
+for ($i=0;$i<count($this->arr);$i++) {
+ $row=$this->arr[$i];
+ $uid2=$row->uid;
+ echo '<tr align="left">';
+ echo '<td valign=top>'.$row->uid.'</td>';
+ echo '<td valign=top>'.formatdate1($row->goodbegin).'</td>';
+ echo '<td valign=top>'.$row->cntgood.'</td>';
+ echo '<td valign=top>'.round($row->goodminutes/60).'</td>';
+ echo '<td valign=top>'.formatdate1($row->badbegin).'</td>';
+ echo '<td valign=top>'.$row->cntbad.'</td>';
+ echo '<td valign=top>'.round($row->badminutes/60).'</td>';
+ echo '<td valign=top>'.formatdate1($row->endsend).'</td>';
+ echo '<td valign=top>'.$row->every10.'</td>';
+ echo '<td valign=top><nobr><input type="button" onclick="javascript:delr('.$uid2.');" value="Удалить">';
+ echo '</td></tr>';
+ $psort--;
+}
+?>
+</table>
+</div>
+<? my7::printpages($this->lend); ?>

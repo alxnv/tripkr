@@ -45,7 +45,7 @@ class database3 {
 
     function q($s) {
         if ($this->mysql5) {
-            $sth = @mysqli_query ($this->handle, $s)
+            $sth = mysqli_query ($this->handle, $s)
                 or die (sprintf ("Не могу выполнить запрос [%s]: %s\nИсходная строка: %s", mysqli_errno ($this->handle), mysqli_error ($this->handle),$s));
         } else {    
             $sth = @mysql_query ($s, $this->handle)
@@ -62,6 +62,14 @@ class database3 {
         }
     }
 
+    function fetch_array($sth) {
+        if ($this->mysql5) { 
+            return $sth->fetch_array();
+        } else {
+            return mysql_fetch_array($sth);
+        }
+    }
+    
     function fetch_object($sth) {
         if ($this->mysql5) { 
             return $sth->fetch_object();
@@ -74,7 +82,7 @@ class database3 {
         $sth=$this->q($s);
         if ($this->mysql5) {
             if ($sth->num_rows===0) {
-                return (object)array();
+                return false; //(object)array();
             } else {
                 return $sth->fetch_object();
             }
@@ -84,6 +92,7 @@ class database3 {
     }
 
     function getkrohi($tab,$uid2) {
+        global $db3;
         $sth=$this->q("select a.uid as uid1,a.ordr as ord1,a.naim as naim1,a.topid as top1,
         b.uid as uid2,b.ordr as ord2,b.naim as naim2,b.topid as top2,
         c.uid as uid3,c.ordr as ord3,c.naim as naim3,c.topid as top3,
@@ -92,7 +101,7 @@ class database3 {
         from $tab a left join $tab b on a.topid=b.uid left join $tab c
         on b.topid=c.uid left join $tab d on c.topid=d.uid left join $tab e
         on d.topid=e.uid where a.uid=$uid2");
-        $arr=mysql_fetch_array($sth);
+        $arr=$db3->fetch_array($sth);
         for ($i=1;$i<6;$i++) {
             if (is_null($arr['uid'.$i])) break;
         };

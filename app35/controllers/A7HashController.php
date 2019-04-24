@@ -76,7 +76,7 @@ class A7HashController extends Zend_Controller_Action
                 my3::log('hdr2',$hdr2);
                 my3::log('msg',$msg);
                 my3::log('headers',$headers);*/
-		if (!mail($email,$hdr2,$msg, $headers)) {
+		if (!my7::mail($email,$hdr2,$msg, $headers)) {
                     $err=$arr[$i]->login."<br>";
                     $errs=$errs.$err;
                     $numerrs++;

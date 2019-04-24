@@ -2,7 +2,13 @@
 error_reporting (E_ALL);
 @session_start();
 require_once 'tools/my3.php';
+require_once 'tools/sd.php';
+require_once 'tools/database3.php';
 $my3=new my3();
+$conf35=parse_ini_file('app35/configs/application.ini',true);
+$db3->connect();
+$sth=$db3->q("select * from et_settings");
+
 
 if (isset($_POST["action"]) && $_POST['action']=='send') {
 	// Send the email
@@ -33,7 +39,7 @@ if (isset($_POST["action"]) && $_POST['action']=='send') {
                 my3::log('hdr2',$hdr2);
                 my3::log('msg',$msg);
                 my3::log('headers',$headers);
-		if (!mail($sitemail,$hdr2,$msg, $headers)) $err="Ошибка отправки сообщения\n";
+		if (!sd::mail($sitemail,$hdr2,$msg, $headers)) $err="Ошибка отправки сообщения\n";
 	}
 	$mess=($err=='' ? 'Ваш вопрос успешно отправлен' : $err);
 	$arr=array('mess'=>$mess, 'success'=>($err=='' ? 1 :0));

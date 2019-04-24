@@ -16,8 +16,13 @@ my7::showerror();
 <br>
 Основной E-mail администратора сайта: <input type="text" name="siteemail" size="70" maxlength="200" value="<?=htmlspecialchars($this->row->siteemail)?>" /><br>
 <br>
-Количество отправляемых почтовых сообщений раз в 10 минут в списках рассылки: <input type="text" name="every10minutesnummails" size="70" maxlength="200" value="<?=htmlspecialchars($this->row->every10minutesnummails)?>" /><br>
+Количество отправляемых почтовых сообщений раз в 10 минут в списках рассылки: <input type="text" size="5" name="every10minutesnummails" maxlength="200" value="<?=htmlspecialchars($this->row->every10minutesnummails)?>" /><br>
 <br>
+<hr>
+<span style="color:red">Системные переменные, не менять!</span><br><br>
+Количество почты отправленной с сайта помимо списков рассылки в последние 10 минут (moremailsent): <input type="text" size="5" name="moremailsent"maxlength="200" value="<?=htmlspecialchars($this->row->moremailsent)?>" /><br>
+<br>
+<a href="<?=my7::baseurl()?>a7-tracemail">Отслеживание работы почтовых рассылок</a>
 <?
 	echo '<br /><div class="savediv"><input type="submit" value="Сохранить"></div></form>';
 ?>

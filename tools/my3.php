@@ -457,6 +457,19 @@ return $s;
         return $db3->qobj($s);
     }
 
+    /**
+     * Проставить в объекте 'null' вместо null
+     * @param object $obj
+     */
+    public static function setnulls($obj) {
+        $arr=(array)$obj;
+        $ark=array_keys($arr);
+
+        for ($i=0;$i<count($ark);$i++) {
+            if (is_null($arr[$ark[$i]])) $arr[$ark[$i]]='null';
+        }
+        return (object)$arr;
+    }
     
     public static  function qobj($s) {
         global $db3;
