@@ -8,6 +8,15 @@ $testing=1; // если 1, то тестовая отправка всех со�
 $sendadminmailperiod=30; // минимальное время между отправками почты администратору о
     // успешном завершении отсылки списков в минутах
 
+error_reporting (E_ALL);
+//@session_start();
+require_once 'tools/my3.php';
+require_once 'tools/sd.php';
+require_once 'tools/database3.php';
+$my3=new my3();
+$conf35=parse_ini_file('app35/configs/application.ini',true);
+$db3->connect();
+
 function updaterecord(&$obj) {
     $obj2=my3::setnulls($obj);
     my3::q("update et_tracemailsend set badbegin=from_unixtime($obj->badbegin), goodbegin=from_unixtime($obj->goodbegin),"
