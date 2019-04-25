@@ -66,11 +66,13 @@ window.location.href='<?=my7::baseurl()?>a7-extmaillist/check/ml/<?=$this->id?>/
 <br>
 <table border="1" cellpadding="3" cellspacing="0">
 <tr valign="top">
-    <th>Вести<br />отправку<br />почты</th><th>Отправлено</th><th>E-mail</th><th>Контактное лицо</th><th>Название компании(не обязательное поле)</th><th>Отправлено<br>без<br>ошибок</th><th>Действия</th>
+    <th>Вести<br />отправку<br />почты</th><th>Отправлено</th><th>E-mail</th><th>Контактное лицо</th><th>Название компании(не обязательное поле)</th><th>Отправлено<br>без<br>ошибок</th><th>Прио<br>ритет</th><th>Действия</th>
 </tr>
 <?
 // фильтры
 $achk1=array(array('N','Все'), array(1,'Вкл'), array(0,'Выкл'));
+$aprio1=array(array('N','Все'), array(1,'Выс.'), array(2,'Ср.'), array(3,'Низк.'));
+$aprio2=array('Выс.','Ср.','Низк.');
 echo '<form id="fm" method="post" action="'.my7::baseurl().'a7-extmaillist/setfilter">';
 echo '<tr>';
 echo '<td><select name="tosendmail" onchange="javascript:fmpost()">';
@@ -84,6 +86,9 @@ echo '<td><input type="text" onkeydown="fmpresspost()" size="10" style="max-widt
 echo '<td><input type="text" onkeydown="fmpresspost()" size="10" style="max-width:100%" name="company" value="'.my7::nbsh($this->flt5->company).'" /></td>';
 echo '<td><select name="error_sent" onchange="javascript:fmpost()">';
 echo my7::makelist($achk1,$this->flt5->error_sent);    
+echo '</select></td>';
+echo '<td><select name="priority" onchange="javascript:fmpost()">';
+echo my7::makelist($aprio1,$this->flt5->priority);    
 echo '</select></td>';
 echo '<td></td>';
 echo '</tr></form>';
@@ -100,7 +105,9 @@ for ($i=0;$i<count($this->arr);$i++) {
  echo '<td>'.my7::nbsh($row->email).'</td>';
  echo '<td>'.my7::nbsh($row->name).'</td>';
  echo '<td>'.my7::nbsh($row->company).'</td>';
- echo '<td>'.($row->error_sent=='' ? 'Да' : 'Нет').'</td>';
+ echo '<td>'.htmlspecialchars($row->error_sent).'</td>';
+ if ($row->priority<1 || $row->priority>3) $row->priority=2;
+ echo '<td>'.$aprio2[$row->priority-1].'</td>';
  echo '<td valign=top><nobr><input type="button" onclick="javascript:izm('.$uid2.');" value="Изменить">'
          . '&nbsp;<input type="button" onclick="javascript:delr('.$uid2.');" value="Удалить"></nobr>';
  echo '</td></tr>';

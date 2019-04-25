@@ -43,6 +43,7 @@ function formatdate1($ts) {
     <th>badminutes</th>
     <th>endsend</th>
     <th>every10</th>
+    <th>mail<br>tos</th>
     <th>Действия</th>
 </tr>
 <?
@@ -60,6 +61,7 @@ for ($i=0;$i<count($this->arr);$i++) {
  echo '<td valign=top>'.round($row->badminutes/60).'</td>';
  echo '<td valign=top>'.formatdate1($row->endsend).'</td>';
  echo '<td valign=top>'.$row->every10.'</td>';
+ echo '<td valign=top>'.$row->mailtos.'</td>';
  echo '<td valign=top><nobr><input type="button" onclick="javascript:delr('.$uid2.');" value="Удалить">';
  echo '</td></tr>';
  $psort--;

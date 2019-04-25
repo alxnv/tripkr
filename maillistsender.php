@@ -3,7 +3,7 @@
 /* 
 Отправляет сообщения почтового списка рассылки по cron раз в 10 минут
  */
-
+$testing=1; // если 1, то тестовая отправка всех сообщений на alxnv@yandex.ru
 
 $sendadminmailperiod=30; // минимальное время между отправками почты администратору о
     // успешном завершении отсылки списков в минутах
@@ -13,7 +13,7 @@ function updaterecord(&$obj) {
     my3::q("update et_tracemailsend set badbegin=from_unixtime($obj->badbegin), goodbegin=from_unixtime($obj->goodbegin),"
             . "endsend=from_unixtime($obj->endsend), cntgood=$obj->cntgood, cntbad=$obj->cntbad,"
             . "goodminutes=$obj2->goodminutes, badminutes=$obj2->badminutes,"
-            . "every10=$obj->every10 where uid=$obj->uid");
+            . "every10=$obj->every10,mailtos=$obj->mailtos where uid=$obj->uid");
 }
 
 /**
@@ -25,7 +25,7 @@ function closerecord(&$obj,$every10,&$isnewrec) {
     calcdurations($obj);
     updaterecord($obj);
     $obj=(object)array('badbegin'=>0,'goodbegin'=>time(),'endsend'=>0,
-            'cntgood'=>0,'cntbad'=>0,'every10'=>$every10);
+            'cntgood'=>0,'cntbad'=>0,'every10'=>$every10,'mailtos'=>0);
     $isnewrec=1;
 
     
@@ -43,7 +43,7 @@ function tracemailsending($numsuccess,$numerrors,$allsent,$every10,$mailtos) {
     $isnewrec=0;
     $obj=my3::qobj("select uid,UNIX_TIMESTAMP(badbegin) as badbegin,"
             . "UNIX_TIMESTAMP(goodbegin) as goodbegin,UNIX_TIMESTAMP(endsend) as endsend,"
-            . "cntgood,cntbad,every10,goodminutes,badminutes from et_tracemailsend order by uid desc limit 0,1");
+            . "cntgood,cntbad,every10,goodminutes,badminutes,mailtos from et_tracemailsend order by uid desc limit 0,1");
     
     $tableempty=($obj===false);
     if (!$tableempty) {
@@ -74,25 +74,29 @@ function tracemailsending($numsuccess,$numerrors,$allsent,$every10,$mailtos) {
     
     if ($isnewrec) {
         $obj=(object)array('badbegin'=>0,'goodbegin'=>time(),'endsend'=>0,
-            'cntgood'=>0,'cntbad'=>0,'every10'=>$every10);
+            'cntgood'=>0,'cntbad'=>0,'every10'=>$every10,'mailtos'=>0);
     }
 
     if ($numerrors==0 && ($obj->badbegin==0)) {
         // пишем правильное
         $obj->cntgood+=$numsuccess;
+        $obj->mailtos+=$mailtos;
     } else if ($numerrors<>0 && (0==$obj->badbegin)) {
         // пишем правильное и ошибки
+        $obj->mailtos+=$mailtos;
         $obj->badbegin=time();
         $obj->cntgood+=$numsuccess;
         $obj->cntbad+=$numerrors;
         
     } else if (($obj->badbegin<>0) && $numsuccess==0) {
         // пишем ошибки
+        $obj->mailtos+=$mailtos;
         $obj->cntbad+=$numerrors;
         
     } else if (($obj->badbegin<>0) && $numsuccess<>0) {
         
         closerecord($obj,$every10,$isnewrec);
+        $obj->mailtos+=$mailtos;
         $obj->cntgood+=$numsuccess;
         if ($numerrors<>0) {
             $obj->badbegin=time();
@@ -108,8 +112,8 @@ function tracemailsending($numsuccess,$numerrors,$allsent,$every10,$mailtos) {
         calcdurations($obj);
         $obj2=my3::setnulls($obj);
         my3::q("insert into et_tracemailsend (badbegin,goodbegin,endsend,cntgood,cntbad,"
-                . "goodminutes,badminutes,every10) values (from_unixtime($obj2->badbegin),from_unixtime($obj2->goodbegin),from_unixtime($obj2->endsend),"
-                . "$obj2->cntgood,$obj2->cntbad,$obj2->goodminutes,$obj2->badminutes,$obj2->every10)");
+                . "goodminutes,badminutes,every10,mailtos) values (from_unixtime($obj2->badbegin),from_unixtime($obj2->goodbegin),from_unixtime($obj2->endsend),"
+                . "$obj2->cntgood,$obj2->cntbad,$obj2->goodminutes,$obj2->badminutes,$obj2->every10,$obj2->mailtos)");
     } else {
         calcdurations($obj);
         updaterecord($obj);
@@ -153,6 +157,7 @@ if ($mailtos==0) $arr=array();
         . " b.email,b.name,b.company,b.uid"
         . " from et_maillists a, et_dbmailexternal b"
         . " where a.tosendmail=1 and a.uid=b.idmaillist and b.tosendmail=1 and b.mailsent=0"
+            . " order by b.priority,b.email"
         . " limit 0,$mailtos");
 
 echo '<pre>';
@@ -181,14 +186,31 @@ for ($i=0;$i<count($arr);$i++) {
     $headers .= "Content-type: text/html; charset=utf-8\nContent-Transfer-Encoding: 8bit\n";
     $hdr2=my3::encodeHeader($contacts);
 
+    if ($testing) {
+        $hdr2=my3::encodeHeader('Тест почтовой рассылки на gokoreatour.ru #'.rand(1,1000000000));
+        $b=mail('alxnv@yandex.ru',$hdr2, htmlspecialchars($contacts), $headers);
+    } else {
+        $b=mail($obj->email,$hdr2,$msg, $headers);
+    }
     
-    $b=mail($obj->email,$hdr2,$msg, $headers);
     if ($b) $numsuccess++;
        else $numerrors++;
+       
+    if ($b) {
+        $error='';
+    } else {
+        $error = error_get_last();
+        if (is_array($error)) $error=$error['message'];
+        if (trim($error)=='')  {
+            $error='1';
+        }
+        $error=$db3->escape($error);
+    }
+       
     echo '<tr><td>'.htmlspecialchars($obj->email).'</td><td>'.htmlspecialchars($contacts).'</td><td>'.($b ? 'Success' : 'Fail').'</td></tr>';
     //var_dump('b',$b,'email',$obj->email,'sitemail',$sitemail,'contacts',$contacts,'msg',$msg);
     $b2=($b ? "''" : "'1'");
-    my3::q("update et_dbmailexternal set mailsent=1, error_sent=$b2 where uid=$obj->uid");
+    my3::q("update et_dbmailexternal set mailsent=1, error_sent='$error' where uid=$obj->uid");
     $arrfromlistssent[$idlist]=$obj->namelist;
 }
 if (count($arr)>0) echo '</table>';
@@ -258,4 +280,4 @@ if (count($ar6)>0 && time()>=$ar2->lastsentadminmail+$sendadminmailperiod*60) {
 //$numerrors=3;
 //$numsuccess=0;
 //$sentall=1;
-tracemailsending($numsuccess,$numerrors,$sentall,$every10,$mailtos);
+tracemailsending($numsuccess,$numerrors,$sentall,$every10,$n45);

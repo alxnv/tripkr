@@ -27,13 +27,16 @@ if ($this->id) {
 };
 echo '<br />';
 */
+$aprio1=array(array(1,'Выс.'), array(2,'Ср.'), array(3,'Низк.'));
+if ($this->row->priority<1 || $this->row->priority>3) $this->row->priority=2;
 ?>
 E-mail: <input type="text" name="email" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->email)?>" /><br>
 Контактное лицо: <input type="text" name="name" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->name)?>" /><br>
 Компания (необязательное поле): <input type="text" name="company" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->company)?>" /><br>
 <br><input type="checkbox" id="tosend" name="tosend" <?=($this->row->tosendmail ? ' checked' : '')?> /><label for="tosend"> Отсылать почтовое сообщение этому абоненту</label><br>
 <br><input type="checkbox" id="mailsent" name="mailsent" <?=($this->row->mailsent ? ' checked' : '')?> /><label for="mailsent"> Почтовое сообщение отослано</label><br>
-<br><input type="checkbox" id="error_sent" name="error_sent" <?=($this->row->error_sent=='' ? ' checked' : '')?> /><label for="error_sent"> Сообщение отправлено без ошибок</label><br>
+Ошибка отправки (если пустое поле, то нет ошибки): <input type="text" name="error_sent" size="50" maxlength="200" value="<?=htmlspecialchars($this->row->error_sent)?>" /><br>
+<br>Приоритет отправки сообщения: <select name="priority"><?=my7::makelist($aprio1,$this->row->priority)?></select><br>
 <br /><div class="savediv"><input type="submit" value="Сохранить" name="save" /> 
 </div>
 </form>

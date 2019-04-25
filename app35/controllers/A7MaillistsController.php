@@ -189,11 +189,11 @@ class A7MaillistsController extends Zend_Controller_Action {
             $name=$db->quote($obj->name);
             $company=$db->quote($obj->company);
             array_push($ar2,"($lto,$email,$obj->tosendmail,$name,$company,$obj->mailsent,"
-                    . "'$obj->error_sent')");
+                    . "'$obj->error_sent',$obj->priority)");
         }
         $s=join(', ',$ar2);
         my7::qdirect("replace into $this->tbldata (idmaillist,email,tosendmail,"
-                . "name,company,mailsent,error_sent) values $s");
+                . "name,company,mailsent,error_sent,priority) values $s");
     }
 
     /**

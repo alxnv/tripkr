@@ -96,6 +96,13 @@ class A7ExtmaillistController extends Zend_Controller_Action {
         } else {
             $fltdata['error_sent']='N';
         }
+        if (isset($flt5['priority'])) {
+            $n1=intval($flt5['priority']);
+            $s.=' and priority='.$n1;
+            $fltdata['priority']=$n1;
+        } else {
+            $fltdata['priority']='N';
+        }
         return $s;
     } 
     
@@ -124,6 +131,9 @@ class A7ExtmaillistController extends Zend_Controller_Action {
             }
             if (isset($fd['tosendmail']) && $fd['tosendmail']!=='N') {
                 $arr['tosendmail']=intval($fd['tosendmail']);
+            }
+            if (isset($fd['priority']) && $fd['priority']!=='N') {
+                $arr['priority']=intval($fd['priority']);
             }
             if (isset($fd['mailsent']) && $fd['mailsent']!=='N') {
                 $arr['mailsent']=intval($fd['mailsent']);
@@ -289,9 +299,10 @@ class A7ExtmaillistController extends Zend_Controller_Action {
                 'idmaillist'=>$maillist,
                 'email'=>$formData['email'],
                 'company'=>$formData['company'],
+                'priority'=>intval($formData['priority']),
                 'tosendmail'=>(isset($formData['tosend']) ? 1 :0),
                 'mailsent'=>(isset($formData['mailsent']) ? 1 :0),
-                'error_sent'=>(isset($formData['error_sent']) ? '' : '1'),
+                'error_sent'=>$formData['error_sent'],
                 );
             if ($arr['email']=='') {
                 $s3='Недопустимо пустое поле E-mail';

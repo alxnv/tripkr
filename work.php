@@ -26,8 +26,8 @@ if (isset($_GET['uid']) && $_GET['uid']=='changepwd' && count($_POST)>0) {
     if (!isset($_POST['pwd']) || !isset($_POST['pwd2']))  die('Не все параметры указаны');
 	$s3='';
         
-	$pwd=mysql_real_escape_string(substr($_POST['pwd'],0,200));
-	$pwd2=mysql_real_escape_string(substr($_POST['pwd2'],0,200));
+	$pwd=$db3->escape(substr($_POST['pwd'],0,200));
+	$pwd2=$db3->escape(substr($_POST['pwd2'],0,200));
         if ($pwd<>$pwd2) $s3.="Введенные пароли не совпадают\n";
 
 	if ($s3<>'') {
@@ -37,7 +37,7 @@ if (isset($_GET['uid']) && $_GET['uid']=='changepwd' && count($_POST)>0) {
 		// записываем новый пароль в бд
 
             global $lgnuid3;
-            $lgn=mysql_real_escape_string($lgnuid3->login);
+            $lgn=$db3->escape($lgnuid3->login);
             my3::q("update et_zayav set pwd='$pwd' where login='$lgn' and ismoderated=1");
             $month = time()+60*60*24*30; //mktime(0,0,0,1,1,2030);
             
@@ -90,8 +90,8 @@ if (isset($_GET['uid']) && $_GET['uid']=='login' && count($_POST)>0) {
 	// вход по паролю и логину
 	if (!isset($_POST['login']) || !isset($_POST['password']) || !isset($_POST['keystring']))  die('Не все параметры указаны');
 	$s3='';
-	$login1=mysql_real_escape_string(substr($_POST['login'],0,70));
-	$pwd1=mysql_real_escape_string(substr($_POST['password'],0,70));
+	$login1=$db3->escape(substr($_POST['login'],0,70));
+	$pwd1=$db3->escape(substr($_POST['password'],0,70));
 	$lgn=my3::qobj("select login,pwd,uid,fio from et_zayav where login='$login1' and pwd='$pwd1' and ismoderated=1 limit 1");
 	if (!$lgn) $s3.="Неправильный логин/пароль\n";
 	if(isset($_SESSION['captcha_keystring']) && $_SESSION['captcha_keystring'] ==  $_POST['keystring']){
@@ -126,50 +126,50 @@ var_dump($_SESSION);*/
 	|| !isset($_POST['email']) || !isset($_POST['phone']) || !isset($_POST['rnum'])
 	|| !isset($_POST['site']) || !isset($_POST['city'])) die('Не все параметры указаны'); 
 
-	my3::q("lock tables et_zayav write");
+	my3::q("lock tables et_zayav write, et_settings write");
 	$s3='';
-	$slogin=mysql_real_escape_string(substr($_POST['login'],0,70));
+	$slogin=$db3->escape(substr($_POST['login'],0,70));
 	$lgn=my3::qobj("select login from et_zayav where login='$slogin' limit 1");
 	if ($lgn) $s3.="Этот логин занят\n";
 	if (strlen($slogin)<3) $s3.="Логин должен быть не короче 3-х букв\n";
 	$login1=substr($_POST['login'],0,100);
-	$login3=mysql_real_escape_string($login1);
+	$login3=$db3->escape($login1);
 	
 	if ($_POST['pwd']<>$_POST['pwd2']) $s3.="Введенные пароли не совпадают\n";
 	$pwd1=substr($_POST['pwd'],0,100);
-	$pwd3=mysql_real_escape_string($pwd1);
+	$pwd3=$db3->escape($pwd1);
 	
 	if ($_POST['pwd']=='') $s3.="Поле 'Пароль' пустое\n";
 	
 	$naim1=substr($_POST['naim'],0,250);
-	$naim3=mysql_real_escape_string($naim1);
+	$naim3=$db3->escape($naim1);
 	if ($naim1=='') $s3.="Поле 'Наименование' пустое\n"; 
 	$fio1=substr($_POST['fio'],0,250);
-	$fio3=mysql_real_escape_string($fio1);
+	$fio3=$db3->escape($fio1);
 	if ($fio1=='') $s3.="Поле 'ФИО' пустое\n"; 
 	$dolgn1=substr($_POST['dolgn'],0,250);
-	$dolgn3=mysql_real_escape_string($dolgn1);
+	$dolgn3=$db3->escape($dolgn1);
 	if ($dolgn1=='') $s3.="Поле 'Должность' пустое\n"; 
 	$email1=substr($_POST['email'],0,250);
-	$email3=mysql_real_escape_string($email1);
+	$email3=$db3->escape($email1);
 	if ($email1=='') $s3.="Поле 'E-mail' пустое\n"; 
 	if (!my3::is_valid_email($email1)) $s3.="Неверный E-mail\n";
 	$phone1=substr($_POST['phone'],0,250);
-	$phone3=mysql_real_escape_string($phone1);
+	$phone3=$db3->escape($phone1);
 	if ($phone1=='') $s3.="Поле 'Телефон' пустое\n"; 
 	$rnum1=substr($_POST['rnum'],0,250);
-	$rnum3=mysql_real_escape_string($rnum1);
+	$rnum3=$db3->escape($rnum1);
 	if ($rnum1=='') $s3.="Поле 'Номер в реестре' пустое\n"; 
 	$site1=substr($_POST['site'],0,250);
-	$site3=mysql_real_escape_string($site1);
+	$site3=$db3->escape($site1);
 	if ($site1=='') $s3.="Поле 'Сайт' пустое\n"; 
 	$city1=substr($_POST['city'],0,250);
-	$city3=mysql_real_escape_string($city1);
+	$city3=$db3->escape($city1);
 	if ($city1=='') $s3.="Поле 'Город' пустое\n"; 
 	
 	
 	
-	if(isset($_SESSION['captcha_keystring']) && $_SESSION['captcha_keystring'] ==  $_POST['keystring']){
+	if(($_SERVER['SERVER_NAME']=='localhost') || (isset($_SESSION['captcha_keystring']) && $_SESSION['captcha_keystring'] ==  $_POST['keystring'])) {
 	}else{
 		$s3.="Проверочное слово введено неправильно\n";
 	};
@@ -183,7 +183,8 @@ var_dump($_SESSION);*/
 		header('Location: '.my3::baseurl().'register');
 	} else {
 		// добавляем в бд
-		my3::q("insert into et_zayav values (0,'$login3','$pwd3', '$naim3', now(), '$fio3', '$dolgn3', '$site3', '$email3', '$phone3', '$rnum3', 0, '', '$city3')");
+		my3::q("insert into et_zayav (uid,login,pwd,naimfirm,data1,fio,dolgn,site,email,kphone,"
+                        . "nreestr,ismoderated,comments,city) values (0,'$login3','$pwd3', '$naim3', now(), '$fio3', '$dolgn3', '$site3', '$email3', '$phone3', '$rnum3', 0, '', '$city3')");
 		$sitemail=my3::SITEMAIL;
 		$msg='На сайте www.gokoreatour.ru туроператор добавил заявку на доступ к конфиденциальной информации 
 		Название фирмы :'.$naim1;
@@ -247,8 +248,8 @@ if (isset($_GET['uid']) && $_GET['uid']=='tourcomments') {
     $hdr2=my3::encodeHeader('www.gokoreatour.ru - добавлен комментарий/вопрос к туру "'.$naim.'"');
 
     @sd::mail($sitemail,$hdr2,$msg, $headers);
-    $name2=  mysql_escape_string($name1);
-    $mess2=  mysql_escape_string($mess1);
+    $name2=  $db3->escape($name1);
+    $mess2=  $db3->escape($mess1);
     $row2=my3::qobj("select max(ordr) as mx from et_tree where idtree=3 and topid=$uid2");
     if ($row2===false) $row2=(object)array('mx'=>0);
     $db3->q("insert into et_tree (idtree,topid,ordr,naim) values 
@@ -292,8 +293,8 @@ $vi2=intval($_POST['vi']);
  $mess1=substr($_POST['txt'],0,20000);
  //var_dump($wret2);exit;
 
-  if (!isset($_SESSION['ttf4l']) && !isset($_POST['4l']) ||
-          $_SESSION['ttf4l']!=strval($_POST['4l']) ||
+  if ((!($_SERVER['SERVER_NAME']=='localhost') && !isset($_SESSION['ttf4l']) && !isset($_POST['4l']) ||
+          $_SESSION['ttf4l']!=strval($_POST['4l'])) ||
           $_POST['naim']=='' || $_POST['txt']=='' ||
 		  $vi2<1 || $vi2>3) {
     unset($_SESSION['ttf4l']);
@@ -323,9 +324,9 @@ $vi2=intval($_POST['vi']);
     $hdr2=my3::encodeHeader('www.gokoreatour.ru - задан вопрос в разделе Вопросы-ответы');
 
     @sd::mail($sitemail,$hdr2,$msg, $headers);
-    $name2=  mysql_escape_string($name1);
-    $name3=mysql_escape_string(my3::mnogot($name1,100));
-    $mess2=  mysql_escape_string($mess1);
+    $name2=  $db3->escape($name1);
+    $name3=$db3->escape(my3::mnogot($name1,100));
+    $mess2=  $db3->escape($mess1);
     $db3->q("lock tables et_tree  write, et_ta_html write");
     $row2=my3::qobj("select max(ordr) as mx from et_tree where idtree=4 and topid=0");
     if ($row2===false) $row2=(object)array('mx'=>0);
