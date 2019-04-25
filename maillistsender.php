@@ -5,7 +5,7 @@
  */
 $testing=1; // если 1, то тестовая отправка всех сообщений на alxnv@yandex.ru
 
-$testemails=array('serg7192@mail.ru','alxnbv@gmail.com'); // на эти email посылаются сообщения
+$testemails=array('alxnv@outlook.com','alxnbv@gmail.com'); // на эти email посылаются сообщения
     // при тесте
 
 $sendadminmailperiod=30; // минимальное время между отправками почты администратору о
