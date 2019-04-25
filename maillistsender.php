@@ -197,7 +197,7 @@ for ($i=0;$i<count($arr);$i++) {
 
     if ($testing) {
         $hdr2=my3::encodeHeader('Тест почтовой рассылки на gokoreatour.ru #'.rand(1,1000000000));
-        $b=mail('alxvorobyov@gmail.com',$hdr2, htmlspecialchars($contacts), $headers);
+        $b=mail('alxnbv@gmail.com',$hdr2, htmlspecialchars($contacts), $headers);
     } else {
         $b=mail($obj->email,$hdr2,$msg, $headers);
     }
