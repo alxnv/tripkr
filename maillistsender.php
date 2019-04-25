@@ -5,6 +5,9 @@
  */
 $testing=1; // если 1, то тестовая отправка всех сообщений на alxnv@yandex.ru
 
+$testemails=array('serg7192@mail.ru','alxnbv@gmail.com'); // на эти email посылаются сообщения
+    // при тесте
+
 $sendadminmailperiod=30; // минимальное время между отправками почты администратору о
     // успешном завершении отсылки списков в минутах
 
@@ -172,6 +175,7 @@ if ($mailtos==0) $arr=array();
 echo '<pre>';
 //var_dump($arr);
 
+$teindex=0;
 $arrfromlistssent=array(); // из каких листов рассылки отправлялись сообщения
 
 // отправляем сообщения
@@ -197,7 +201,9 @@ for ($i=0;$i<count($arr);$i++) {
 
     if ($testing) {
         $hdr2=my3::encodeHeader('Тест почтовой рассылки на gokoreatour.ru #'.rand(1,1000000000));
-        $b=mail('alxnbv@gmail.com',$hdr2, htmlspecialchars($contacts), $headers);
+        $b=mail($testemails[$teindex],$hdr2, htmlspecialchars($contacts), $headers);
+        $teindex++;
+        if ($teindex>=count($testemails)) $teindex=0;
     } else {
         $b=mail($obj->email,$hdr2,$msg, $headers);
     }
