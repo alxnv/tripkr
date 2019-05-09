@@ -12,7 +12,7 @@ class my3 {
     public $basepath=null;
     public $ismobile=null;
     public $onecolumn=null;
-    const SITEMAIL='mow.ustravel@gmail.com'; //  mail администратора сайта. на него отсылаются все оповещения
+    const SITEMAIL='master@gokoreatour.ru'; //  mail администратора сайта. на него отсылаются все оповещения
     const SITE='https://www.gokoreatour.ru'; //  сайт
     const imagefactor=1; // во сколько раз увеличивать картинки для мобильного просмотра 
     function __construct() {

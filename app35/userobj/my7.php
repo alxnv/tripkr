@@ -17,7 +17,7 @@ class my7 {
     public $db;
     public $link;
 	const LOG_DATA=false; // работает ли функция log()
-    const SITEMAIL='mow.ustravel@gmail.com'; //  mail администратора сайта. на него отсылаются все оповещения
+    const SITEMAIL='master@gokoreatour.ru'; //  mail администратора сайта. на него отсылаются все оповещения
 
     function __construct() {
         $this->baseurl=dirname($_SERVER['SCRIPT_NAME']).'/';
