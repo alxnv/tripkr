@@ -29,6 +29,9 @@ class A7ZayavController extends Zend_Controller_Action {
     }
     public function indexAction() {
         // выводим список туроператоров в виде таблицы
+        
+        unset($_SESSION['flt596']);
+        
         if (isset($_SESSION['flt596'])) {
             $this->view->flt596=$_SESSION['flt596'];
         } else {

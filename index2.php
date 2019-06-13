@@ -13,7 +13,7 @@ if (APPLICATION_ENV=='production') $path593=dirname(__FILE__);
 //echo APPLICATION_ENV.' '.$path593.' '.dirname(__FILE__);
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', APPLICATION_ENV=='production' ? $path593.'/app35' : 
-	(COMPLOC=='dacha' ? 'c:\xampp\htdocs\1-tripkr\app35' : 'c:\xampp\htdocs\1-tripkr\app35'));
+	(COMPLOC=='dacha' ? 'c:\xampp\htdocs\tripkr\app35' : 'c:\xampp\htdocs\tripkr\app35'));
 unset($arr,$s8);
 
 	
@@ -35,7 +35,7 @@ if (substr($sr,strlen($spath),2)<>'a7' && substr($sr,strlen($spath),3)<>'ta_') {
 }
 unset($sr,$sname,$k,$spath);
 set_include_path(implode(PATH_SEPARATOR, array(
-    APPLICATION_ENV=='production' ? $path593.'/lib35' : 'c:\WebServers\zendf\library',
+    APPLICATION_ENV=='production' ? $path593.'/lib35' : 'c:\zend',
     APPLICATION_PATH.'/controllers',
     get_include_path(),
 )));
