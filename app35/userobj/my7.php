@@ -26,10 +26,10 @@ class my7 {
         if ($this->baseurl=='//') $this->baseurl='/';
         $this->basepath=dirname($_SERVER["SCRIPT_FILENAME"]).'/';
         $this->mysqli=!function_exists('mysql_connect');
-        if (!$this->mysqli) {
+        /*if (!$this->mysqli) {
             $this->db=Zend_Db_Table::getDefaultAdapter();
             $link=$this->db->getConnection();
-        }
+            }*/
     }
 
 /**
