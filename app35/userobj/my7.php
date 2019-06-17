@@ -63,8 +63,8 @@ class my7 {
         return $s2;
      } else {
          //$db=my7::db(); // получаем доступ к бд?
-         //return mysql_real_escape_string($s);
-         return PDO::quote ($s);
+         return mysql_escape_string($s);
+         //return PDO::quote ($s);
      }
  }
  /**
