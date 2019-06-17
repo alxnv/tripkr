@@ -26,8 +26,10 @@ class my7 {
         if ($this->baseurl=='//') $this->baseurl='/';
         $this->basepath=dirname($_SERVER["SCRIPT_FILENAME"]).'/';
         $this->mysqli=!function_exists('mysql_connect');
-        //$this->db=Zend_Db_Table::getDefaultAdapter();
-        //$link=$this->db->getConnection();
+        if (!$this->mysqli) {
+            $this->db=Zend_Db_Table::getDefaultAdapter();
+            $link=$this->db->getConnection();
+        }
     }
 
 /**
@@ -60,7 +62,7 @@ class my7 {
             // символ (кавычку)
         return $s2;
      } else {
-         return mysql_real_escape_string($s);
+         return mysql_real_escape_string($s,$my7->link);
      }
  }
  /**
