@@ -39,6 +39,7 @@ class A7ZayavController extends Zend_Controller_Action {
         }
         $b = !($this->view->flt596=='');
         $flt = my7::mysql_escape_string($this->view->flt596);
+        var_dump('flt',$flt);
         $pg1 = $this->_getParam('page', 0);
         $_SESSION[$this->sess]=intval($pg1);
 
