@@ -16,16 +16,11 @@ window.location.href='<?=my7::baseurl()?>a7-zayav/edit/id/'+id;
 <h1 align="center">Заявки туроператоров на доступ к конфиденциальной информации</h1>
 <p align="center">(серым цветом выделены не одобренные (пока?) заявки)</p>
 <p align="center">
-<?php
-/* здесь убрал пока фильтр, для восстановления - раскомментировать эти строки
-?>
 <form method="post" action="<?=my7::baseurl()?>a7-zayav/filter">Фильтр
     по названию фирмы и E-mail: <input type="text" name="filter"
    value="<?=my7::nbsh($this->flt596)?>" /> 
     <input type="submit" value="Применить" />
 </form>
- */
-?>
 </p>
 <!--<a href="<?=my7::baseurl()?>a7-news/edit/id/0">Добавить новость</a><br>-->
 <br>

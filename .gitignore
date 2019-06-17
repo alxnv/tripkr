@@ -1,4 +1,5 @@
 .htaccess
+.git
 lib35
 UserFiles
 pmad859376
@@ -13,7 +14,6 @@ vz
 *.doc*
 *.gif
 /nbproject/
-.git
 images
 img2
 logs

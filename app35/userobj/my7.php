@@ -1,4 +1,4 @@
-<?
+<?php
 // Copyright (C) 2010 Воробьев Александр
 
 // глобальный класс для работы со всем :)
@@ -54,7 +54,14 @@ class my7 {
  static function mysql_escape_string($s) {
      global $my7;
      //return ($my7->mysqli ? mysqli_real_escape_string($s) : mysql_real_escape_string($s));
-     return $my7->db()->quote($s);
+     if ($my7->mysqli) {
+        $s2=$my7->db()->quote($s);
+        $s2=substr(substr($s2,0,strlen($s2)-1),1); // убираем первый и последний
+            // символ (кавычку)
+        return $s2;
+     } else {
+         return mysql_real_escape_string($s);
+     }
  }
  /**
  * добавить слеш для специальных символов для базы данных
