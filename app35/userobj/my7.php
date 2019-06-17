@@ -62,8 +62,9 @@ class my7 {
             // символ (кавычку)
         return $s2;
      } else {
-         $db=my7::db(); // получаем доступ к бд?
-         return mysql_real_escape_string($s);
+         //$db=my7::db(); // получаем доступ к бд?
+         //return mysql_real_escape_string($s);
+         return PDO::quote ($s);
      }
  }
  /**
