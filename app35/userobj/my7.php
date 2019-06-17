@@ -62,7 +62,7 @@ class my7 {
             // символ (кавычку)
         return $s2;
      } else {
-         return mysql_real_escape_string($s,$my7->link);
+         return mysql_real_escape_string($s);
      }
  }
  /**
