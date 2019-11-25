@@ -36,7 +36,7 @@
 </div><!-- .wrapper -->
       <div id="<?=($my3->ismobile ? 'footer2' : 'footer')?>">
           <hr class="hr2" noshade="noshade" />
-            <p id="svyaz" style="font-size:90%">Тел.: (495) 728-88-95 |
+            <p id="svyaz">Тел.: (495) 728-88-95 |
 <?
 $q78=my3::qobj("select siteemail from et_settings");
 ?>
