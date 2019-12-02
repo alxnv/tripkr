@@ -13,8 +13,6 @@ if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
 $uri2=(substr($uri4.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
    // htmlspecialchars()
 $dummy=$uri4.'gokoreatour.ru';
-if (!isset($title)) $title='US Korea';
-$capt5=htmlspecialchars($title);
 ?>
      <div class="newsocial" style="margin-left:60px; width:110px;height:120px;margin-top:20px;">
         <div class="newsocial2">
@@ -30,7 +28,7 @@ $capt5=htmlspecialchars($title);
         </div>
         <div class="newsocial2">
             <div>
-                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?description=<?=$capt5?>&u=<?=($uri2)?>"><img
+                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?=($uri2)?>"><img
                     src="<?=BS?>images/c_fb.jpg"
                    width="33" height="33" border="0" /></a>
             </div>

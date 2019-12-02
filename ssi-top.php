@@ -51,6 +51,10 @@ $my3->onecolumn=$my3->ismobile; // выводим все на экран в од
 }*/
 //echo "bs=".BS;
 //exit;
+
+if (!isset($title)) $title='US Korea';
+$capt5=htmlspecialchars($title);
+
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -59,6 +63,7 @@ $my3->onecolumn=$my3->ismobile; // выводим все на экран в од
 <meta name="description" content="US Korea - сайт о Корее для туристов и профессионалов турбизнеса. Корея, туры" />
 <meta name="keywords" content="Korea, Корея, US Korea, US Travel, туры" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
+<meta property="og:description" content="<?=$capt5?>" />
 <meta name="viewport" content="width=device-width, initial-scale=0.37" />
 <link rel="icon" type="image/png" href="<?=BS?>images/favicon.png" />
 <link rel="stylesheet" type="text/css" href="<?=BS?>style.css" />
