@@ -6,6 +6,12 @@
 $uri2=htmlspecialchars(substr('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
 $dummy='http://gokoreatour.ru';
 ?>
+<!-- uSocial -->
+<script async src="https://usocial.pro/usocial/usocial.js?v=6.1.4" data-script="usocial" charset="utf-8"></script>
+<div class="uSocial-Share" data-pid="8c3d6b4bd6d1707e564b91148c85947d" data-type="share" data-options="round-rect,style1,default,top,slide-down,size24,eachCounter0,counter0" data-social="vk,fb,ok,twi,lj,telegram,mail" data-mobile="vi,wa,sms"></div>
+<!-- /uSocial -->
+
+<? /*
       <script type="text/javascript">(function() {
       if (window.pluso) {return};
        var d = document, s = d.createElement('script'), g = 'getElementsByTagName';
@@ -16,7 +22,8 @@ $dummy='http://gokoreatour.ru';
     })();
  </script>
 <div class="pluso-engine"  style="margin-top:10px;" pluso-sharer={"buttons":"vkontakte,odnoklassniki,facebook,twitter,google,moimir,more","style":{"size":"small","shape":"square","theme":"theme03","css":""},"orientation":"horizontal","multiline":false} ></div>
-<? /*
+
+
 <script type="text/javascript">(function() {
   if (window.pluso)if (typeof window.pluso.start == "function") return;
   if (window.ifpluso==undefined) { window.ifpluso = 1;
