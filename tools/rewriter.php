@@ -24,6 +24,7 @@ my3::redirectifnotdomain();
 $sstr=substr($sr,strlen($spath)); // url с параметрами относительно домашнего каталога без начального слэша и без якоря
 //var_dump($sstr,$sr,$spath);
 $sstr=str_replace('..', '', $sstr);
+if (defined('HTTPS')) echo 'https';
 if (defined('HTTPS')) $spath=str_replace('http://','https://',$spath);
      // если сайт https
 define('BS',$spath);
