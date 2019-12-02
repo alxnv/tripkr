@@ -6,6 +6,36 @@
 $uri2=htmlspecialchars(substr('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
 $dummy='http://gokoreatour.ru';
 ?>
+     <div class="newsocial" style="margin-left:60px; width:110px;height:120px;margin-top:20px;">
+        <div class="newsocial2">
+            <div>
+                <a target="_blank" href="http://twitter.com/share?text=Туры в Южную Корею&url=<?=$uri2?>"><img src="<?=BS?>images/c_tweetter.jpg"
+                   width="33" height="33" border="0" /></a>
+            </div>
+            <div>
+            <a target="_blank" href="http://vk.com/share.php?description=Поделиться страничкой сайта gokoreatour.ru&url=<?=$uri2?>"><img
+                    src="<?=BS?>images/c_vk.jpg"
+                   width="33" height="33" border="0" /></a>
+            </div>
+        </div>
+        <div class="newsocial2">
+            <div>
+                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?=urlencode($uri2)?>"><img
+                    src="<?=BS?>images/c_fb.jpg"
+                   width="33" height="33" border="0" /></a>
+            </div>
+            <div>
+                <a target="_blank" href="https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl=<?=urlencode($uri2)?>"><img
+                    src="<?=BS?>images/c_ok.jpg"
+                   width="33" height="33" border="0" /></a>
+            </div>
+        </div>
+        <?/*<div style="float:left;margin-left:10px">
+            <a target="_blank" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=<?=($uri2)?>&st.comments=Поделитесь страничкой с сайта gokoreatour.ru"><img
+                src="<?=BS?>images/c_ok.jpg"
+               width="33" height="33" border="0" /></a>
+        </div>
+</div>
       <script type="text/javascript">(function() {
       if (window.pluso) {return};
        var d = document, s = d.createElement('script'), g = 'getElementsByTagName';
@@ -83,36 +113,7 @@ document.getElementById('fb7').setAttribute( 'data-action',"recommend");
  * 
  */?>
  <? /*
-     <div class="newsocial" style="margin-left:60px; width:110px;height:120px;margin-top:20px;">
-        <div class="newsocial2">
-            <div>
-                <a target="_blank" href="http://twitter.com/share?text=Туры в Южную Корею&url=<?=$uri2?>"><img src="<?=BS?>images/c_tweetter.jpg"
-                   width="33" height="33" border="0" /></a>
-            </div>
-            <div>
-            <a target="_blank" href="http://vk.com/share.php?description=Поделиться страничкой сайта gokoreatour.ru&url=<?=$uri2?>"><img
-                    src="<?=BS?>images/c_vk.jpg"
-                   width="33" height="33" border="0" /></a>
-            </div>
-        </div>
-        <div class="newsocial2">
-            <div>
-                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?=urlencode($uri2)?>"><img
-                    src="<?=BS?>images/c_fb.jpg"
-                   width="33" height="33" border="0" /></a>
-            </div>
-            <div>
-                <a target="_blank" href="https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl=<?=urlencode($uri2)?>"><img
-                    src="<?=BS?>images/c_ok.jpg"
-                   width="33" height="33" border="0" /></a>
-            </div>
-        </div>
-        <?/*<div style="float:left;margin-left:10px">
-            <a target="_blank" href="http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=<?=($uri2)?>&st.comments=Поделитесь страничкой с сайта gokoreatour.ru"><img
-                src="<?=BS?>images/c_ok.jpg"
-               width="33" height="33" border="0" /></a>
-        </div>
-</div>*/?>
+*/?>
 <?
 /*
 <div class="title1 netLinks">
