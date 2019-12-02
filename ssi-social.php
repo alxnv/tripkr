@@ -3,8 +3,15 @@
 <div class="yashare-auto-init" style="margin-top:20px" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj"></div> 
 */?>
 <?
-$uri2=htmlspecialchars(substr('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
-$dummy='http://gokoreatour.ru';
+if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
+        $uri4 = 'https://';
+} else {
+        $uri4 = 'http://';
+}
+//$uri4 .= $_SERVER['HTTP_HOST'];
+
+$uri2=htmlspecialchars(substr($uri4.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
+$dummy=$uri4.'gokoreatour.ru';
 ?>
      <div class="newsocial" style="margin-left:60px; width:110px;height:120px;margin-top:20px;">
         <div class="newsocial2">

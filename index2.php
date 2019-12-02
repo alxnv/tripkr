@@ -1,5 +1,5 @@
 <?php
-define('HTTPS',1); // если сайт грузится по протоколу https
+//define('HTTPS',1); // если сайт грузится по протоколу https
 define('COMPLOC','dacha'); // computer location
 defined('APPLICATION_ENV') 
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
