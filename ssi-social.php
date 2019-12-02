@@ -30,7 +30,7 @@ $capt5=htmlspecialchars($title);
         </div>
         <div class="newsocial2">
             <div>
-                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?caption=<?=$capt5?>&u=<?=($uri2)?>"><img
+                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?description=<?=$capt5?>&u=<?=($uri2)?>"><img
                     src="<?=BS?>images/c_fb.jpg"
                    width="33" height="33" border="0" /></a>
             </div>
