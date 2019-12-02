@@ -74,7 +74,6 @@ $uri22=(substr($uri4.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
 <meta property="og:url"                content="<?=$uri22?>" />
 <meta property="og:type"               content="article" />
 <meta property="og:title"              content="<?=$capt5?>" />
-<meta property="og:description" content="<?=$capt5?>" />
 <meta name="viewport" content="width=device-width, initial-scale=0.37" />
 <link rel="icon" type="image/png" href="<?=BS?>images/favicon.png" />
 <link rel="stylesheet" type="text/css" href="<?=BS?>style.css" />
