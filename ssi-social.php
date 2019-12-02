@@ -28,12 +28,12 @@ $dummy=$uri4.'gokoreatour.ru';
         </div>
         <div class="newsocial2">
             <div>
-                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?=urlencode($uri2)?>"><img
+                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?=($uri2)?>"><img
                     src="<?=BS?>images/c_fb.jpg"
                    width="33" height="33" border="0" /></a>
             </div>
             <div>
-                <a target="_blank" href="https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl=<?=urlencode($uri2)?>"><img
+                <a target="_blank" href="https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl=<?=($uri2)?>"><img
                     src="<?=BS?>images/c_ok.jpg"
                    width="33" height="33" border="0" /></a>
             </div>
