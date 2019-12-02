@@ -16,7 +16,9 @@ if ($choosemobile) {
 
 $s10=$_SERVER["HTTP_USER_AGENT"];
 if ((strpos($s10,'+http://www.google.com/bot.html')!==false ||
-        strpos($s10,'+http://yandex.com/bots')!==false)) {
+        strpos($s10,'+http://yandex.com/bots')!==false) ||
+        strpos($s10,'facebookexternalhit')!==false) // facebookexternalhit - краулер соц сетей фейсбук(open graph)
+        ) {
     // google bot или yandex bot
     $_SESSION['scrwidth']=1280; 
 } else {
