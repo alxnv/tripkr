@@ -15,7 +15,7 @@ $dummy='http://gokoreatour.ru';
        h.appendChild(s);
     })();
  </script>
-<div class="pluso-engine" pluso-sharer={"buttons":"vkontakte,odnoklassniki,facebook,twitter,google,moimir,more","style":{"size":"small","shape":"square","theme":"theme03","css":""},"orientation":"horizontal","multiline":false} ></div>
+<div class="pluso-engine"  style="margin-top:10px;" pluso-sharer={"buttons":"vkontakte,odnoklassniki,facebook,twitter,google,moimir,more","style":{"size":"small","shape":"square","theme":"theme03","css":""},"orientation":"horizontal","multiline":false} ></div>
 <? /*
 <script type="text/javascript">(function() {
   if (window.pluso)if (typeof window.pluso.start == "function") return;
