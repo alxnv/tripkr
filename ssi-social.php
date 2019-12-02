@@ -6,6 +6,17 @@
 $uri2=htmlspecialchars(substr('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
 $dummy='http://gokoreatour.ru';
 ?>
+      <script type="text/javascript">(function() {
+      if (window.pluso) {return};
+       var d = document, s = d.createElement('script'), g = 'getElementsByTagName';
+       s.type = 'text/javascript'; s.charset='UTF-8'; s.async = true;
+       s.src = ('https:' == window.location.protocol ? 'https' : 'http')  + '://x.pluso.ru/pluso-x.js';
+       var h=d[g]('body')[0];
+       h.appendChild(s);
+    })();
+ </script>
+<div class="pluso-engine" pluso-sharer={"buttons":"vkontakte,odnoklassniki,facebook,twitter,google,moimir,email,print,more","style":{"size":"medium","shape":"square","theme":"theme03","css":""},"orientation":"horizontal","multiline":false} ></div>
+<? /*
 <script type="text/javascript">(function() {
   if (window.pluso)if (typeof window.pluso.start == "function") return;
   if (window.ifpluso==undefined) { window.ifpluso = 1;
@@ -16,7 +27,8 @@ $dummy='http://gokoreatour.ru';
     h.appendChild(s);
   }})();</script>
 <div class="pluso" style="margin-top:10px;width:150px" data-background="transparent" data-options="small,square,line,horizontal,nocounter,theme=04" data-services="vkontakte,facebook,twitter,livejournal,google"></div>
-<? /*
+
+
 <div style="margin-top:10px">
 <a href="https://twitter.com/share" class="twitter-share-button" id="tweet5">Tweet</a>
 <script type="text/javascript">
