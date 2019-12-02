@@ -10,7 +10,8 @@ if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
 }
 //$uri4 .= $_SERVER['HTTP_HOST'];
 
-$uri2=htmlspecialchars(substr($uri4.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
+$uri2=(substr($uri4.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
+   // htmlspecialchars()
 $dummy=$uri4.'gokoreatour.ru';
 ?>
      <div class="newsocial" style="margin-left:60px; width:110px;height:120px;margin-top:20px;">
