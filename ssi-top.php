@@ -54,6 +54,12 @@ $my3->onecolumn=$my3->ismobile; // выводим все на экран в од
 
 if (!isset($title)) $title='US Korea';
 $capt5=htmlspecialchars($title);
+if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
+        $uri4 = 'https://';
+} else {
+        $uri4 = 'http://';
+}
+$uri22=(substr($uri4.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],0,500));
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -63,6 +69,9 @@ $capt5=htmlspecialchars($title);
 <meta name="description" content="US Korea - сайт о Корее для туристов и профессионалов турбизнеса. Корея, туры" />
 <meta name="keywords" content="Korea, Корея, US Korea, US Travel, туры" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
+<meta property="og:url"                content="<?=$uri22?>" />
+<meta property="og:type"               content="article" />
+<meta property="og:title"              content="<?=$capt5?>" />
 <meta property="og:description" content="<?=$capt5?>" />
 <meta name="viewport" content="width=device-width, initial-scale=0.37" />
 <link rel="icon" type="image/png" href="<?=BS?>images/favicon.png" />
